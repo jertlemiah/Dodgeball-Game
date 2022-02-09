@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2076340684479514035}
   - component: {fileID: 2076340684479514034}
   - component: {fileID: 1996447166}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Icosphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8639,7 +8639,7 @@ GameObject:
   - component: {fileID: 2076340685624309512}
   - component: {fileID: 851144451}
   - component: {fileID: 851144450}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dodgeball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8785,7 +8785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7c38b4acefed14296b4ab22b4b795a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 2076340685624309512}
   dodgeballClipsQuiet:
   - {fileID: 8300000, guid: d6010c207b710f645addb54bb896e404, type: 3}
   - {fileID: 8300000, guid: 3a9bc9f865ce85d499fe8c3b16ad387c, type: 3}
