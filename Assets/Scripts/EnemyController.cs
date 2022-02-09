@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     {
         
     }
-    void OnCollision(Collision c)
+    void OnCollisionEnter(Collision c)
     {
         Debug.Log(gameObject.name+" has been hit by "+c.gameObject.name);
     }
