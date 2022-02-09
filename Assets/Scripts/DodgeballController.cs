@@ -55,7 +55,7 @@ public class DodgeballController : MonoBehaviour
             randClip = randomQuietAudioClip.GetRandomAudioClip();
         }
         
-        Debug.Log("Dodgeball hit, vel is "+rb.velocity.magnitude+", playing clip: "+randClip);
+        // Debug.Log("Dodgeball hit, vel is "+rb.velocity.magnitude+", playing clip: "+randClip);
         audioSource.PlayOneShot(randClip);
     }
 }
