@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 _look;
     public GameObject FollowTarget;
     private float vcam_offset;
+    [SerializeField] float lookDamper = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,10 +39,14 @@ public class PlayerController : MonoBehaviour
     {
         // rotate the camera
         transform.position = transform.position + new Vector3(movementX*m_Speed, 0, movementY*m_Speed);
+        Vector3 targetAngle = Vector3.zero;
         if (movementX < 0.1f && movementX < 0.1f)
         {
-            FollowTarget.transform.RotateAround(transform.position, Vector3.up, _look.x);
+            FollowTarget.transform.RotateAround(transform.position, Vector3.up, _look.x*lookDamper);
+            // targetAngle = Vector3.Lerp(transform.eulerAngles,targetAngle)
         }
+
+        // FollowTarget.transform.rotation = Quaternion.Euler(targetAngle);
         
     }
 }
