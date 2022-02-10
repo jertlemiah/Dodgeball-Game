@@ -37,16 +37,18 @@ public class Throw : MonoBehaviour
         _input.Disable();
     }
 
-    void ThrowBall()
+    public void ThrowBall()
     {
         if(!followingBall)
         {
-            GameObject ball = Instantiate(ballPrefab, throwSpot.transform.position, throwSpot.transform.rotation) as GameObject;
+            GameObject ballParent = Instantiate(ballPrefab, throwSpot.transform.position, throwSpot.transform.rotation) as GameObject;
             // ball.GetComponent<DodgeballController>();
-            Rigidbody ballRb = ball.GetComponent<Rigidbody>();
-            ballRb.AddForce(throwSpot.transform.forward * throwPower,ForceMode.VelocityChange);
-            ballVirtualCamera.LookAt = ball.transform;
-            ballVirtualCamera.Follow = ball.transform;
+            Rigidbody ballRb = ballParent.GetComponentInChildren<Rigidbody>();
+            Vector3 throwForce = throwSpot.transform.forward * throwPower;
+            ballRb.AddForce(throwForce,ForceMode.VelocityChange);
+            ballVirtualCamera.LookAt = ballParent.transform;
+            ballVirtualCamera.Follow = ballParent.transform;
+            // ballParent.transform.forward = transform.forward;
             cineAnimator.SetTrigger("SwitchToBall");
             
             followingBall = true;
