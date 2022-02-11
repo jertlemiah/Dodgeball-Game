@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Throw",
+                    "type": "PassThrough",
+                    "id": "5ffd42c0-a5ab-4ef0-921e-916272bd1781",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -247,6 +256,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31e20605-a5f2-46b8-8275-3dae4dd25aa7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
