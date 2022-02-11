@@ -29,3 +29,13 @@ candidates check time : 26ms
 >>>>>>> TankCameraControlsBranch
 console write time    : 0ms
 
+[api-updater (non-obsolete-error-filter)] 2/11/2022 9:33:07 AM : Starting /Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 160.47ms
+moved types parse time: 65ms
+candidates parse time : 1ms
+C# parse time         : 277ms
+candidates check time : 32ms
+console write time    : 0ms
+
