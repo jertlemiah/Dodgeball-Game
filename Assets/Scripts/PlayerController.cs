@@ -10,8 +10,9 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;  
     public Vector2 _look;
-    public GameObject FollowTarget;
+    // public GameObject FollowTarget;
     private float vcam_offset;
+    public int health = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -38,10 +39,18 @@ public class PlayerController : MonoBehaviour
     {
         // rotate the camera
         transform.position = transform.position + new Vector3(movementX*m_Speed, 0, movementY*m_Speed);
-        if (movementX < 0.1f && movementX < 0.1f)
-        {
-            FollowTarget.transform.RotateAround(transform.position, Vector3.up, _look.x);
-        }
+        // if (movementX < 0.1f && movementX < 0.1f)
+        // {
+        //     FollowTarget.transform.RotateAround(transform.position, Vector3.up, _look.x);
+        // }
         
+    }
+
+    public void TakeDamage (int damage) {
+        if (health - damage < 0) {
+            health = 0;
+        } else {
+            health -= damage;
+        }
     }
 }
