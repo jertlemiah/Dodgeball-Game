@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class SimpleHealthBar : MonoBehaviour
 {
     public Slider healthBar;
-    PlayerHealth playerHealth;
+    private int playerHealth;
 
     void Start() {
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().health;
         healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
     }
 
+    // TODO: We probably dont want this updating every tick, but for now its fine
     void Update() {
-        Debug.Log(healthBar.value.ToString());
-        Debug.Log(playerHealth.health.ToString());
-        healthBar.value = playerHealth.health;
+        healthBar.value = playerHealth;
     }
 }
