@@ -1058,7 +1058,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-69678
+  m_Name: pb_Mesh-13776
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1601,6 +1601,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1252547087}
     m_Modifications:
+    - target: {fileID: 654523865171364722, guid: 4f7281bba6e1d8d4bafb4e6842ee187b, type: 3}
+      propertyPath: rotateSpeed
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 654523865627913721, guid: 4f7281bba6e1d8d4bafb4e6842ee187b, type: 3}
       propertyPath: m_Name
       value: RenderCam - Spinning Dodgeball
