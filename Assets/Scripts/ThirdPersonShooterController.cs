@@ -7,8 +7,8 @@ using StarterAssets;
 public class ThirdPersonShooterController : MonoBehaviour
 {   
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
-    [SerializeField] private float normalSensitivity;
-    [SerializeField] private float aimSensitivity;
+    [SerializeField] private float normalSensitivity = 2f;
+    [SerializeField] private float aimSensitivity = 0.5f;
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
     //[SerializeField] private Transform debugTransform;
 
@@ -19,10 +19,10 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     private GameObject ball;
     private Rigidbody rb;
-    public float shift_x;
-    public float shift_y;
-    public float shift_z;
-    public float throw_speed;
+    public float shift_x = 0.4f;
+    public float shift_y = 1.4f;
+    public float shift_z = 0.4f;
+    public float throw_speed = 10f;
     // Start is called before the first frame update
     private void Awake()
     {
