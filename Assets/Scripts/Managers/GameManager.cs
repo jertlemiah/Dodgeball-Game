@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState {Paused,PreMatch,MidMatch,PostMatch}
 public class GameManager : Singleton<GameManager>
 {
     public float timeRemaining = 60; // seconds
@@ -11,10 +12,8 @@ public class GameManager : Singleton<GameManager>
     public int blueScore;
 
     // [Header("Game Events")]
-    public delegate void SetScoreHandler(int blueScore, int redScore);
-    public static event SetScoreHandler SetScore;
-    public delegate void SetTimerHandler(float timeRemaining);
-    public static event SetTimerHandler SetTimer;
+    public delegate void SetScoreHandler(int blueScore, int redScore); public static event SetScoreHandler SetScore;
+    public delegate void SetTimerHandler(float timeRemaining);         public static event SetTimerHandler SetTimer;
     // Start is called before the first frame update
     void Start()
     {

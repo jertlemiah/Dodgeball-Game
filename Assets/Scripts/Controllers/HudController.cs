@@ -11,6 +11,7 @@ public class HudController : MonoBehaviour
     [SerializeField] private Slider sliderBlueScore;
     [SerializeField] private TMP_Text textRedScore;
     [SerializeField] private Slider sliderRedScore;
+    [SerializeField] private RawImage renderedTexture_dodgeball;
     private GameManager gameManager;
     // public float timeRemaining = 60; // seconds
     // public bool timerIsRunning = false;
@@ -49,5 +50,9 @@ public class HudController : MonoBehaviour
         float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         textTimer.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+    }
+    void DisplaySelectedBall()
+    {
+
     }
 }
