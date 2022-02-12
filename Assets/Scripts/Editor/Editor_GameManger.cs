@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(HudController))]
+[CustomEditor(typeof(GameManager))]
 
-public class Editor_HudController : Editor
+public class Editor_GameManger : Editor
 {
     public override void OnInspectorGUI()
 	{
-		HudController hud = target as HudController;
+		GameManager hud = target as GameManager;
         base.OnInspectorGUI();
         if (GUILayout.Button("Add points red"))
 		{
