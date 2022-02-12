@@ -16,6 +16,7 @@ namespace StarterAssets
 	{
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
+		public float Sensitivity = 1f;
 		public float MoveSpeed = 2.0f;
 		[Tooltip("Sprint speed of the character in m/s")]
 		public float SprintSpeed = 5.335f;
@@ -91,6 +92,8 @@ namespace StarterAssets
 
 		private bool _hasAnimator;
 
+		private bool _rotateOnMove = true;
+
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -154,8 +157,8 @@ namespace StarterAssets
 			// if there is an input and camera position is not fixed
 			if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
 			{
-				_cinemachineTargetYaw += _input.look.x * Time.deltaTime;
-				_cinemachineTargetPitch += _input.look.y * Time.deltaTime;
+				_cinemachineTargetYaw += _input.look.x * Time.deltaTime * Sensitivity;
+				_cinemachineTargetPitch += _input.look.y * Time.deltaTime * Sensitivity;
 			}
 
 			// clamp our rotations so our values are limited 360 degrees
@@ -210,7 +213,10 @@ namespace StarterAssets
 				float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
 
 				// rotate to face input direction relative to camera position
-				transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+				if (_rotateOnMove)
+				{
+					transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+				}
 			}
 
 
@@ -313,6 +319,16 @@ namespace StarterAssets
 			
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
+		}
+
+		public void SetSensitivity(float newSensitivity)
+		{
+			Sensitivity = newSensitivity;
+		}
+
+		public void SetRotateOnMove(bool newRotateOnMove)
+		{
+			_rotateOnMove = newRotateOnMove;
 		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController_old : MonoBehaviour
 {
     private Rigidbody m_Rigidbody;
     private float m_Speed;
