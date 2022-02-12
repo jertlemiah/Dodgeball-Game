@@ -11,63 +11,39 @@ public class HudController : MonoBehaviour
     [SerializeField] private Slider sliderBlueScore;
     [SerializeField] private TMP_Text textRedScore;
     [SerializeField] private Slider sliderRedScore;
-    public float timeRemaining = 60; // seconds
-    public bool timerIsRunning = false;
-    float pointsToWin = 10; // This var needs to be in the GameManager
+    private GameManager gameManager;
+    // public float timeRemaining = 60; // seconds
+    // public bool timerIsRunning = false;
+    // float pointsToWin = 10; // This var needs to be in the GameManager
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        StartTimer(timeRemaining);
-        SetScore(0,0);
+        // StartTimer(timeRemaining);
+        // SetScore(0,0);
+        gameManager = GameManager.Instance;
+        GameManager.SetScore += SetScoreUI;
+        GameManager.SetTimer += DisplayTime;
     } 
+    void OnDisable()
+    {
+        GameManager.SetScore -= SetScoreUI;
+        GameManager.SetTimer -= DisplayTime;
+    }
   
     // Update is called once per frame
     void Update()
     {
-        if (timerIsRunning)
-        {
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-                DisplayTime(timeRemaining);
-            }
-            else 
-            {
-                Debug.Log("Time has run out! Game Over!");
-                timeRemaining = 0;
-                DisplayTime(0);
-                timerIsRunning = false;
-            }
-        }
+
     }
-    public void GiveBluePoints(int bluePoints)
-    {
-        int currentRedScore = int.Parse(textRedScore.text);//Need to get this from the GameManager
-        int currentBlueScore = int.Parse(textBlueScore.text);//Need to get this from the GameManager
-        currentBlueScore += bluePoints;
-        SetScore(currentBlueScore,currentRedScore);
-    }
-    public void GiveRedPoints(int redPoints)
-    {
-        int currentRedScore = int.Parse(textRedScore.text);//Need to get this from the GameManager
-        currentRedScore += redPoints;
-        int currentBlueScore = int.Parse(textBlueScore.text);//Need to get this from the GameManager
-        SetScore(currentBlueScore,currentRedScore);
-    }
-    public void SetScore(int blueScore, int redScore)
+    
+    public void SetScoreUI(int blueScore, int redScore)
     {
         textBlueScore.text = blueScore.ToString();
-        sliderBlueScore.value = blueScore/pointsToWin;
+        sliderBlueScore.value = blueScore/gameManager.pointsToWin;
         textRedScore.text = redScore.ToString();
-        sliderRedScore.value = redScore/pointsToWin;
+        sliderRedScore.value = redScore/gameManager.pointsToWin;
     }
-    public void StartTimer(float timerTime)
-    {
-        timeRemaining = timerTime;
-        DisplayTime(timerTime);
-        timerIsRunning = true;
-    }
+    
     void DisplayTime(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
