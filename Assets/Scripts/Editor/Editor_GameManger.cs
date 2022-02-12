@@ -13,11 +13,11 @@ public class Editor_GameManger : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Add points red"))
 		{
-			hud.GiveRedPoints(1);
+			hud.GiveTeam2Points(1);
 		}
         if (GUILayout.Button("Add points blue"))
 		{
-			hud.GiveBluePoints(1);
+			hud.GiveTeam1Points(1);
 		}
 		// Draw default inspector after button...
 		

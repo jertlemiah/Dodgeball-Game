@@ -7,8 +7,8 @@ public class GameManager : Singleton<GameManager>
     public float timeRemaining = 60; // seconds
     public bool timerIsRunning = false;
     public float pointsToWin = 10; // This var needs to be in the GameManager
-    public int redScore;
-    public int blueScore;
+    public int team2Score;
+    public int team1Score;
 
     // [Header("Game Events")]
     public delegate void SetScoreHandler(int blueScore, int redScore);
@@ -48,20 +48,20 @@ public class GameManager : Singleton<GameManager>
             timerIsRunning = false;
         }
     }
-    public void GiveBluePoints(int bluePoints)
+    public void GiveTeam1Points(int newTeam1Points)
     {
-        TriggerEvent_SetScore(this.blueScore+bluePoints,this.redScore);
+        TriggerEvent_SetScore(this.team1Score+newTeam1Points,this.team2Score);
     }
-    public void GiveRedPoints(int redPoints)
+    public void GiveTeam2Points(int newTeam2Points)
     {
-        TriggerEvent_SetScore(this.blueScore,this.redScore+redPoints);
+        TriggerEvent_SetScore(this.team1Score,this.team2Score+newTeam2Points);
     }
-    public void TriggerEvent_SetScore(int blueScore, int redScore)
+    public void TriggerEvent_SetScore(int team1Score, int team2Score)
     {
-        this.blueScore = blueScore;
-        this.redScore = redScore;
+        this.team1Score = team1Score;
+        this.team2Score = team2Score;
         if(SetScore != null)
-            SetScore(blueScore, redScore);
+            SetScore(team1Score, team2Score);
     }
     public void TriggerEvent_SetTimer(float timeRemaining)
     {

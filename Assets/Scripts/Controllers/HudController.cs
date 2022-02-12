@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class HudController : MonoBehaviour
 {
     [SerializeField] private TMP_Text textTimer;
-    [SerializeField] private TMP_Text textBlueScore;
-    [SerializeField] private Slider sliderBlueScore;
-    [SerializeField] private TMP_Text textRedScore;
-    [SerializeField] private Slider sliderRedScore;
+    [SerializeField] private TMP_Text textTeam1Score;
+    [SerializeField] private Slider sliderTeam1Score;
+    [SerializeField] private TMP_Text textTeam2Score;
+    [SerializeField] private Slider sliderTeam2Score;
     private GameManager gameManager;
     // public float timeRemaining = 60; // seconds
     // public bool timerIsRunning = false;
@@ -36,12 +36,12 @@ public class HudController : MonoBehaviour
 
     }
     
-    public void SetScoreUI(int blueScore, int redScore)
+    public void SetScoreUI(int team1Score, int team2Score)
     {
-        textBlueScore.text = blueScore.ToString();
-        sliderBlueScore.value = blueScore/gameManager.pointsToWin;
-        textRedScore.text = redScore.ToString();
-        sliderRedScore.value = redScore/gameManager.pointsToWin;
+        textTeam1Score.text = team1Score.ToString();
+        sliderTeam1Score.value = team1Score/gameManager.pointsToWin;
+        textTeam2Score.text = team2Score.ToString();
+        sliderTeam2Score.value = team2Score/gameManager.pointsToWin;
     }
     
     void DisplayTime(float timeToDisplay)
