@@ -11,6 +11,7 @@ public class HudController : MonoBehaviour
     [SerializeField] private Slider sliderTeam1Score;
     [SerializeField] private TMP_Text textTeam2Score;
     [SerializeField] private Slider sliderTeam2Score;
+    [SerializeField] GameObject ballRenderTexture;
     private GameManager gameManager;
     // public float timeRemaining = 60; // seconds
     // public bool timerIsRunning = false;
@@ -23,11 +24,15 @@ public class HudController : MonoBehaviour
         gameManager = GameManager.Instance;
         GameManager.SetScore += SetScoreUI;
         GameManager.SetTimer += DisplayTime;
+        GameManager.PickupBall += DisplayHeldBall;
+        GameManager.RemoveBall += HideHeldBall;
     } 
     void OnDisable()
     {
         GameManager.SetScore -= SetScoreUI;
         GameManager.SetTimer -= DisplayTime;
+        GameManager.PickupBall -= DisplayHeldBall;
+        GameManager.RemoveBall -= HideHeldBall;
     }
   
     // Update is called once per frame
@@ -39,9 +44,9 @@ public class HudController : MonoBehaviour
     public void SetScoreUI(int team1Score, int team2Score)
     {
         textTeam1Score.text = team1Score.ToString();
-        sliderTeam1Score.value = team1Score/gameManager.pointsToWin;
+        sliderTeam1Score.value = (float)team1Score/gameManager.winningScore;
         textTeam2Score.text = team2Score.ToString();
-        sliderTeam2Score.value = team2Score/gameManager.pointsToWin;
+        sliderTeam2Score.value = (float)team2Score/gameManager.winningScore;
     }
     
     void DisplayTime(float timeToDisplay)
@@ -49,5 +54,13 @@ public class HudController : MonoBehaviour
         float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         textTimer.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+    }
+    void DisplayHeldBall()
+    {
+        ballRenderTexture.SetActive(true);
+    }
+    void HideHeldBall()
+    {
+        ballRenderTexture.SetActive(false);
     }
 }
