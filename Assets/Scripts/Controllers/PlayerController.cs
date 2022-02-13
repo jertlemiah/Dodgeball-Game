@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private float movementY;  
     public Vector2 _look;
     // public GameObject FollowTarget;
-    private float vcam_offset;
     public int health = 100;
 
     // Start is called before the first frame update
@@ -19,7 +18,6 @@ public class PlayerController : MonoBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Speed = 0.01f;
-        vcam_offset = 4;
     }
 
     private void OnMove(InputValue movementValue)
