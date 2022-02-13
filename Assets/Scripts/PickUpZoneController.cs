@@ -14,6 +14,10 @@ public class PickUpZoneController : MonoBehaviour
         {
             if(other.gameObject.CompareTag("Ball"))
             {
+                if (other.gameObject.GetComponentInParent<Animator>() != null)
+                {
+                    other.gameObject.GetComponentInParent<Animator>().enabled = false;
+                }
                 ball = other.gameObject;
                 foundBall= true;
                 GameManager.Instance.TEMP_TurnOnBallHUD();
