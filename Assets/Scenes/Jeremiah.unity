@@ -503,6 +503,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1998508389685913653, guid: 0e940d3c86765b24fad99e50b6c0209e, type: 3}
   m_PrefabInstance: {fileID: 767079710}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &200236249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3595249375039899590, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
+  m_PrefabInstance: {fileID: 3595249375168535327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &200236250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3595249375039899589, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
@@ -5404,9 +5409,17 @@ PrefabInstance:
       value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 3595249375039899588, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
+      propertyPath: predictedPosGO
+      value: 
+      objectReference: {fileID: 200236249}
+    - target: {fileID: 3595249375039899588, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
       propertyPath: projectionTime
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3595249375039899588, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
+      propertyPath: trackingTargetGO
+      value: 
+      objectReference: {fileID: 188345789}
     - target: {fileID: 3595249375039899589, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
       propertyPath: m_RootOrder
       value: 7

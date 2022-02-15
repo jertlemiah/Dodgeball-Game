@@ -8,7 +8,8 @@ public class PredictedPositionController : MonoBehaviour
     [SerializeField] float projectionTime = 1;
     [SerializeField] float yOffset = 1;
     [SerializeField] float snappingSpeed = 1;
-    [SerializeField] GameObject trackingGO;
+    [SerializeField] GameObject trackingTargetGO;
+    [SerializeField] GameObject predictedPosGO;
     Vector3 velPrev;
     Vector3 accelPrev;
     Vector3 posPrev;
@@ -21,7 +22,7 @@ public class PredictedPositionController : MonoBehaviour
     void FixedUpdate()
     {
         // transform.position = GetProjectedPosition(projectionTime);
-        transform.DOMove(GetProjectedPosition(projectionTime),snappingSpeed);
+        predictedPosGO.transform.DOMove(GetProjectedPosition(projectionTime),snappingSpeed);
     }
 
     private void LateUpdate()
@@ -33,7 +34,7 @@ public class PredictedPositionController : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        Vector3 velTrack = (trackingGO.transform.position - posPrev) / Time.deltaTime;
+        Vector3 velTrack = (trackingTargetGO.transform.position - posPrev) / Time.deltaTime;
         Vector3 accelTrack = velTrack - velPrev;
 
         velAvg = velTrack;
@@ -41,7 +42,7 @@ public class PredictedPositionController : MonoBehaviour
 
         GetProjectedPosition(projectionTime);
 
-        posPrev = trackingGO.transform.position;
+        posPrev = trackingTargetGO.transform.position;
         velPrev = velTrack;
         accelPrev = accelTrack;
     }
@@ -51,7 +52,7 @@ public class PredictedPositionController : MonoBehaviour
         Vector3 posProj = new Vector3();
         // x0 + v0 * t + 1/2 * a * t^2
         float t = (projectionTime/Time.deltaTime)*Time.deltaTime;
-        Vector3 x0 = trackingGO.transform.position;
+        Vector3 x0 = trackingTargetGO.transform.position;
         Vector3 v0 = velAvg;
         Vector3 a0 = accelAvg;
         posProj = x0 + v0*t + 1/2*a0*t*t;
