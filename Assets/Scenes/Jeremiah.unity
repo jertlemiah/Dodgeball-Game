@@ -549,9 +549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e442cc85f6cea7b4e8421e2690e1f4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectionTime: 1
+  projectionTime: 0.6
   yOffset: 1
-  snappingSpeed: 1
+  snappingSpeed: 0.5
   trackingGO: {fileID: 188345789}
 --- !u!135 &200236252
 SphereCollider:
