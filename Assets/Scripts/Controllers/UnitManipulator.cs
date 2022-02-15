@@ -5,8 +5,9 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(CharacterController))]
-public class NewPlayerController : MonoBehaviour
+public class UnitManipulator : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
     public int healthCurrent = 2;
     public int healthMax = 2;
     public bool hasBall = false;
@@ -14,7 +15,7 @@ public class NewPlayerController : MonoBehaviour
     public GameObject heldBallGO;
     // Start is called before the first frame update
     public Team team = Team.Team1;
-    public float DAMAGE_SPEED = 5;
+    public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
     void Start()
     {
         healthCurrent = healthMax;
@@ -44,5 +45,18 @@ public class NewPlayerController : MonoBehaviour
         {
             TakeDamage(1);
         }
+    }
+
+    public void Move(Vector3 direction)
+    {
+
+    }
+    public void Jump()
+    {
+
+    }
+    public void Throw(Vector3 direction)
+    {
+
     }
 }

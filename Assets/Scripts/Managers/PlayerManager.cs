@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] ControllerBrainPair[] controllerBrainPairs;
     [Serializable]public struct ControllerBrainPair
     {
-        public NewPlayerController playerController;
+        public UnitManipulator playerController;
         public PlayerBrain playerBrain;
     }
     // Start is called before the first frame update
