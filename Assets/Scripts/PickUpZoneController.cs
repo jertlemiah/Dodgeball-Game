@@ -20,9 +20,9 @@ public class PickUpZoneController : MonoBehaviour
                 }
                 ball = other.gameObject;
                 foundBall= true;
+                GameManager.Instance.TEMP_TurnOnBallHUD();
             }
         }
-        
 
     }
 }

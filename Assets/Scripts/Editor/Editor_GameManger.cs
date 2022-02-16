@@ -9,16 +9,21 @@ public class Editor_GameManger : Editor
 {
     public override void OnInspectorGUI()
 	{
-		GameManager hud = target as GameManager;
+		GameManager manager = target as GameManager;
         base.OnInspectorGUI();
         if (GUILayout.Button("Add points red"))
 		{
-			hud.GiveTeam2Points(1);
+			manager.GiveTeam2Points(1);
 		}
         if (GUILayout.Button("Add points blue"))
 		{
-			hud.GiveTeam1Points(1);
+			manager.GiveTeam1Points(1);
 		}
+		if (GUILayout.Button("Turn off 'Game Over' canvas"))
+		{
+			manager.TEMP_TurnOffGameOverCanvas();
+		}
+		
 		// Draw default inspector after button...
 		
 	}
