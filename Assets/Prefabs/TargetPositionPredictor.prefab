@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3595249375039899590}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.056344, y: 2.3429608, z: -5.0073385}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e442cc85f6cea7b4e8421e2690e1f4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectionTime: 0.6
+  projectionTime: 0.5
   yOffset: 1
-  snappingSpeed: 0.5
-  trackingGO: {fileID: 0}
+  snappingSpeed: 0.6
+  trackingTargetGO: {fileID: 0}
+  predictedPosGO: {fileID: 3595249375039899590}

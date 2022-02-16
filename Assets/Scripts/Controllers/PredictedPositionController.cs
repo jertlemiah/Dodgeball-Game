@@ -10,6 +10,8 @@ public class PredictedPositionController : MonoBehaviour
     [SerializeField] float snappingSpeed = 1;
     [SerializeField] GameObject trackingTargetGO;
     [SerializeField] GameObject predictedPosGO;
+    [SerializeField] float gizmoRadius = 0.2f;
+    [SerializeField] Color gizmoColor = Color.green;
     Vector3 velPrev;
     Vector3 accelPrev;
     Vector3 posPrev;
@@ -22,7 +24,12 @@ public class PredictedPositionController : MonoBehaviour
     void FixedUpdate()
     {
         // transform.position = GetProjectedPosition(projectionTime);
-        predictedPosGO.transform.DOMove(GetProjectedPosition(projectionTime),snappingSpeed);
+        predictedPosGO.transform.DOMove(GetProjectedPosition(projectionTime),snappingSpeed);        
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = gizmoColor;
+        Gizmos.DrawSphere(predictedPosGO.transform.position, gizmoRadius);
     }
 
     private void LateUpdate()

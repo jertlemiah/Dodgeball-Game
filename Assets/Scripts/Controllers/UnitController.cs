@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(CharacterController))]
-public class UnitManipulator : MonoBehaviour
+public class UnitController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     public int healthCurrent = 2;
