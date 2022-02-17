@@ -8,6 +8,8 @@ using UnityEngine;
 public class UnitController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] const float IFRAME_TIME = 1f;
+    [SerializeField] private float timeOfLastHit;
     public int healthCurrent = 2;
     public int healthMax = 2;
     public bool hasBall = false;
@@ -19,6 +21,7 @@ public class UnitController : MonoBehaviour
     void Start()
     {
         healthCurrent = healthMax;
+        timeOfLastHit = Time.time;
     }
 
     // Update is called once per frame
@@ -28,6 +31,7 @@ public class UnitController : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        timeOfLastHit = Time.time;
         // This will need to be swapped out for the real system at some point
         if(team == Team.Team1)
         {
@@ -41,9 +45,11 @@ public class UnitController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Ball") && collision.rigidbody.velocity.magnitude > DAMAGE_SPEED)
-        {
-            TakeDamage(1);
+        if(collision.gameObject.CompareTag("Ball") && collision.rigidbody.velocity.magnitude > DAMAGE_SPEED){
+            if((Time.time - timeOfLastHit) > IFRAME_TIME){
+                TakeDamage(1);
+            }
+            
         }
     }
 

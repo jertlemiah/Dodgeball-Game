@@ -77,11 +77,12 @@ public class GameManager : Singleton<GameManager>
     }
     public void TriggerEvent_SetScore(int team1Score, int team2Score)
     {
+        // Debug.Log("Setting new score, team1:"+team1Score+" team2: "+team2Score);
         this.team1Score = team1Score;
         this.team2Score = team2Score;
         if(SetScore != null)
             SetScore(team1Score, team2Score);
-        if(this.team1Score > winningScore ||this.team2Score > winningScore  )
+        if(this.team1Score >= winningScore ||this.team2Score >= winningScore  )
         {
             TriggerEvent_EndGame();
         }
