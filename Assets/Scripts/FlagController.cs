@@ -53,6 +53,24 @@ public class FlagController : MonoBehaviour
     }
 
 
+    /** Flag Returned Function
+     * Called by Environment to return the flag. 
+     * Returns: True if the "returning the flag" action is successful, false if the flag cannot be returned
+     */
+    public bool FlagReturned()
+    {
+        if (!InTransit)
+        {
+            return false;
+        }
+        else
+        {
+            transform.Find("FlagBase").gameObject.SetActive(true);
+            transform.position = startingPosition;
+            InTransit = false;
+            return true;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
