@@ -23,14 +23,14 @@ public class HudController : MonoBehaviour
         // SetScore(0,0);
         gameManager = GameManager.Instance;
         GameManager.SetScore += SetScoreUI;
-        GameManager.SetTimer += DisplayTime;
+        GameManager.SetTimer += SetTimerUI;
         GameManager.PickupBall += DisplayHeldBall;
         GameManager.RemoveBall += HideHeldBall;
     } 
     void OnDisable()
     {
         GameManager.SetScore -= SetScoreUI;
-        GameManager.SetTimer -= DisplayTime;
+        GameManager.SetTimer -= SetTimerUI;
         GameManager.PickupBall -= DisplayHeldBall;
         GameManager.RemoveBall -= HideHeldBall;
     }
@@ -49,7 +49,7 @@ public class HudController : MonoBehaviour
         sliderTeam2Score.value = (float)team2Score/gameManager.winningScore;
     }
     
-    void DisplayTime(float timeToDisplay)
+    void SetTimerUI(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);

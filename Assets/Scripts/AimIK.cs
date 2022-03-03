@@ -7,6 +7,7 @@ using DG.Tweening;
 public class HumanBone{
     public HumanBodyBones bone;
     [Range(0,1)]public float boneWeight = 1f;
+    [Range(0,180)]public float maxAngle = 90f;
 }
 [RequireComponent(typeof(Animator))]
 public class AimIK : MonoBehaviour
@@ -98,7 +99,11 @@ public class AimIK : MonoBehaviour
         Vector3 targetDirection = targetPosition - aimTransform.position;
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection, targetDirection);
         Quaternion weightedRotation = Quaternion.Slerp(Quaternion.identity,aimTowards, weight);
+        // Vector3 newBoneRotation = Quaternion.eu(weightedRotation * bone.rotation);
+        // newBoneRotation
+        // TODO: Need to add max angle limits, not sure how I am going to handle that
         bone.rotation = weightedRotation * bone.rotation;
+        // bone.rotation = newBoneRotation;
     }
 
     public void SetTargetTransform(Transform target){
