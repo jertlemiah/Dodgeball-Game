@@ -29,7 +29,11 @@ public class FlagCollider : MonoBehaviour
             {
                 mFlagController.FlagTaken(collider.gameObject);
             }
-            else if (collider.gameObject.tag == "Base")
+            else if (collider.gameObject.tag == "Enemy") // Acceptable colliders for enemy flag captures
+            {
+                mFlagController.FlagTaken(collider.gameObject);
+            }
+            else if (collider.gameObject.tag == "Base") // Acceptable colliders for scoring the flag
             {
                 mFlagController.FlagScored();
             }
