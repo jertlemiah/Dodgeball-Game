@@ -21,10 +21,10 @@ public class GameManager : Singleton<GameManager>
     // [SerializeField] GameObject GameOverPanelTeam1Wins; //TEMP
     // [SerializeField] GameObject GameOverPanelTeam2Wins; //TEMP
     // [SerializeField] GameObject GameOverPanelTie; //TEMP
-    public delegate void PickupBallHandler(); // This is temporary
-    public static event PickupBallHandler PickupBall;// This is temporary
-    public delegate void RemoveBallHandler(); // This is temporary
-    public static event RemoveBallHandler RemoveBall;// This is temporary
+    // public delegate void PickupBallHandler(); // This is temporary
+    // public static event PickupBallHandler PickupBall;// This is temporary
+    // public delegate void RemoveBallHandler(); // This is temporary
+    // public static event RemoveBallHandler RemoveBall;// This is temporary
     // Start is called before the first frame update
     void Start()
     {
