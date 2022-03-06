@@ -6,6 +6,7 @@ public class FlagController : MonoBehaviour
 {
     bool InTransit;
     Vector3 startingPosition;
+    GameObject PlayerWithFlag;
 
     public bool IsFlagInTransit { get { return InTransit; } }
 
@@ -13,7 +14,7 @@ public class FlagController : MonoBehaviour
      * Called by player/CPU that is trying to take the flag. 
      * Returns: True if "taking the flag" action is successful, false if the flag cannot be taken
      */
-    public bool FlagTaken()
+    public bool FlagTaken(GameObject player)
     {
         if (InTransit)
         {
@@ -26,6 +27,8 @@ public class FlagController : MonoBehaviour
             // disable the base
             transform.Find("FlagBase").gameObject.SetActive(false);
             InTransit = true;
+            PlayerWithFlag = player;
+            //transform.SetParent(player.transform);
             return true;
         }
     }
@@ -46,7 +49,10 @@ public class FlagController : MonoBehaviour
             // Call the environment.Score script here to increment the score
             // Then, reset the flag's position and base
             transform.Find("FlagBase").gameObject.SetActive(true);
+            //transform.SetParent(null);
+            PlayerWithFlag = null;
             transform.position = startingPosition;
+            //transform.rotation = new Quaternion(0, 0, 0, 0);
             InTransit = false;
             return true;
         }
@@ -66,7 +72,10 @@ public class FlagController : MonoBehaviour
         else
         {
             transform.Find("FlagBase").gameObject.SetActive(true);
+            //transform.SetParent(null);
+            PlayerWithFlag = null;
             transform.position = startingPosition;
+            //transform.rotation = new Quaternion(0,0,0,0);  
             InTransit = false;
             return true;
         }
@@ -75,15 +84,17 @@ public class FlagController : MonoBehaviour
     void Start()
     {
         InTransit = false;
-        startingPosition = transform.position; 
+        //startingPosition = transform.position; 
+        startingPosition = GameObject.Find("FlagReturnPos").transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (InTransit)
+        if (InTransit && PlayerWithFlag != null)
         {
-            // Cycle through the bulb colors here, we want it to pulse so the enemy players are drawn to it
+            // keep the flag "attached" to the player
+            this.transform.position = PlayerWithFlag.transform.position;   
         }
     }
 }
