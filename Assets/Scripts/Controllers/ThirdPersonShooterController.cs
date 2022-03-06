@@ -73,7 +73,7 @@ public class ThirdPersonShooterController : MonoBehaviour
                 Vector3 throw_direction = (mouseWorldPosition - ball.transform.position).normalized;
                 rb.AddForce(throw_direction*throw_speed*100f);
                 pickUpZoneController.hasBall = false;
-                GameManager.Instance.TEMP_TurnOffBallHUD();
+                // GameManager.Instance.TEMP_TurnOffBallHUD();
             }
            
         }
