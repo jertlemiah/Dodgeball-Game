@@ -6,37 +6,33 @@ using UnityEngine.UI;
 
 public class HudController : MonoBehaviour
 {
-    [SerializeField] GameConstantsSO gameConstants;
     [SerializeField] private TMP_Text textTimer;
     [SerializeField] private TMP_Text textTeam1Score;
     [SerializeField] private Slider sliderTeam1Score;
     [SerializeField] private TMP_Text textTeam2Score;
     [SerializeField] private Slider sliderTeam2Score;
     [SerializeField] GameObject ballRenderTexture;
-    // private GameManager gameManager;
+    private GameManager gameManager;
+    // public float timeRemaining = 60; // seconds
+    // public bool timerIsRunning = false;
+    // float pointsToWin = 10; // This var needs to be in the GameManager
     
     void Awake()
     {
-        if(!gameConstants)
-            Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
         // StartTimer(timeRemaining);
         // SetScore(0,0);
-        EventManagerSO.E_SetScore += SetScoreUI;
-        EventManagerSO.E_SetTimer += SetTimerUI;
-        // gameManager = GameManager.Instance;
-        // GameManager.SetScore += SetScoreUI;
-        // GameManager.SetTimer += SetTimerUI;
-        // GameManager.PickupBall += DisplayHeldBall;
-        // GameManager.RemoveBall += HideHeldBall;
+        gameManager = GameManager.Instance;
+        GameManager.SetScore += SetScoreUI;
+        GameManager.SetTimer += DisplayTime;
+        GameManager.PickupBall += DisplayHeldBall;
+        GameManager.RemoveBall += HideHeldBall;
     } 
     void OnDisable()
     {
-        EventManagerSO.E_SetScore -= SetScoreUI;
-        EventManagerSO.E_SetTimer -= SetTimerUI;
-        // GameManager.SetScore -= SetScoreUI;
-        // GameManager.SetTimer -= SetTimerUI;
-        // GameManager.PickupBall -= DisplayHeldBall;
-        // GameManager.RemoveBall -= HideHeldBall;
+        GameManager.SetScore -= SetScoreUI;
+        GameManager.SetTimer -= DisplayTime;
+        GameManager.PickupBall -= DisplayHeldBall;
+        GameManager.RemoveBall -= HideHeldBall;
     }
   
     // Update is called once per frame
@@ -48,14 +44,12 @@ public class HudController : MonoBehaviour
     public void SetScoreUI(int team1Score, int team2Score)
     {
         textTeam1Score.text = team1Score.ToString();
-        sliderTeam1Score.value = (float)team1Score/gameConstants.WINNING_SCORE;
-        // sliderTeam1Score.value = (float)team1Score/gameManager.winningScore;
+        sliderTeam1Score.value = (float)team1Score/gameManager.winningScore;
         textTeam2Score.text = team2Score.ToString();
-        sliderTeam2Score.value = (float)team2Score/gameConstants.WINNING_SCORE;
-        // sliderTeam2Score.value = (float)team2Score/gameManager.winningScore;
+        sliderTeam2Score.value = (float)team2Score/gameManager.winningScore;
     }
     
-    void SetTimerUI(float timeToDisplay)
+    void DisplayTime(float timeToDisplay)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60); 
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
