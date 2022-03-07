@@ -6,6 +6,7 @@ public class FlagController : MonoBehaviour
 {
     bool InTransit;
     Vector3 startingPosition;
+    Quaternion startingRotation;
     GameObject PlayerWithFlag;
     // HUD_CONTROLLER_TYPE mHUDController;
 
@@ -27,9 +28,12 @@ public class FlagController : MonoBehaviour
         {
             // disable the base
             transform.Find("FlagBase").gameObject.SetActive(false);
+            transform.Find("FlagPole").gameObject.SetActive(false);
             InTransit = true;
             PlayerWithFlag = player;
-            transform.SetParent(player.transform);
+            transform.position = player.transform.Find("Skeleton/FlagCarryTarget").transform.position;
+            transform.SetParent(player.transform.Find("Skeleton/FlagCarryTarget").transform);
+            this.GetComponent<Collider>().enabled = false; 
 
             /*Call "Flag has been Taken" HUD Functions here
             if (PlayerWithFlag.tag == "Player")
@@ -62,6 +66,7 @@ public class FlagController : MonoBehaviour
             // Call the environment.Score script here to increment the score
             // Then, reset the flag's position and base
             transform.Find("FlagBase").gameObject.SetActive(true);
+            transform.Find("FlagPole").gameObject.SetActive(true);
             transform.SetParent(null);
             /*Call "Flag has been Scored" HUD Functions here
             if (PlayerWithFlag.tag == "Player")
@@ -75,7 +80,9 @@ public class FlagController : MonoBehaviour
              */
             PlayerWithFlag = null;
             transform.position = startingPosition;
+            transform.rotation = startingRotation;
             InTransit = false;
+            this.GetComponent<Collider>().enabled = true;
             return true;
         }
     }
@@ -94,6 +101,7 @@ public class FlagController : MonoBehaviour
         else
         {
             transform.Find("FlagBase").gameObject.SetActive(true);
+            transform.Find("FlagPole").gameObject.SetActive(true);
             transform.SetParent(null);
             /*Call "Flag has been Returned" HUD Functions here
             if (PlayerWithFlag.tag == "Player")
@@ -107,6 +115,8 @@ public class FlagController : MonoBehaviour
              */
             PlayerWithFlag = null;
             transform.position = startingPosition;
+            startingRotation = transform.rotation;
+            this.GetComponent<Collider>().enabled = true;
             InTransit = false;
             return true;
         }
@@ -116,6 +126,8 @@ public class FlagController : MonoBehaviour
     {
         InTransit = false;
         startingPosition = transform.position; 
+        startingRotation = transform.rotation;
+        this.GetComponent<Collider>().enabled = true;
         // Get reference to HUD Controller
         // mHUDController = GameObject.Find("WhateverTheHUDobjectNameIs").GetComponent<WhatevertheScriptNameIs>();
     }

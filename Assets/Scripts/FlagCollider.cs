@@ -9,7 +9,7 @@ public class FlagCollider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mFlagController = this.GetComponentInParent<FlagController>();  // get the parent Flag controller, which houses all the flag logic
+        mFlagController = this.GetComponent<FlagController>();  // get the Flag controller, which houses all the flag logic
     }
 
     // Update is called once per frame
@@ -25,11 +25,11 @@ public class FlagCollider : MonoBehaviour
 
         if (mFlagController != null)
         {
-            if (collider.gameObject.tag == "Player") // Acceptable colliders for capturing the flag
+            if (collider.gameObject.tag == "Player") // Acceptable colliders for taking the flag
             {
                 mFlagController.FlagTaken(collider.gameObject);
             }
-            else if (collider.gameObject.tag == "Enemy") // Acceptable colliders for enemy flag captures
+            else if (collider.gameObject.tag == "Enemy") // Acceptable colliders for enemy flag takes
             {
                 mFlagController.FlagTaken(collider.gameObject);
             }
