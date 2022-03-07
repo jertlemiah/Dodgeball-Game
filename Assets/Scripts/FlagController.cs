@@ -38,8 +38,8 @@ public class FlagController : MonoBehaviour
             this.GetComponent<Collider>().enabled = false; 
 
             // true bc team actively has flag
-           string team = PlayerWithFlag.tag == "Player" ? "blue" : "red";
-            gameManager.HandleFlag(team, false);
+            string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
+            gameManager.HandleFlag(team, true);
 
             return true;
         }
@@ -98,7 +98,7 @@ public class FlagController : MonoBehaviour
             transform.SetParent(null);
             
             // false bc team does not actively have flag
-            string team = PlayerWithFlag.tag == "Player" ? "blue" : "red";
+            string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
             gameManager.HandleFlag(team, false);
 
             PlayerWithFlag = null;

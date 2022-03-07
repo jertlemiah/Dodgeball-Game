@@ -30,6 +30,10 @@ public class HudController : MonoBehaviour
         GameManager.SetTimer += DisplayTime;
         GameManager.PickupBall += DisplayHeldBall;
         GameManager.RemoveBall += HideHeldBall;
+
+        // Hide Flags by default
+        redFlag.SetActive(false);
+        blueFlag.SetActive(false);
     } 
     void OnDisable()
     {
