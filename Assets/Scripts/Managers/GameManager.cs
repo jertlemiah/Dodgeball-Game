@@ -11,10 +11,14 @@ public class GameManager : Singleton<GameManager>
     public int winningScore = 10; 
     public int team1Score;
     public int team2Score;
+    public string teamWithFlag = null;
     public bool useStartingScores = false;
+    public bool redTeamHasFlag = false;
+    public bool blueTeamHasFlag = false;
     [SerializeField] GameObject GameOverPanelTeam1Wins; //TEMP
     [SerializeField] GameObject GameOverPanelTeam2Wins; //TEMP
     [SerializeField] GameObject GameOverPanelTie; //TEMP
+
 
     // [Header("Game Events")]
     public delegate void SetScoreHandler(int blueScore, int redScore);
@@ -44,12 +48,14 @@ public class GameManager : Singleton<GameManager>
         if (timerIsRunning)
             {RunTimer();}
     }
+    
     public void StartTimer(float timerTime)
     {
         timeRemaining = timerTime;
         TriggerEvent_SetTimer(timerTime);
         timerIsRunning = true;
     }
+    
     void RunTimer()
     {
         if (timeRemaining > 0)
@@ -65,16 +71,19 @@ public class GameManager : Singleton<GameManager>
             TriggerEvent_EndGame();
         }
     }
+    
     public void GiveTeam1Points(int newTeam1Points)
     {
         this.team1Score = Mathf.Min(team1Score+newTeam1Points, winningScore);
         TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
+    
     public void GiveTeam2Points(int newTeam2Points)
     {
         this.team2Score = Mathf.Min(team2Score+newTeam2Points, winningScore);
         TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
+    
     public void TriggerEvent_SetScore(int team1Score, int team2Score)
     {
         this.team1Score = team1Score;
@@ -86,12 +95,14 @@ public class GameManager : Singleton<GameManager>
             TriggerEvent_EndGame();
         }
     }
+    
     public void TriggerEvent_SetTimer(float timeRemaining)
     {
         this.timeRemaining = timeRemaining;
         if(SetTimer != null)
             SetTimer(timeRemaining);
     }
+    
     public void TriggerEvent_EndGame()
     {
         // TEMP
@@ -116,12 +127,14 @@ public class GameManager : Singleton<GameManager>
         if(EndGame != null)
             EndGame();
     }
+    
     public void TEMP_TurnOffGameOverCanvas()
     {
         GameOverPanelTeam1Wins.SetActive(false);
         GameOverPanelTeam2Wins.SetActive(false);
         GameOverPanelTie.SetActive(false);
     }
+    
     // Below is a temp function that will be removed as soon as the approprite architecture has been completed
     public void TEMP_TurnOnBallHUD()
     {
@@ -129,9 +142,14 @@ public class GameManager : Singleton<GameManager>
         if(PickupBall != null)
             PickupBall();
     }
+    
     public void TEMP_TurnOffBallHUD()
     {
         if(RemoveBall != null)
             RemoveBall();
+    }
+
+    public void TEMP_ToggleRedTeamFlag() {
+        redTeamHasFlag = !redTeamHasFlag;
     }
 }

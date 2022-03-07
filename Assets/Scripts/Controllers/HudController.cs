@@ -12,6 +12,12 @@ public class HudController : MonoBehaviour
     [SerializeField] private TMP_Text textTeam2Score;
     [SerializeField] private Slider sliderTeam2Score;
     [SerializeField] GameObject ballRenderTexture;
+
+    public GameObject blueFlag;
+    public GameObject redFlag;
+
+    [SerializeField] private bool blueTeamHasFlag;
+    [SerializeField] private bool redTeamHasFlag;
     private GameManager gameManager;
     // public float timeRemaining = 60; // seconds
     // public bool timerIsRunning = false;
@@ -38,6 +44,18 @@ public class HudController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.redTeamHasFlag) {
+            redFlag.SetActive(true);
+        } else {
+            redFlag.SetActive(false);
+        }
+        
+        if (gameManager.blueTeamHasFlag) {
+            blueFlag.SetActive(true);
+        } else {
+            blueFlag.SetActive(false);
+        }
+
 
     }
     

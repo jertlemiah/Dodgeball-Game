@@ -6,6 +6,7 @@ public class FlagController : MonoBehaviour
 {
     bool InTransit;
     Vector3 startingPosition;
+    public GameManager gm;
 
     public bool IsFlagInTransit { get { return InTransit; } }
 

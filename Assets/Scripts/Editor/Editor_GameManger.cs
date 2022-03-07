@@ -23,6 +23,11 @@ public class Editor_GameManger : Editor
 		{
 			manager.TEMP_TurnOffGameOverCanvas();
 		}
+		if (GUILayout.Button("Toggle Red Team Flag"))
+		{
+			manager.TEMP_ToggleRedTeamFlag();
+		}
+
 		
 		// Draw default inspector after button...
 		
