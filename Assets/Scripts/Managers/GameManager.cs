@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Team {Team1,Team2, NoTeam}
+public enum Team {Team1,Team2}
 public enum GateState {PreMatch,MidMatch,PostMatch,Paused}
-public struct TeamData
-{
-    public int teamScore;
-    public List<UnitController> teamMembers;
-}
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] GameConstantsSO gameConstants;
     public float timeRemaining = 60; // seconds
     public bool timerIsRunning = false;
+    public int winningScore = 10; 
     public int team1Score;
     public int team2Score;
     public bool useStartingScores = false;
-    public Dictionary<Team, TeamData> teamDict;
-    // [SerializeField] GameObject GameOverPanelTeam1Wins; //TEMP
-    // [SerializeField] GameObject GameOverPanelTeam2Wins; //TEMP
-    // [SerializeField] GameObject GameOverPanelTie; //TEMP
+    [SerializeField] GameObject GameOverPanelTeam1Wins; //TEMP
+    [SerializeField] GameObject GameOverPanelTeam2Wins; //TEMP
+    [SerializeField] GameObject GameOverPanelTie; //TEMP
+
+    // [Header("Game Events")]
+    public delegate void SetScoreHandler(int blueScore, int redScore);
+    public static event SetScoreHandler SetScore;
+    public delegate void SetTimerHandler(float timeRemaining);
+    public static event SetTimerHandler SetTimer;
+    public delegate void EndGameHandler();
+    public static event EndGameHandler EndGame;
+
     public delegate void PickupBallHandler(); // This is temporary
     public static event PickupBallHandler PickupBall;// This is temporary
     public delegate void RemoveBallHandler(); // This is temporary
@@ -28,40 +31,11 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        
         StartTimer(timeRemaining);
-        // EventManagerSO.TriggerEvent_SetScore(0,0);
         if(useStartingScores)
-            EventManagerSO.TriggerEvent_SetScore(team1Score,team2Score);
+            TriggerEvent_SetScore(team1Score,team2Score);
         else
-            EventManagerSO.TriggerEvent_SetScore(0,0);
-    }
-    void Awake()
-    {
-        teamDict = new Dictionary<Team, TeamData>();
-        foreach(Team team in System.Enum.GetValues(typeof(Team)))
-        {
-            TeamData teamData = new TeamData();
-            teamDict.Add(team,teamData);
-        }
-        if(!gameConstants)
-            Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
-        EventManagerSO.E_SetScore += SetScore;
-        EventManagerSO.E_EndGame += EndGame;
-        EventManagerSO.E_GiveTeamPoints += GiveTeamPoints;
-        // EventManagerSO.E_SetTimer += se
-        // EventManagerSO.SetTimer += SetTimerUI;
-        // GameManager.PickupBall += DisplayHeldBall;
-        // GameManager.RemoveBall += HideHeldBall;
-    } 
-    void OnDisable()
-    {
-        EventManagerSO.E_SetScore -= SetScore;
-        EventManagerSO.E_EndGame -= EndGame;
-        EventManagerSO.E_GiveTeamPoints -= GiveTeamPoints;
-        // GameManager.SetTimer -= SetTimerUI;
-        // GameManager.PickupBall -= DisplayHeldBall;
-        // GameManager.RemoveBall -= HideHeldBall;
+            TriggerEvent_SetScore(0,0);
     }
 
     // Update is called once per frame
@@ -73,7 +47,7 @@ public class GameManager : Singleton<GameManager>
     public void StartTimer(float timerTime)
     {
         timeRemaining = timerTime;
-        EventManagerSO.TriggerEvent_SetTimer(timerTime);
+        TriggerEvent_SetTimer(timerTime);
         timerIsRunning = true;
     }
     void RunTimer()
@@ -81,93 +55,83 @@ public class GameManager : Singleton<GameManager>
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            EventManagerSO.TriggerEvent_SetTimer(timeRemaining);
+            TriggerEvent_SetTimer(timeRemaining);
         }
         else 
         {
             Debug.Log("Time has run out! Game Over!");
-            EventManagerSO.TriggerEvent_SetTimer(0);
+            TriggerEvent_SetTimer(0);
             timerIsRunning = false;
-
-            if(team1Score > team2Score){
-                EventManagerSO.TriggerEvent_EndGame(Team.Team1);
-            } else if(team1Score < team2Score){
-                EventManagerSO.TriggerEvent_EndGame(Team.Team2);
-            } else {
-                EventManagerSO.TriggerEvent_EndGame(Team.NoTeam);
-            }
-            
+            TriggerEvent_EndGame();
         }
     }
-    void EndGame(Team winningTeam)
+    public void GiveTeam1Points(int newTeam1Points)
     {
-
+        this.team1Score = Mathf.Min(team1Score+newTeam1Points, winningScore);
+        TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
-    // public void GiveTeam1Points(int newTeam1Points)
-    // {
-    //     this.team1Score = Mathf.Min(team1Score+newTeam1Points, winningScore);
-    //     TriggerEvent_SetScore(this.team1Score,this.team2Score);
-    // }
-    // public void GiveTeam2Points(int newTeam2Points)
-    // {
-    //     this.team2Score = Mathf.Min(team2Score+newTeam2Points, winningScore);
-    //     TriggerEvent_SetScore(this.team1Score,this.team2Score);
-    // }
-    private void GiveTeamPoints(Team team, int points)
+    public void GiveTeam2Points(int newTeam2Points)
     {
-        // TeamData teamData = teamDict[team];
-        // teamData.teamScore += points;
-        // teamDict[team] = teamData;
-        if(team == Team.Team1){
-            team1Score += points;
-        } else if(team == Team.Team2){
-            team2Score += points;
-        }
-        EventManagerSO.TriggerEvent_SetScore(team1Score,team2Score);
+        this.team2Score = Mathf.Min(team2Score+newTeam2Points, winningScore);
+        TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
-    private void SetScore(int team1Score, int team2Score)
+    public void TriggerEvent_SetScore(int team1Score, int team2Score)
     {
-        // Debug.Log("Setting new score, team1:"+team1Score+" team2: "+team2Score);
         this.team1Score = team1Score;
         this.team2Score = team2Score;
-        if(this.team1Score >= gameConstants.WINNING_SCORE ||this.team2Score >= gameConstants.WINNING_SCORE )
+        if(SetScore != null)
+            SetScore(team1Score, team2Score);
+        if(this.team1Score > winningScore ||this.team2Score > winningScore  )
         {
-            if(team1Score > team2Score){
-                EventManagerSO.TriggerEvent_EndGame(Team.Team1);
-            } else if(team1Score < team2Score){
-                EventManagerSO.TriggerEvent_EndGame(Team.Team2);
-            }
+            TriggerEvent_EndGame();
         }
     }
-    // public void TriggerEvent_SetTimer(float timeRemaining)
-    // {
-    //     this.timeRemaining = timeRemaining;
-    //     if(SetTimer != null)
-    //         SetTimer(timeRemaining);
-    // }
-    // public void TriggerEvent_EndGame()
-    // {
-    //     // TEMP
-    //     if(this.team1Score > this.team2Score)
-    //     {
-    //         GameOverPanelTeam1Wins.SetActive(true);
-    //         GameOverPanelTeam2Wins.SetActive(false);
-    //         GameOverPanelTie.SetActive(false);
-    //     }
-    //     else if(this.team1Score < this.team2Score)
-    //     {
-    //         GameOverPanelTeam2Wins.SetActive(true);
-    //         GameOverPanelTeam1Wins.SetActive(false);
-    //         GameOverPanelTie.SetActive(false);
-    //     }
-    //     else{
-    //         GameOverPanelTie.SetActive(true);
-    //         GameOverPanelTeam1Wins.SetActive(false);
-    //         GameOverPanelTeam2Wins.SetActive(false);
-    //     }
+    public void TriggerEvent_SetTimer(float timeRemaining)
+    {
+        this.timeRemaining = timeRemaining;
+        if(SetTimer != null)
+            SetTimer(timeRemaining);
+    }
+    public void TriggerEvent_EndGame()
+    {
+        // TEMP
+        if(this.team1Score > this.team2Score)
+        {
+            GameOverPanelTeam1Wins.SetActive(true);
+            GameOverPanelTeam2Wins.SetActive(false);
+            GameOverPanelTie.SetActive(false);
+        }
+        else if(this.team1Score < this.team2Score)
+        {
+            GameOverPanelTeam2Wins.SetActive(true);
+            GameOverPanelTeam1Wins.SetActive(false);
+            GameOverPanelTie.SetActive(false);
+        }
+        else{
+            GameOverPanelTie.SetActive(true);
+            GameOverPanelTeam1Wins.SetActive(false);
+            GameOverPanelTeam2Wins.SetActive(false);
+        }
         
-    //     if(EndGame != null)
-    //         EndGame();
-    // }
-    
+        if(EndGame != null)
+            EndGame();
+    }
+    public void TEMP_TurnOffGameOverCanvas()
+    {
+        GameOverPanelTeam1Wins.SetActive(false);
+        GameOverPanelTeam2Wins.SetActive(false);
+        GameOverPanelTie.SetActive(false);
+    }
+    // Below is a temp function that will be removed as soon as the approprite architecture has been completed
+    public void TEMP_TurnOnBallHUD()
+    {
+        // Debug.Log("Turning on ball hud element");
+        if(PickupBall != null)
+            PickupBall();
+    }
+    public void TEMP_TurnOffBallHUD()
+    {
+        if(RemoveBall != null)
+            RemoveBall();
+    }
 }
