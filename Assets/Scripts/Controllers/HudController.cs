@@ -16,8 +16,6 @@ public class HudController : MonoBehaviour
     public GameObject blueFlag;
     public GameObject redFlag;
 
-    [SerializeField] private bool blueTeamHasFlag;
-    [SerializeField] private bool redTeamHasFlag;
     private GameManager gameManager;
     // public float timeRemaining = 60; // seconds
     // public bool timerIsRunning = false;
