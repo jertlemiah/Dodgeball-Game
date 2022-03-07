@@ -6,12 +6,13 @@ public enum Team {Team1,Team2}
 public enum GateState {PreMatch,MidMatch,PostMatch,Paused}
 public class GameManager : Singleton<GameManager>
 {
+    private HudController hudController;
+    
     public float timeRemaining = 60; // seconds
     public bool timerIsRunning = false;
     public int winningScore = 10; 
     public int team1Score;
     public int team2Score;
-    public string teamWithFlag = null;
     public bool useStartingScores = false;
     public bool redTeamHasFlag = false;
     public bool blueTeamHasFlag = false;
@@ -35,6 +36,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        hudController = GameObject.Find("HUD Canvas").GetComponent<HudController>();
         StartTimer(timeRemaining);
         if(useStartingScores)
             TriggerEvent_SetScore(team1Score,team2Score);
@@ -72,12 +74,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
     
+    // TODO: This is only called in UnitController, and I think it can be removed
     public void GiveTeam1Points(int newTeam1Points)
     {
         this.team1Score = Mathf.Min(team1Score+newTeam1Points, winningScore);
         TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
-    
+    // TODO: This is only called in UnitController, and I think it can be removed
     public void GiveTeam2Points(int newTeam2Points)
     {
         this.team2Score = Mathf.Min(team2Score+newTeam2Points, winningScore);
@@ -103,6 +106,8 @@ public class GameManager : Singleton<GameManager>
         else {
             redTeamHasFlag = status;
         }
+
+        hudController.UpdateFlags(team, status);
     }
 
     public void TriggerEvent_SetScore(int team1Score, int team2Score)

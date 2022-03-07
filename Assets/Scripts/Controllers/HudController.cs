@@ -44,19 +44,14 @@ public class HudController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.redTeamHasFlag) {
-            redFlag.SetActive(true);
-        } else {
-            redFlag.SetActive(false);
-        }
-        
-        if (gameManager.blueTeamHasFlag) {
-            blueFlag.SetActive(true);
-        } else {
-            blueFlag.SetActive(false);
-        }
+    }
 
-
+    public void UpdateFlags(string team, bool status) {
+        if (team == "RED") {
+            redFlag.SetActive(status);
+        } else {
+            blueFlag.SetActive(status);
+        }
     }
     
     public void SetScoreUI(int team1Score, int team2Score)
