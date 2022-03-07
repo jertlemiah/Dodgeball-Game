@@ -23,9 +23,10 @@ public class Editor_GameManger : Editor
 		{
 			manager.TEMP_TurnOffGameOverCanvas();
 		}
-		if (GUILayout.Button("Toggle Red Team Flag"))
+		if (GUILayout.Button("Toggle Blue Team Flag"))
 		{
-			manager.TEMP_ToggleRedTeamFlag();
+			Debug.Log(manager.blueTeamHasFlag);
+			manager.handleFlag("Player", !manager.blueTeamHasFlag);
 		}
 
 		

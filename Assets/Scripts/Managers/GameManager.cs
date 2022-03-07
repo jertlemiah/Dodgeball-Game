@@ -83,6 +83,16 @@ public class GameManager : Singleton<GameManager>
         this.team2Score = Mathf.Min(team2Score+newTeam2Points, winningScore);
         TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
+
+    public void handleFlag(string team, bool status)
+    {
+        if (team == "Player") {
+            blueTeamHasFlag = status;
+        }
+        else {
+            redTeamHasFlag = status;
+        }
+    }
     
     public void TriggerEvent_SetScore(int team1Score, int team2Score)
     {
@@ -149,7 +159,4 @@ public class GameManager : Singleton<GameManager>
             RemoveBall();
     }
 
-    public void TEMP_ToggleRedTeamFlag() {
-        redTeamHasFlag = !redTeamHasFlag;
-    }
 }

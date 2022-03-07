@@ -8,6 +8,8 @@ public class FlagController : MonoBehaviour
     Vector3 startingPosition;
     Quaternion startingRotation;
     GameObject PlayerWithFlag;
+
+    private GameManager gameManager;
     // HUD_CONTROLLER_TYPE mHUDController;
 
     public bool IsFlagInTransit { get { return InTransit; } }
@@ -35,16 +37,8 @@ public class FlagController : MonoBehaviour
             transform.SetParent(player.transform.Find("Skeleton/FlagCarryTarget").transform);
             this.GetComponent<Collider>().enabled = false; 
 
-            /*Call "Flag has been Taken" HUD Functions here
-            if (PlayerWithFlag.tag == "Player")
-            {
-                mHUDController.FlagTakenByPlayer();   <- or whatever you want to call it
-            }
-            else if (PlayerWithFlag.tag == "Enemy")
-            {
-                mHUDController.FlagTakenByEnemy();   <- or whatever you want to call it
-            }
-             */
+            // true bc team actively has flag
+           gameManager.handleFlag(PlayerWithFlag.tag, true);
 
             return true;
         }
@@ -68,16 +62,10 @@ public class FlagController : MonoBehaviour
             transform.Find("FlagBase").gameObject.SetActive(true);
             transform.Find("FlagPole").gameObject.SetActive(true);
             transform.SetParent(null);
-            /*Call "Flag has been Scored" HUD Functions here
-            if (PlayerWithFlag.tag == "Player")
-            {
-                mHUDController.FlagScoredByPlayer();   <- or whatever you want to call it
-            }
-            else if (PlayerWithFlag.tag == "Enemy")
-            {
-                mHUDController.FlagScoredByEnemy();   <- or whatever you want to call it
-            }
-             */
+
+            // false bc team does not actively have flag
+            gameManager.handleFlag(PlayerWithFlag.tag, false);
+            
             PlayerWithFlag = null;
             transform.position = startingPosition;
             transform.rotation = startingRotation;
@@ -103,16 +91,10 @@ public class FlagController : MonoBehaviour
             transform.Find("FlagBase").gameObject.SetActive(true);
             transform.Find("FlagPole").gameObject.SetActive(true);
             transform.SetParent(null);
-            /*Call "Flag has been Returned" HUD Functions here
-            if (PlayerWithFlag.tag == "Player")
-            {
-                mHUDController.FlagReturnedByEnemy();   <- or whatever you want to call it
-            }
-            else if (PlayerWithFlag.tag == "Enemy")
-            {
-                mHUDController.FlagReturnedByPlayer();   <- or whatever you want to call it
-            }
-             */
+            
+            // false bc team does not actively have flag
+            gameManager.handleFlag(PlayerWithFlag.tag, false);
+
             PlayerWithFlag = null;
             transform.position = startingPosition;
             startingRotation = transform.rotation;
@@ -130,6 +112,7 @@ public class FlagController : MonoBehaviour
         this.GetComponent<Collider>().enabled = true;
         // Get reference to HUD Controller
         // mHUDController = GameObject.Find("WhateverTheHUDobjectNameIs").GetComponent<WhatevertheScriptNameIs>();
+        gameManager = GameObject.Find("Game manager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
