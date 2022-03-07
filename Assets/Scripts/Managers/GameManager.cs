@@ -84,16 +84,27 @@ public class GameManager : Singleton<GameManager>
         TriggerEvent_SetScore(this.team1Score,this.team2Score);
     }
 
-    public void handleFlag(string team, bool status)
+    public void UpdateScore(string team, int newPoints)
     {
-        if (team == "Player") {
+        if (team == "BLUE") {
+            this.team1Score = Mathf.Min(team1Score + newPoints, winningScore);
+        } else {
+            this.team2Score = Mathf.Min(team2Score + newPoints, winningScore);
+        }
+
+        TriggerEvent_SetScore(this.team1Score,this.team2Score);
+    }
+
+    public void HandleFlag(string team, bool status)
+    {
+        if (team == "BLUE") {
             blueTeamHasFlag = status;
         }
         else {
             redTeamHasFlag = status;
         }
     }
-    
+
     public void TriggerEvent_SetScore(int team1Score, int team2Score)
     {
         this.team1Score = team1Score;

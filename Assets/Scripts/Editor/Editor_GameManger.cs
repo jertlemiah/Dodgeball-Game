@@ -13,11 +13,12 @@ public class Editor_GameManger : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Add points red"))
 		{
-			manager.GiveTeam2Points(1);
+			manager.UpdateScore("RED", 1);
+
 		}
         if (GUILayout.Button("Add points blue"))
 		{
-			manager.GiveTeam1Points(1);
+			manager.UpdateScore("BLUE", 1);
 		}
 		if (GUILayout.Button("Turn off 'Game Over' canvas"))
 		{
@@ -26,7 +27,7 @@ public class Editor_GameManger : Editor
 		if (GUILayout.Button("Toggle Blue Team Flag"))
 		{
 			Debug.Log(manager.blueTeamHasFlag);
-			manager.handleFlag("Player", !manager.blueTeamHasFlag);
+			manager.HandleFlag("BLUE", !manager.blueTeamHasFlag);
 		}
 
 		
