@@ -117,8 +117,7 @@ public class FlagController : MonoBehaviour
         startingRotation = transform.rotation;
         this.GetComponent<Collider>().enabled = true;
         // Get reference to HUD Controller
-        // mHUDController = GameObject.Find("WhateverTheHUDobjectNameIs").GetComponent<WhatevertheScriptNameIs>();
-        gameManager = GameObject.Find("Game manager").GetComponent<GameManager>();
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
