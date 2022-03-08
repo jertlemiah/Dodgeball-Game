@@ -31,11 +31,13 @@ public class UnitController : MonoBehaviour
         // This will need to be swapped out for the real system at some point
         if(team == Team.Team1)
         {
-            GameManager.Instance.GiveTeam2Points(1);
+            // GameManager.Instance.GiveTeam2Points(1);
+            EventManagerSO.GiveTeamPoints(Team.Team2,1);
         }
         else
         {
-            GameManager.Instance.GiveTeam1Points(1);
+            // GameManager.Instance.GiveTeam1Points(1);
+            EventManagerSO.GiveTeamPoints(Team.Team1,1);
         }
     }
 
