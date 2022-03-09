@@ -9,7 +9,6 @@ public class FlagController : MonoBehaviour
     Quaternion startingRotation;
     GameObject PlayerWithFlag;
 
-    private GameManager gameManager;
     // HUD_CONTROLLER_TYPE mHUDController;
 
     public bool IsFlagInTransit { get { return InTransit; } }
@@ -116,8 +115,6 @@ public class FlagController : MonoBehaviour
         startingPosition = transform.position; 
         startingRotation = transform.rotation;
         this.GetComponent<Collider>().enabled = true;
-        // Get reference to HUD Controller
-        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
