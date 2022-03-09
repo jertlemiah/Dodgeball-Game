@@ -25,7 +25,6 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        
         StartTimer(timeRemaining);
         // EventManagerSO.TriggerEvent_SetScore(0,0);
         if(useStartingScores)
@@ -67,12 +66,14 @@ public class GameManager : Singleton<GameManager>
         if (timerIsRunning)
             {RunTimer();}
     }
+    
     public void StartTimer(float timerTime)
     {
         timeRemaining = timerTime;
         EventManagerSO.TriggerEvent_SetTimer(timerTime);
         timerIsRunning = true;
     }
+    
     void RunTimer()
     {
         if (timeRemaining > 0)

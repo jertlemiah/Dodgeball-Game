@@ -13,6 +13,10 @@ public class HudController : MonoBehaviour
     [SerializeField] private TMP_Text textTeam2Score;
     [SerializeField] private Slider sliderTeam2Score;
     [SerializeField] GameObject ballRenderTexture;
+
+    public GameObject blueFlag;
+    public GameObject redFlag;
+
     // private GameManager gameManager;
     
     void Awake()
@@ -21,8 +25,14 @@ public class HudController : MonoBehaviour
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
         // StartTimer(timeRemaining);
         // SetScore(0,0);
+
+        // Hide Flags by default
+        redFlag.SetActive(false);
+        blueFlag.SetActive(false);
+        
         EventManagerSO.E_SetScore += SetScoreUI;
         EventManagerSO.E_SetTimer += SetTimerUI;
+        EventManagerSO.E_UpdateFlagStatus += UpdateFlags;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
         // GameManager.SetTimer += SetTimerUI;
@@ -33,6 +43,7 @@ public class HudController : MonoBehaviour
     {
         EventManagerSO.E_SetScore -= SetScoreUI;
         EventManagerSO.E_SetTimer -= SetTimerUI;
+        EventManagerSO.E_UpdateFlagStatus -= UpdateFlags;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
         // GameManager.PickupBall -= DisplayHeldBall;
@@ -42,7 +53,14 @@ public class HudController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
 
+    public void UpdateFlags(Team team, bool status) {
+        if (team == Team.Team1) {
+            blueFlag.SetActive(status);
+        } else {
+            redFlag.SetActive(status);
+        }
     }
     
     public void SetScoreUI(int team1Score, int team2Score)

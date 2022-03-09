@@ -11,7 +11,13 @@ public class Editor_GameManger : Editor
 	{
 		GameManager manager = target as GameManager;
         base.OnInspectorGUI();
-        // if (GUILayout.Button("Add points red"))
+        // if (GUILayout.Button("Toggle Blue Team Flag"))
+		// {
+		// 	Debug.Log(manager.blueTeamHasFlag);
+		// 	manager.HandleFlag("BLUE", !manager.blueTeamHasFlag);
+		// }
+		
+		// if (GUILayout.Button("Add points red"))
 		// {
 		// 	manager.GiveTeam2Points(1);
 		// }

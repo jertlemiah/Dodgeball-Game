@@ -18,7 +18,7 @@ public class RedBaseController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "FlagLight")
+        if (other.gameObject.name == "FlagLight" && other.gameObject.transform.parent.parent.parent.parent.tag != "Player")
         {
             other.gameObject.GetComponentInParent<FlagController>().FlagScored();
         }

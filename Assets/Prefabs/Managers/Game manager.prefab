@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1feac545eb088448a87095f18e2a810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConstants: {fileID: 11400000, guid: 481dfb3e77250a847b2a0f82686ecdc1, type: 2}
   timeRemaining: 10
   timerIsRunning: 0
-  pointsToWin: 10
-  redScore: 0
-  blueScore: 0
+  team1Score: 0
+  team2Score: 0
+  useStartingScores: 0

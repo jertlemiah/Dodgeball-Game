@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2565443601125015818, guid: 170429f97485ffd4199ffe2978caa1b4, type: 3}
       propertyPath: m_Name
-      value: RedScoreboard
+      value: RedScoreboard Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2565443601125015819, guid: 170429f97485ffd4199ffe2978caa1b4, type: 3}
       propertyPath: m_Pivot.x
@@ -106,6 +106,14 @@ PrefabInstance:
     - target: {fileID: 5290410084609898884, guid: 170429f97485ffd4199ffe2978caa1b4, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618896561847591264, guid: 170429f97485ffd4199ffe2978caa1b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 148.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7618896561847591264, guid: 170429f97485ffd4199ffe2978caa1b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 170429f97485ffd4199ffe2978caa1b4, type: 3}
