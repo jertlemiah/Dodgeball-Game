@@ -8751,6 +8751,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 277309537527057240, guid: 934547f2f72fce44fb028a9de8b362e2, type: 3}
+      propertyPath: gameConstants
+      value: 
+      objectReference: {fileID: 11400000, guid: 481dfb3e77250a847b2a0f82686ecdc1, type: 2}
+    - target: {fileID: 277309537527057240, guid: 934547f2f72fce44fb028a9de8b362e2, type: 3}
       propertyPath: timeRemaining
       value: 999
       objectReference: {fileID: 0}
@@ -9308,6 +9312,10 @@ PrefabInstance:
       propertyPath: blueFlag
       value: 
       objectReference: {fileID: 1584539491}
+    - target: {fileID: 6509902746890903286, guid: c34ea4af2f2a3e3429b715d726227786, type: 3}
+      propertyPath: gameConstants
+      value: 
+      objectReference: {fileID: 11400000, guid: 481dfb3e77250a847b2a0f82686ecdc1, type: 2}
     - target: {fileID: 6509902746890903286, guid: c34ea4af2f2a3e3429b715d726227786, type: 3}
       propertyPath: redTeamHasFlag
       value: 0
