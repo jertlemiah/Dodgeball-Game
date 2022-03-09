@@ -10,8 +10,8 @@ public class DodgeballController : MonoBehaviour
     [SerializeField] AudioClip[] dodgeballClipsMedium;
     [SerializeField] AudioClip[] dodgeballClipsLoud;
     [SerializeField] AudioSource audioSource;  
-    [SerializeField] float quietSpeed = 0.1f;
-    [SerializeField] float mediumSpeed = 0.2f;
+    // [SerializeField] float quietSpeed = 0.1f;
+    // [SerializeField] float mediumSpeed = 0.2f;
     [SerializeField] float loudSpeed = 0.3f;
     RandomAudioClip randomQuietAudioClip = new RandomAudioClip();
     RandomAudioClip randomMediumAudioClip = new RandomAudioClip();
