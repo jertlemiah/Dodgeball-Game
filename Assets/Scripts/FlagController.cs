@@ -38,8 +38,8 @@ public class FlagController : MonoBehaviour
             this.GetComponent<Collider>().enabled = false; 
 
             // true bc team actively has flag
-            string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
-            // TODO: CALL EVENT gameManager.HandleFlag(team, true);
+            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, true);
 
             return true;
         }
@@ -65,9 +65,9 @@ public class FlagController : MonoBehaviour
             transform.SetParent(null);
 
             // false bc team does not actively have flag
-            string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
-            // TODO: CALL EVENT gameManager.HandleFlag(team, false);
-            // TODO: CALL EVENT gameManager.UpdateScore(team, 1);
+            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
+            EventManagerSO.GiveTeamPoints(team, 1);
 
             
             
@@ -98,8 +98,8 @@ public class FlagController : MonoBehaviour
             transform.SetParent(null);
             
             // false bc team does not actively have flag
-            string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
-            // TODO: CALL EVENT gameManager.HandleFlag(team, false);
+            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
 
             PlayerWithFlag = null;
             transform.position = startingPosition;

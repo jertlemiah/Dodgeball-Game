@@ -7,16 +7,25 @@ public class EventManagerSO : ScriptableObject
 {
     public delegate void SetScoreHandler(int blueScore, int redScore);
     public static event SetScoreHandler E_SetScore;
+
     public delegate void GiveTeamPointsHandler(Team team, int points);
     public static event GiveTeamPointsHandler E_GiveTeamPoints;
+
     public delegate void SetTimerHandler(float timeRemaining);
     public static event SetTimerHandler E_SetTimer;
+
     public delegate void EndGameHandler(Team winningTeam);
     public static event EndGameHandler E_EndGame;
+    
     public delegate void PauseGameHandler();
     public static event PauseGameHandler E_PauseGame;
+
     public delegate void UnpauseGameHandler();
     public static event UnpauseGameHandler E_UnpauseGame;
+
+    public delegate void UpdateFlagStatusHandler(Team team, bool status); // team: the team, status: does team actively have flag
+    public static event UpdateFlagStatusHandler E_UpdateFlagStatus;
+    
     
     public static void GiveTeamPoints(Team team, int points)
     {
@@ -58,6 +67,14 @@ public class EventManagerSO : ScriptableObject
         if(E_UnpauseGame != null){
             Debug.Log("Triggering Event 'UnpauseGame()'");
             E_UnpauseGame();
+        }
+    }
+
+    public static void TriggerEvent_UpdateFlagStatus(Team team, bool status)
+    {       
+        if(E_UpdateFlagStatus != null){
+            Debug.Log("Triggering Event 'UpdateFlagStatus()'");
+            E_UpdateFlagStatus(team, status);
         }
     }
 }

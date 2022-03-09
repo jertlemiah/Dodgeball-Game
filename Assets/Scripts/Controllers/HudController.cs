@@ -25,13 +25,14 @@ public class HudController : MonoBehaviour
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
         // StartTimer(timeRemaining);
         // SetScore(0,0);
-        
+
         // Hide Flags by default
         redFlag.SetActive(false);
         blueFlag.SetActive(false);
         
         EventManagerSO.E_SetScore += SetScoreUI;
         EventManagerSO.E_SetTimer += SetTimerUI;
+        EventManagerSO.E_UpdateFlagStatus += UpdateFlags;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
         // GameManager.SetTimer += SetTimerUI;
@@ -42,6 +43,7 @@ public class HudController : MonoBehaviour
     {
         EventManagerSO.E_SetScore -= SetScoreUI;
         EventManagerSO.E_SetTimer -= SetTimerUI;
+        EventManagerSO.E_UpdateFlagStatus -= UpdateFlags;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
         // GameManager.PickupBall -= DisplayHeldBall;
@@ -53,11 +55,11 @@ public class HudController : MonoBehaviour
     {
     }
 
-    public void UpdateFlags(string team, bool status) {
-        if (team == "RED") {
-            redFlag.SetActive(status);
-        } else {
+    public void UpdateFlags(Team team, bool status) {
+        if (team == Team.Team1) {
             blueFlag.SetActive(status);
+        } else {
+            redFlag.SetActive(status);
         }
     }
     
