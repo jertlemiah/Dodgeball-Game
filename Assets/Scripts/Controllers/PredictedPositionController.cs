@@ -28,6 +28,9 @@ public class PredictedPositionController : MonoBehaviour
     NavMeshHit navHit;
     void FixedUpdate()
     {
+        if(trackingTargetGO == null)
+            return;
+        
         Vector3 newPos = GetProjectedPosition(projectionTime);
         
         

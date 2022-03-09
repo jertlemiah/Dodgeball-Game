@@ -42,10 +42,10 @@ public class GameSceneManager : Singleton<GameSceneManager>
         }
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneIndex, LoadSceneMode.Additive));
 
-        StartCoroutine(GetSceneLoadProgress());
+        StartCoroutine(GetSceneLoadProgress(sceneIndex));
     }
     
-    public IEnumerator GetSceneLoadProgress()
+    public IEnumerator GetSceneLoadProgress(SceneIndex sceneIndex)
     {
         loadingBar.value = 0;
         for(int i=0; i<scenesLoading.Count; i++)
@@ -73,6 +73,8 @@ public class GameSceneManager : Singleton<GameSceneManager>
                 yield return new WaitForSeconds(minLoadingTime-(Time.time - startTime) );
             }
         }
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)sceneIndex));
+        Debug.Log("active scene: "+SceneManager.GetActiveScene().name);
 
         loadingScreenGO.SetActive(false);
     }
