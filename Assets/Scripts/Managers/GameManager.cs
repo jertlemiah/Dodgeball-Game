@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Team {Team1,Team2, NoTeam}
-public enum GateState {PreMatch,MidMatch,PostMatch,Paused}
+public enum GameState {PreMatch,MidMatch,PostMatch,Paused}
 public struct TeamData
 {
     public int teamScore;

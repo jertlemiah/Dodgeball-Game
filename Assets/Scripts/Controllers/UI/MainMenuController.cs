@@ -39,9 +39,17 @@ public class MainMenuController : MonoBehaviour
         titleScreenGO.GetComponent<RectTransform>().DOMoveX(0,screenTransitionTime);
         playScreenGO.GetComponent<RectTransform>().DOMoveX(offscreenOffset,screenTransitionTime);
     }
+    public void Play_LoadLevel(SceneIndex sceneIndex) 
+    {
+        GameSceneManager.Instance.LoadScene(sceneIndex);
+    }
     public void QuitButton()
     {
         Debug.Log("Quitting game");
         Application.Quit();
     }
+    // void OnDestroy()
+    // {
+        
+    // }
 }

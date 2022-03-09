@@ -8,6 +8,7 @@ using DG.Tweening;
 public class LevelPanelController : MonoBehaviour,
     ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField] public SceneIndex sceneIndex;
     [SerializeField] public  GameObject UiSelector, UiSelected, UiPressed;
     
     [SerializeField] public  Color colorDarkText, colorLightText;
@@ -33,18 +34,26 @@ public class LevelPanelController : MonoBehaviour,
         }
         //menuManager = MenuManager.Instance;
     }
+    public void Play_LoadLevel() 
+    {
+        GameSceneManager.Instance.LoadScene(sceneIndex);
+    }
 
     // void SetAlpha
 
     void GrowSelectedPanel()
     {
         // tmpText.rectTransform.DOAnchorPos(textEndPosition,textShiftDuration,true);
-        GetComponent<RectTransform>().DOScale(panelSelectedScale,scalingDuration);
+        RectTransform panel = GetComponent<RectTransform>();
+        if(panel != null)
+            panel.DOScale(panelSelectedScale,scalingDuration);
     }
     void ShrinkSelectedPanel()
     {
         // tmpText.rectTransform.DOAnchorPos(textStartPosition,textShiftDuration,true);
-        GetComponent<RectTransform>().DOScale(1,scalingDuration);
+        RectTransform panel = GetComponent<RectTransform>();
+        if(panel != null)
+            panel.DOScale(1,scalingDuration);
     }
 
     // private void OnDisable()

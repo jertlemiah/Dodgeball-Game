@@ -38,11 +38,15 @@ public class CustomButtonController : MonoBehaviour,
 
     void ShiftSelectText()
     {
-        tmpText.rectTransform.DOAnchorPos(textEndPosition,textShiftDuration,true);
+        RectTransform rect = tmpText.rectTransform;
+        if(rect != null)
+            rect.DOAnchorPos(textEndPosition,textShiftDuration,true);
     }
     void UnshiftSelectText()
     {
-        tmpText.rectTransform.DOAnchorPos(textStartPosition,textShiftDuration,true);
+        RectTransform rect = tmpText.rectTransform;
+        if(rect != null)
+            rect.DOAnchorPos(textStartPosition,textShiftDuration,true);
     }
 
     // private void OnDisable()
