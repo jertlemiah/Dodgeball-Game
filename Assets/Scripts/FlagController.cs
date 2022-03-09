@@ -39,7 +39,7 @@ public class FlagController : MonoBehaviour
 
             // true bc team actively has flag
             string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
-            gameManager.HandleFlag(team, true);
+            // TODO: CALL EVENT gameManager.HandleFlag(team, true);
 
             return true;
         }
@@ -66,8 +66,8 @@ public class FlagController : MonoBehaviour
 
             // false bc team does not actively have flag
             string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
-            gameManager.HandleFlag(team, false);
-            gameManager.UpdateScore(team, 1);
+            // TODO: CALL EVENT gameManager.HandleFlag(team, false);
+            // TODO: CALL EVENT gameManager.UpdateScore(team, 1);
 
             
             
@@ -99,7 +99,7 @@ public class FlagController : MonoBehaviour
             
             // false bc team does not actively have flag
             string team = PlayerWithFlag.tag == "Player" ? "BLUE" : "RED";
-            gameManager.HandleFlag(team, false);
+            // TODO: CALL EVENT gameManager.HandleFlag(team, false);
 
             PlayerWithFlag = null;
             transform.position = startingPosition;
