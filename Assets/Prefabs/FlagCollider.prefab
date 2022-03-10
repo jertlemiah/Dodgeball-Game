@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6798270960791179941}
   - component: {fileID: 6798270960791179962}
   - component: {fileID: 6798270960791179963}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FlagBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6798270960791179961}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 6798270961093539273}
   - component: {fileID: 6798270961093539278}
   - component: {fileID: 6798270961093539275}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FlagLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &6798270961093539275
 TrailRenderer:
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 6798270961784623662}
   - component: {fileID: 6798270961784623663}
   - component: {fileID: 6798270961784623660}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FlagPole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6798270961784623650}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 6798270962661253713}
   - component: {fileID: 6798270962661253718}
   - component: {fileID: 6798270962661253719}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FlagCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6798270962661253716}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

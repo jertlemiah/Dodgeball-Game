@@ -9,10 +9,10 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
     [SerializeField] private float normalSensitivity;
     [SerializeField] private float aimSensitivity;
-    [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
+    [SerializeField] private LayerMask aimColliderLayerMask;
 
     [SerializeField] private GameObject handSpot;
-    //[SerializeField] private Transform debugTransform;
+    [SerializeField] private Transform debugTransform;
 
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;

@@ -35,6 +35,7 @@ public class FlagController : MonoBehaviour
             transform.position = player.transform.Find("Skeleton/FlagCarryTarget").transform.position;
             transform.SetParent(player.transform.Find("Skeleton/FlagCarryTarget").transform);
             this.GetComponent<Collider>().enabled = false; 
+            //this.GetComponent<Collider>().isKinematic = true;
 
             // true bc team actively has flag
             Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
