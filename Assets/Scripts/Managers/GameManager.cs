@@ -25,7 +25,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        StartTimer(timeRemaining);
+        // StartTimer(timeRemaining);
         // EventManagerSO.TriggerEvent_SetScore(0,0);
         if(useStartingScores)
             EventManagerSO.TriggerEvent_SetScore(team1Score,team2Score);
@@ -43,8 +43,12 @@ public class GameManager : Singleton<GameManager>
         if(!gameConstants)
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
         EventManagerSO.E_SetScore += SetScore;
-        EventManagerSO.E_EndGame += EndGame;
+        EventManagerSO.E_EndMatch += EndGame;
         EventManagerSO.E_GiveTeamPoints += GiveTeamPoints;
+        EventManagerSO.E_PauseGame += PauseGame;
+        EventManagerSO.E_UnpauseGame += UnpauseGame;
+        EventManagerSO.E_FinishedLoading += StartPrematch;
+        EventManagerSO.E_StartMatch += StartMatch;
         // EventManagerSO.E_SetTimer += se
         // EventManagerSO.SetTimer += SetTimerUI;
         // GameManager.PickupBall += DisplayHeldBall;
@@ -53,8 +57,12 @@ public class GameManager : Singleton<GameManager>
     void OnDisable()
     {
         EventManagerSO.E_SetScore -= SetScore;
-        EventManagerSO.E_EndGame -= EndGame;
+        EventManagerSO.E_EndMatch -= EndGame;
         EventManagerSO.E_GiveTeamPoints -= GiveTeamPoints;
+        EventManagerSO.E_PauseGame -= PauseGame;
+        EventManagerSO.E_UnpauseGame -= UnpauseGame;
+        EventManagerSO.E_FinishedLoading -= StartPrematch;
+        EventManagerSO.E_StartMatch -= StartMatch;
         // GameManager.SetTimer -= SetTimerUI;
         // GameManager.PickupBall -= DisplayHeldBall;
         // GameManager.RemoveBall -= HideHeldBall;
@@ -65,6 +73,14 @@ public class GameManager : Singleton<GameManager>
     {
         if (timerIsRunning)
             {RunTimer();}
+    }
+    void StartPrematch()
+    {
+        EventManagerSO.TriggerEvent_StartPrematch();
+    }
+    void StartMatch()
+    {
+        StartTimer(timeRemaining);
     }
     
     public void StartTimer(float timerTime)
@@ -127,4 +143,14 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }    
+
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void UnpauseGame()
+    {
+        Time.timeScale = 1;
+    }
 }

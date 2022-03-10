@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 7fcb5d5cff108fb409d925006cb1c2cd
   - enabled: 1
+    path: Assets/Scenes/Jeremiah.unity
+    guid: 11f6e7c12bff1ae4e80cc175b55e5951
+  - enabled: 1
     path: Assets/Scenes/Andrew Environment Scene.unity
     guid: c2cca698c20901c46a0371e2ddfecab9
   m_configObjects:

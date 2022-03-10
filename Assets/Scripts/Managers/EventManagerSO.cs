@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EventManagerSO", menuName = "SO Channels/EventManager", order = 1)]
 public class EventManagerSO : ScriptableObject
 {
-    public delegate void SetScoreHandler(int blueScore, int redScore);
+    public delegate void SetScoreHandler(int team1Score, int team2Score);
     public static event SetScoreHandler E_SetScore;
 
     public delegate void GiveTeamPointsHandler(Team team, int points);
@@ -14,8 +14,8 @@ public class EventManagerSO : ScriptableObject
     public delegate void SetTimerHandler(float timeRemaining);
     public static event SetTimerHandler E_SetTimer;
 
-    public delegate void EndGameHandler(Team winningTeam);
-    public static event EndGameHandler E_EndGame;
+    public delegate void EndMatchHandler(Team winningTeam);
+    public static event EndMatchHandler E_EndMatch;
     
     public delegate void PauseGameHandler();
     public static event PauseGameHandler E_PauseGame;
@@ -25,6 +25,14 @@ public class EventManagerSO : ScriptableObject
 
     public delegate void UpdateFlagStatusHandler(Team team, bool status); // team: the team, status: does team actively have flag
     public static event UpdateFlagStatusHandler E_UpdateFlagStatus;
+
+    public delegate void StartMatchHandler();
+    public static event StartMatchHandler E_StartMatch;
+    public delegate void StartPrematchHandler();
+    public static event StartPrematchHandler E_StartPrematch;
+
+    public delegate void FinishedLoadingHandler();
+    public static event FinishedLoadingHandler E_FinishedLoading;
     
     
     public static void GiveTeamPoints(Team team, int points)
@@ -50,9 +58,9 @@ public class EventManagerSO : ScriptableObject
     }
     public static void TriggerEvent_EndGame(Team winningTeam)
     {       
-        if(E_EndGame != null){
+        if(E_EndMatch != null){
             Debug.Log("Triggering Event 'EndGame("+winningTeam.ToString()+")'");
-            E_EndGame(winningTeam);
+            E_EndMatch(winningTeam);
         }       
     }
     public static void TriggerEvent_PauseGame()
@@ -76,5 +84,27 @@ public class EventManagerSO : ScriptableObject
             Debug.Log("Triggering Event 'UpdateFlagStatus()'");
             E_UpdateFlagStatus(team, status);
         }
+    }
+
+    public static void TriggerEvent_StartPrematch()
+    {
+        if(E_StartPrematch != null){
+            Debug.Log("Triggering Event 'E_StartPrematch()'"); 
+            E_StartPrematch();
+        }        
+    }
+    public static void TriggerEvent_StartMatch()
+    {
+        if(E_StartMatch != null){
+            Debug.Log("Triggering Event 'E_StartMatch()'"); 
+            E_StartMatch();
+        }        
+    }
+    public static void TriggerEvent_FinishedLoading()
+    {
+        if(E_FinishedLoading != null){
+            Debug.Log("Triggering Event 'E_FinishedLoading()'"); 
+            E_FinishedLoading();
+        }   
     }
 }

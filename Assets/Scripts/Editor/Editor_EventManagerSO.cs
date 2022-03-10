@@ -57,5 +57,14 @@ public class Editor_EventManagerSO : Editor
 			EventManagerSO.TriggerEvent_UnpauseGame();
 		}
 		
+		if (GUILayout.Button("Finished Loading Scene")){
+			EventManagerSO.TriggerEvent_FinishedLoading();	
+		}
+        if (GUILayout.Button("Start Prematch Preparations")){
+			EventManagerSO.TriggerEvent_StartPrematch();
+		}
+		if (GUILayout.Button("Start Match")){
+			EventManagerSO.TriggerEvent_StartMatch();
+		}
 	}
 }
