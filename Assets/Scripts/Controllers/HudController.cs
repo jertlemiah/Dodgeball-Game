@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HudController : MonoBehaviour
 {
     [SerializeField] GameConstantsSO gameConstants;
+    [SerializeField] GameObject hudScreenGO;
+    [SerializeField] float offscreenVertical = 100f;
+    [SerializeField] float screenTransitionTime = 1f;
     [SerializeField] private TMP_Text textTimer;
     [SerializeField] private TMP_Text textTeam1Score;
     [SerializeField] private Slider sliderTeam1Score;
@@ -29,10 +33,14 @@ public class HudController : MonoBehaviour
         // Hide Flags by default
         redFlag.SetActive(false);
         blueFlag.SetActive(false);
+        // hudScreenGO.SetActive(false);
         
         EventManagerSO.E_SetScore += SetScoreUI;
         EventManagerSO.E_SetTimer += SetTimerUI;
         EventManagerSO.E_UpdateFlagStatus += UpdateFlags;
+        EventManagerSO.E_FinishedLoading += DisableHUD;
+        EventManagerSO.E_StartMatch += EnableHUD;
+        EventManagerSO.E_EndMatch += EndMatch;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
         // GameManager.SetTimer += SetTimerUI;
@@ -44,6 +52,9 @@ public class HudController : MonoBehaviour
         EventManagerSO.E_SetScore -= SetScoreUI;
         EventManagerSO.E_SetTimer -= SetTimerUI;
         EventManagerSO.E_UpdateFlagStatus -= UpdateFlags;
+        EventManagerSO.E_FinishedLoading -= DisableHUD;
+        EventManagerSO.E_StartMatch -= EnableHUD;
+        EventManagerSO.E_EndMatch -= EndMatch;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
         // GameManager.PickupBall -= DisplayHeldBall;
@@ -53,6 +64,24 @@ public class HudController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+    private void EnableHUD()
+    {
+        Vector2 newPos = new Vector2(0,offscreenVertical);
+        hudScreenGO.GetComponent<RectTransform>().DOAnchorPos(newPos,0);
+        
+        hudScreenGO.SetActive(true);
+        hudScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
+        
+    }
+
+    private void EndMatch(Team NA)
+    {
+        DisableHUD();
+    }
+    private void DisableHUD()
+    {
+        hudScreenGO.SetActive(false);
     }
 
     public void UpdateFlags(Team team, bool status) {

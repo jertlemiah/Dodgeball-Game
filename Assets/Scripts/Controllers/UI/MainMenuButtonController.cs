@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
 
-public class CustomButtonController : MonoBehaviour,
+public class MainMenuButtonController : MonoBehaviour,
     ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] public  GameObject UiSelector, UiSelected, UiPressed;
