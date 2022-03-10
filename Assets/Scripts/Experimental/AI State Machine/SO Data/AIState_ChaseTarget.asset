@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AIState_ChaseTarget
   m_EditorClassIdentifier: 
   ownerStateMachine: {fileID: 0}
-  aiStateEnum: 0
+  aiStateEnum: 1
   targetGO: {fileID: 0}
-  predPosCon: {fileID: 0}
+  predictionController: {fileID: 0}
   minTimeInState: 3
   maxPredictionTime: 5
   remainingDistance: 0
