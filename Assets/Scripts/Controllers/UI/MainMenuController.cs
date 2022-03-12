@@ -3,28 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class MainMenuController : MonoBehaviour
+public enum MenuScreen {Title,Play,Settings,Credits,LevelDetails}
+public class MainMenuController : Singleton<MainMenuController>
 {
+    [SerializeField] public Screen currentScreen;
     [SerializeField] GameObject titleScreenGO;
     [SerializeField] GameObject playScreenGO;
     [SerializeField] GameObject settingsScreenGO;
-    [SerializeField] float offscreenHorizontal = 1000f;
-    [SerializeField] float offscreenVertical = 600f;
+    [SerializeField] float screenWidth = 1000f;
+    [SerializeField] float screenHeight = 600f;
     [SerializeField] float screenTransitionTime = 1f;
     // Start is called before the first frame update
     void Start()
     {
         RectTransform rt = titleScreenGO.GetComponent<RectTransform>();
-        offscreenHorizontal = rt.rect.width * rt.localScale.x;
-        offscreenVertical = rt.rect.height * rt.localScale.y;
-        playScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(offscreenHorizontal,0);
-        settingsScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,offscreenVertical);
+        screenWidth = rt.rect.width * rt.localScale.x;
+        screenHeight = rt.rect.height * rt.localScale.y;
+        playScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(screenWidth,0);
+        settingsScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,screenHeight);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    // public void OverrideScreenSwitch(MenuScreen newScreen)
+    // {
+        
+    //     playScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
+    // }
+    public void Play_LevelDetailsButton(LevelPanelController levelPanelController) 
+    {
+        // GameSceneManager.Instance.LoadScene(sceneIndex);
+        levelPanelController.GetComponent<RectTransform>().DOSizeDelta(new Vector2(screenWidth,screenHeight),screenTransitionTime);
     }
     public void Title_PlayButton()
     {
@@ -43,7 +55,7 @@ public class MainMenuController : MonoBehaviour
         // playScreenGO.GetComponent<RectTransform>().DOMoveX(0,screenTransitionTime);
 
         // titleScreenGO.SetActive(false);
-        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-offscreenHorizontal,0),screenTransitionTime);
+        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-screenWidth,0),screenTransitionTime);
         playScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
     }
     public void Play_ReturnButton()
@@ -61,17 +73,17 @@ public class MainMenuController : MonoBehaviour
         // playScreenGO.GetComponent<RectTransform>().DOMoveX(offscreenHorizontal,screenTransitionTime);
         // titleScreenGO.SetActive(true);
         titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
-        playScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(offscreenHorizontal,0),screenTransitionTime);
+        playScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(screenWidth,0),screenTransitionTime);
     }
     public void Title_SettingsButton()
     {
-        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,-offscreenVertical),screenTransitionTime);
+        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,-screenHeight),screenTransitionTime);
         settingsScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
     }
     public void Settings_ReturnButton()
     {
         titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
-        settingsScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,offscreenVertical),screenTransitionTime);
+        settingsScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,screenHeight),screenTransitionTime);
     }
     
     public void QuitButton()
