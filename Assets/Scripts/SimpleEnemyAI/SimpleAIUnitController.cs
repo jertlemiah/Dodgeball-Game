@@ -116,6 +116,7 @@ public class SimpleAIUnitController : MonoBehaviour
                     if (targetObject == null) // if all enemy players are currently respawning, go back to Idle 
                     {
                         state = SimpleAIState.Idle;
+                        agent.ResetPath();
                     }
                     else // if we found a good enemy player target, set it as the new destination and transition to ChasePlayer
                     {
@@ -133,6 +134,7 @@ public class SimpleAIUnitController : MonoBehaviour
                     if (targetObject == null) // if all dodgeballs are currently held, then go back to Idle
                     {
                         state = SimpleAIState.Idle;
+                        agent.ResetPath();
                     }
                     else // if we found a good dodgeball, set it as the new destination and transition to ChaseBall state
                     {
@@ -143,7 +145,7 @@ public class SimpleAIUnitController : MonoBehaviour
                 }
                 break;
             case SimpleAIState.ChaseBall:
-                if (hasBall == true) // If we now have a ball (this is set by the "ChaseBall" state action, see below switch statement)
+                if (hasBall == true) // If we now have a ball (this is set by the SimpleAIUnitBallPickup collision trigger)
                 {
                     state = SimpleAIState.ChasePlayer; // transition to Chase Player state
                     currentTimeInState = 0.0f; // reset current time in state
@@ -167,25 +169,39 @@ public class SimpleAIUnitController : MonoBehaviour
             case SimpleAIState.ChaseBall:
                 //Always chase the nearest dodgeball. Update the navMeshAgent's destination so we don't end up chasing a fast moving ball while walking right past a stationary one
                 targetObject = FindNearestDodgeball();
-                agent.destination = targetObject.transform.position;
-                if (this.transform.Find("BallHoldSpotAI").childCount > 0 ) // if we've successfully picked up a dodgeball, set the hasBall flag
+                if (targetObject == null) // if all dodgeballs are currently held, then go back to Idle
                 {
-                    hasBall = true; // this will cause us to transition into ChasePlayer state in the above switch statement
+                    state = SimpleAIState.Idle;
+                    agent.ResetPath();
                 }
+                else
+                {
+                    agent.destination = targetObject.transform.position;
+                }
+
                 break;
             case SimpleAIState.ChasePlayer:
                 // always chase the nearest player. bla bla see above comment in chaseball
                 targetObject = FindNearestEnemyPlayer();
-                agent.destination = targetObject.transform.position;
-                if (agent.remainingDistance < 5.0f && currentTimeInState > minimumTimeInState) // if we've gotten close enough and have been in the state long enough (for smoothness)
-                { 
-                    ThrowBall(); // throw the ball
-                    hasBall = false; 
-                }
-                else if (this.transform.Find("BallHoldSpotAI").childCount == 0) // our ball got stolen out of our hands :(
+                if (targetObject == null) // if all enemy players are currently respawning, go back to Idle 
                 {
-                    hasBall = false;
+                    state = SimpleAIState.Idle;
+                    agent.ResetPath();
                 }
+                else
+                {
+                    agent.destination = targetObject.transform.position;
+                    if (agent.remainingDistance < 5.0f && currentTimeInState > minimumTimeInState) // if we've gotten close enough and have been in the state long enough (for smoothness)
+                    {
+                        ThrowBall(); // throw the ball
+                        hasBall = false;
+                    }
+                    else if (this.transform.Find("BallHoldSpotAI").childCount == 0) // our ball got stolen out of our hands :(
+                    {
+                        hasBall = false;
+                    }
+                }
+
                 break;
             default:
                 break;

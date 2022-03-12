@@ -37,6 +37,7 @@ public class SimpleAIUnitBallPickUp : MonoBehaviour
                 ball.transform.localRotation = Quaternion.identity;
                 ballRb = ball.GetComponent<Rigidbody>();
                 ballRb.isKinematic = true;
+                this.transform.GetComponentInParent<SimpleAIUnitController>().hasBall = true;
             }
         }
     }
