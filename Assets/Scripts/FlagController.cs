@@ -80,6 +80,36 @@ public class FlagController : MonoBehaviour
         }
     }
 
+    /** FlaggedDropped Function
+     * Function to handle the "dropping" of the flag
+     * Makes sure you can only drop a flag that is in transit, then reactivates the base and pole. Removes the parent (newly deceased flag carrier), 
+     * then sets the flag back on the ground. Finally, re-enables the collider so it can be picked up again and sets InTransit to false
+     * Returns true if flag is successfully dropped, false otherwise
+     */
+    public bool FlagDropped()
+    {
+        if (!InTransit) // can't drop a flag that isn't in transit
+        { 
+            return false; 
+        }
+        else
+        {
+            transform.Find("FlagBase").gameObject.SetActive(true); // re enable base and pole
+            transform.Find("FlagPole").gameObject.SetActive(true);
+            transform.SetParent(null); // remove parent flag carrier
+
+            // false bc team does not actively have flag
+            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
+            PlayerWithFlag = null; // null out PlayerWithFlag
+            transform.position = new Vector3(transform.position.x, startingPosition.y, transform.position.z); // lower it to the ground
+            transform.rotation = startingRotation;
+            this.GetComponent<Collider>().enabled = true; // re enable collider so it can be picked up again
+            InTransit = false; // no longer in transit
+            return true;
+        }
+    }
+
 
     /** Flag Returned Function
      * Called by Environment to return the flag. 
@@ -103,7 +133,7 @@ public class FlagController : MonoBehaviour
 
             PlayerWithFlag = null;
             transform.position = startingPosition;
-            startingRotation = transform.rotation;
+            transform.rotation = startingRotation;
             this.GetComponent<Collider>().enabled = true;
             InTransit = false;
             return true;
