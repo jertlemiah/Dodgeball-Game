@@ -12,12 +12,17 @@ public class PlayerController : MonoBehaviour
     public Vector2 _look;
     // public GameObject FollowTarget;
     public int health = 100;
+    public bool respawn = false;
+
+    private SpawnManager spawnManager;
+    [SerializeField] public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
+        // m_Rigidbody = GetComponent<Rigidbody>();
         m_Speed = 0.01f;
+        spawnManager = SpawnManager.Instance;
     }
 
     private void OnMove(InputValue movementValue)
@@ -37,6 +42,16 @@ public class PlayerController : MonoBehaviour
     {
         // rotate the camera
         transform.position = transform.position + new Vector3(movementX*m_Speed, 0, movementY*m_Speed);
+        
+        if (health <= 0) {
+            var spawnPoint = spawnManager.GetSpawnLocation();
+            Debug.Log("spawnPoint" + spawnPoint);
+            player.transform.position = spawnPoint;
+            health = 100;
+        }
+        
+
+
         // if (movementX < 0.1f && movementX < 0.1f)
         // {
         //     FollowTarget.transform.RotateAround(transform.position, Vector3.up, _look.x);
