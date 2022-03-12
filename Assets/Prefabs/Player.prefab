@@ -1036,6 +1036,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  canMove: 1
 --- !u!114 &1202531955121058271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,7 +1221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202531955153956524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.128, y: -0.203, z: 0}
+  m_LocalPosition: {x: 0.128, y: -0.083, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1202531955600286833}
@@ -3047,7 +3048,7 @@ Transform:
   m_GameObject: {fileID: 1202531956702175399}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.408, z: 0}
-  m_LocalScale: {x: 2, y: 0.3, z: 2}
+  m_LocalScale: {x: 2.2, y: 0.3, z: 2.2}
   m_Children: []
   m_Father: {fileID: 1202531955121058243}
   m_RootOrder: 3

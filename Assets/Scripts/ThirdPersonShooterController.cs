@@ -63,6 +63,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         pickUpZoneController.foundBall = false;
 
         anim.SetBool("PickUp", false);
+        thirdPersonController.canMove = true;
     }
 
     private void Update()
@@ -80,6 +81,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         {   
             ball = pickUpZoneController.ball.transform.parent.gameObject;
             anim.SetBool("PickUp", true);
+            thirdPersonController.canMove = false;
         }
 
         if(anim.GetBool("PickUp"))
