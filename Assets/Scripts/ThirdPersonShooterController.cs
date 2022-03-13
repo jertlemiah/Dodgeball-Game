@@ -52,6 +52,9 @@ public class ThirdPersonShooterController : MonoBehaviour
         ball.GetComponent<DodgeballController>().hasOwner = false;
     }
 
+    /* PickUpBall() - Triggered through animation events
+
+    */
     public void PickUpBall()
     {
         ball.transform.parent = handSpot.transform;
