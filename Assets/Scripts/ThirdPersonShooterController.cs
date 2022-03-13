@@ -48,6 +48,8 @@ public class ThirdPersonShooterController : MonoBehaviour
         rb.AddForce(throw_direction*throw_speed*100f);
         pickUpZoneController.hasBall = false;
         anim.SetBool("Throw", false);
+
+        ball.GetComponent<DodgeballController>().hasOwner = false;
     }
 
     public void PickUpBall()
