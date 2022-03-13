@@ -14,10 +14,11 @@ public class GameController : MonoBehaviour
     public Text timeText;
     public Text bluePointsText;
     public Text redPointsText;
+
     // Start is called before the first frame update
     void Start()
     {
-        timerIsRunning = true;
+        timerIsRunning = false;
         bluePointsText.text = bluePoints.ToString();
         redPointsText.text = redPoints.ToString();
     }

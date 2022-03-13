@@ -28,6 +28,9 @@ public class PredictedPositionController : MonoBehaviour
     NavMeshHit navHit;
     void FixedUpdate()
     {
+        if(trackingTargetGO == null)
+            return;
+        
         Vector3 newPos = GetProjectedPosition(projectionTime);
         
         
@@ -88,11 +91,14 @@ public class PredictedPositionController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(trackingTargetGO == null)
+            return;
         StartCoroutine(CheskPos());
     }
 
     IEnumerator CheskPos()
     {
+        
         yield return new WaitForEndOfFrame();
 
         Vector3 velTrack = (trackingTargetGO.transform.position - posPrev) / Time.deltaTime;

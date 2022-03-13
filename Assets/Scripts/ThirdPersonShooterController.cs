@@ -9,10 +9,10 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
     [SerializeField] private float normalSensitivity;
     [SerializeField] private float aimSensitivity;
-    [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
+    [SerializeField] private LayerMask aimColliderLayerMask;
 
     [SerializeField] private GameObject handSpot;
-    //[SerializeField] private Transform debugTransform;
+    [SerializeField] private Transform debugTransform;
 
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
@@ -66,6 +66,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         pickUpZoneController.foundBall = false;
 
         anim.SetBool("PickUp", false);
+        thirdPersonController.canMove = true;
     }
 
     private void Update()
@@ -83,6 +84,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         {   
             ball = pickUpZoneController.ball.transform.parent.gameObject;
             anim.SetBool("PickUp", true);
+            thirdPersonController.canMove = false;
         }
 
         if(anim.GetBool("PickUp"))

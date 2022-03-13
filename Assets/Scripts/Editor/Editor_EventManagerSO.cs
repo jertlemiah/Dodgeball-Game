@@ -18,6 +18,24 @@ public class Editor_EventManagerSO : Editor
 		{
 			EventManagerSO.GiveTeamPoints(Team.Team2,1);
 		}
+
+		if (GUILayout.Button("Team 1 Grabs Flag"))
+		{
+			EventManagerSO.TriggerEvent_UpdateFlagStatus(Team.Team1, true);
+		}
+		if (GUILayout.Button("Team 2 Grabs Flag"))
+		{
+			EventManagerSO.TriggerEvent_UpdateFlagStatus(Team.Team2, true);
+		}
+		if (GUILayout.Button("Team 1 Drops/Returns Flag"))
+		{
+			EventManagerSO.TriggerEvent_UpdateFlagStatus(Team.Team1, false);
+		}
+		if (GUILayout.Button("Team 2 Drops/Returns Flag"))
+		{
+			EventManagerSO.TriggerEvent_UpdateFlagStatus(Team.Team2, false);
+		}
+	
 		// if (GUILayout.Button("Turn off 'Game Over' canvas"))
 		// {
 		// 	manager.TEMP_TurnOffGameOverCanvas();
@@ -39,5 +57,14 @@ public class Editor_EventManagerSO : Editor
 			EventManagerSO.TriggerEvent_UnpauseGame();
 		}
 		
+		if (GUILayout.Button("Finished Loading Scene")){
+			EventManagerSO.TriggerEvent_FinishedLoading();	
+		}
+        if (GUILayout.Button("Start Prematch Preparations")){
+			EventManagerSO.TriggerEvent_StartPrematch();
+		}
+		if (GUILayout.Button("Start Match")){
+			EventManagerSO.TriggerEvent_StartMatch();
+		}
 	}
 }
