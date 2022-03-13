@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float health = 100f;
     void Start()
     {
         
@@ -17,6 +18,8 @@ public class EnemyController : MonoBehaviour
     }
     void OnCollisionEnter(Collision c)
     {
+        health = health - (health * c.gameObject.GetComponent<DodgeballController>().damage);
+        Debug.Log(health);
         Debug.Log(gameObject.name+" has been hit by "+c.gameObject.name);
     }
 }

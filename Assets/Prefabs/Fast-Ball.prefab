@@ -8638,10 +8638,10 @@ GameObject:
   - component: {fileID: 2076340685624309513}
   - component: {fileID: 2076340685624309512}
   - component: {fileID: 851144451}
-  - component: {fileID: 851144450}
   - component: {fileID: -8109734628765744971}
+  - component: {fileID: 2706368876847593665}
   m_Layer: 6
-  m_Name: Dodgeball
+  m_Name: Fast-Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8774,36 +8774,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &851144450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2076340685624309495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b7c38b4acefed14296b4ab22b4b795a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 2076340685624309512}
-  dodgeballClipsQuiet:
-  - {fileID: 8300000, guid: d6010c207b710f645addb54bb896e404, type: 3}
-  - {fileID: 8300000, guid: 3a9bc9f865ce85d499fe8c3b16ad387c, type: 3}
-  - {fileID: 8300000, guid: 64d6b6ec63415e64f874aec1f42700b3, type: 3}
-  - {fileID: 8300000, guid: b44e2f5cb4527dd478ca10b13fc1c08e, type: 3}
-  - {fileID: 8300000, guid: 2aa016ee51f1f8043b561462372366a9, type: 3}
-  dodgeballClipsMedium:
-  - {fileID: 8300000, guid: 7fcc4f97018a6ba4ba99c56e2982588a, type: 3}
-  - {fileID: 8300000, guid: 0bdb10a671fa2ac489c51561ba550c42, type: 3}
-  dodgeballClipsLoud:
-  - {fileID: 8300000, guid: e4d9df4c560350342906cea39abcf571, type: 3}
-  - {fileID: 8300000, guid: 6d0c022e32716dd46a3949f84761f4d0, type: 3}
-  audioSource: {fileID: 851144451}
-  quietSpeed: 0
-  mediumSpeed: 1.5
-  loudSpeed: 3
-  velocity: 20
 --- !u!96 &-8109734628765744971
 TrailRenderer:
   serializedVersion: 2
@@ -8902,3 +8872,34 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &2706368876847593665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076340685624309495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d201286eeda2a45f0b78e4e05af7f912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 2076340685624309512}
+  dodgeballClipsQuiet:
+  - {fileID: 8300000, guid: d6010c207b710f645addb54bb896e404, type: 3}
+  - {fileID: 8300000, guid: 3a9bc9f865ce85d499fe8c3b16ad387c, type: 3}
+  - {fileID: 8300000, guid: 64d6b6ec63415e64f874aec1f42700b3, type: 3}
+  - {fileID: 8300000, guid: b44e2f5cb4527dd478ca10b13fc1c08e, type: 3}
+  - {fileID: 8300000, guid: 2aa016ee51f1f8043b561462372366a9, type: 3}
+  dodgeballClipsMedium:
+  - {fileID: 8300000, guid: 7fcc4f97018a6ba4ba99c56e2982588a, type: 3}
+  - {fileID: 8300000, guid: 0bdb10a671fa2ac489c51561ba550c42, type: 3}
+  dodgeballClipsLoud:
+  - {fileID: 8300000, guid: e4d9df4c560350342906cea39abcf571, type: 3}
+  - {fileID: 8300000, guid: 6d0c022e32716dd46a3949f84761f4d0, type: 3}
+  audioSource: {fileID: 851144451}
+  quietSpeed: 0
+  mediumSpeed: 1.5
+  loudSpeed: 3
+  velocity: 40
+  damage: 0.1
