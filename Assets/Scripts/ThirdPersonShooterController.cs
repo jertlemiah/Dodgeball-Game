@@ -48,6 +48,8 @@ public class ThirdPersonShooterController : MonoBehaviour
         rb.AddForce(throw_direction*throw_speed*100f);
         pickUpZoneController.hasBall = false;
         anim.SetBool("Throw", false);
+
+        ball.GetComponent<DodgeballController>().hasOwner = false;
     }
 
     public void PickUpBall()
@@ -63,6 +65,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         pickUpZoneController.foundBall = false;
 
         anim.SetBool("PickUp", false);
+        thirdPersonController.canMove = true;
     }
 
     private void Update()
@@ -80,6 +83,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         {   
             ball = pickUpZoneController.ball.transform.parent.gameObject;
             anim.SetBool("PickUp", true);
+            thirdPersonController.canMove = false;
         }
 
         if(anim.GetBool("PickUp"))

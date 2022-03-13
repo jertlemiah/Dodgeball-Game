@@ -34,7 +34,6 @@ public class FlagController : MonoBehaviour
             PlayerWithFlag = player;
             transform.position = player.transform.Find("Skeleton/FlagCarryTarget").transform.position;
             transform.SetParent(player.transform.Find("Skeleton/FlagCarryTarget").transform);
-            this.GetComponent<Collider>().enabled = false; 
             //this.GetComponent<Collider>().isKinematic = true;
 
             // true bc team actively has flag
@@ -51,7 +50,7 @@ public class FlagController : MonoBehaviour
      * Returns: True if the "scoring the flag" action is successful, false if the flag cannot be scored
      */
     public bool FlagScored()
-    {
+   {
         if (!InTransit) // add conditions where we don't want to score the flag here
         {
             return false;
@@ -68,14 +67,42 @@ public class FlagController : MonoBehaviour
             Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
             EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
             EventManagerSO.GiveTeamPoints(team, 1);
-
+            
             
             
             PlayerWithFlag = null;
             transform.position = startingPosition;
             transform.rotation = startingRotation;
             InTransit = false;
-            this.GetComponent<Collider>().enabled = true;
+            return true;
+        }
+    }
+
+    /** FlaggedDropped Function
+     * Function to handle the "dropping" of the flag
+     * Makes sure you can only drop a flag that is in transit, then reactivates the base and pole. Removes the parent (newly deceased flag carrier), 
+     * then sets the flag back on the ground. Finally, re-enables the collider so it can be picked up again and sets InTransit to false
+     * Returns true if flag is successfully dropped, false otherwise
+     */
+    public bool FlagDropped()
+    {
+        if (!InTransit) // can't drop a flag that isn't in transit
+        { 
+            return false; 
+        }
+        else
+        {
+            transform.Find("FlagBase").gameObject.SetActive(true); // re enable base and pole
+            transform.Find("FlagPole").gameObject.SetActive(true);
+            transform.SetParent(null); // remove parent flag carrier
+
+            // false bc team does not actively have flag
+            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
+            PlayerWithFlag = null; // null out PlayerWithFlag
+            transform.position = new Vector3(transform.position.x, startingPosition.y, transform.position.z); // lower it to the ground
+            transform.rotation = startingRotation;
+            InTransit = false; // no longer in transit
             return true;
         }
     }
@@ -103,8 +130,7 @@ public class FlagController : MonoBehaviour
 
             PlayerWithFlag = null;
             transform.position = startingPosition;
-            startingRotation = transform.rotation;
-            this.GetComponent<Collider>().enabled = true;
+            transform.rotation = startingRotation;
             InTransit = false;
             return true;
         }
@@ -115,7 +141,6 @@ public class FlagController : MonoBehaviour
         InTransit = false;
         startingPosition = transform.position; 
         startingRotation = transform.rotation;
-        this.GetComponent<Collider>().enabled = true;
     }
 
     // Update is called once per frame

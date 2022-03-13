@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public enum SceneIndex {MANAGER = 0, TITLE_SCREEN = 1, LEVEL_GYM = 2}
+public enum SceneIndex {MANAGER = 0, TITLE_SCREEN = 1, LEVEL_GYM = 2, LEVEL_TEST = 3}
 public class GameSceneManager : Singleton<GameSceneManager>
 {
     [SerializeField] GameObject loadingScreenGO;

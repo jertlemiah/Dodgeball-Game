@@ -16,6 +16,8 @@ public class DodgeballController : MonoBehaviour
     RandomAudioClip randomQuietAudioClip = new RandomAudioClip();
     RandomAudioClip randomMediumAudioClip = new RandomAudioClip();
     RandomAudioClip randomLoudAudioClip = new RandomAudioClip();
+
+    public bool hasOwner = false;
     
     // Start is called before the first frame update
     void Start()
