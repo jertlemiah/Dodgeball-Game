@@ -16174,6 +16174,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1625473314562438703, guid: ff55b23ec5d854349bc89894800b4fb5, type: 3}
   m_PrefabInstance: {fileID: 1643594399}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2092562761 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1325101787872442452, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+  m_PrefabInstance: {fileID: 1325101788004369244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 256506bca0828754cb52dd31deee26bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2111233196 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1625473314562438703, guid: ff55b23ec5d854349bc89894800b4fb5, type: 3}
@@ -16554,6 +16565,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2004207322}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLevelDetails
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2092562761}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: LevelPanelController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1325101787872442463, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
       propertyPath: m_Name
       value: Gym - Level Select Panel
@@ -16879,15 +16914,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 284371913}
+      objectReference: {fileID: 2004207322}
     - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLevelDetails
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 284371913}
+    - target: {fileID: 1325101787872442457, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: LevelPanelController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1325101787872442463, guid: 9fc5d3ad2c5a6cb43ae4d455cd7b069b, type: 3}
       propertyPath: m_Name
