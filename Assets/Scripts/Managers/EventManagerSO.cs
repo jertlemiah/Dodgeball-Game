@@ -33,8 +33,6 @@ public class EventManagerSO : ScriptableObject
 
     public delegate void FinishedLoadingHandler();
     public static event FinishedLoadingHandler E_FinishedLoading;
-    
-    
     public static void GiveTeamPoints(Team team, int points)
     {
         if(E_GiveTeamPoints != null){

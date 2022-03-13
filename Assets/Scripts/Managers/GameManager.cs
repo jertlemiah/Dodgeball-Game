@@ -12,6 +12,7 @@ public struct TeamData
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameConstantsSO gameConstants;
+    public GameState currentState;
     public float timeRemaining = 60; // seconds
     public bool timerIsRunning = false;
     public int team1Score;
@@ -77,10 +78,12 @@ public class GameManager : Singleton<GameManager>
     void StartPrematch()
     {
         EventManagerSO.TriggerEvent_StartPrematch();
+        currentState = GameState.PreMatch;
     }
     void StartMatch()
     {
         StartTimer(timeRemaining);
+        currentState = GameState.MidMatch;
     }
     
     public void StartTimer(float timerTime)
@@ -115,7 +118,7 @@ public class GameManager : Singleton<GameManager>
     }
     void EndGame(Team winningTeam)
     {
-
+        currentState = GameState.PostMatch;
     }
     private void GiveTeamPoints(Team team, int points)
     {
@@ -144,13 +147,25 @@ public class GameManager : Singleton<GameManager>
         }
     }    
 
+    public void TogglePause()
+    {
+        if(currentState == GameState.MidMatch){
+            EventManagerSO.TriggerEvent_PauseGame();
+        } 
+        else if (currentState == GameState.Paused){
+            EventManagerSO.TriggerEvent_UnpauseGame();
+        }
+    }
+
     void PauseGame()
     {
         Time.timeScale = 0;
+        currentState = GameState.Paused;
     }
 
     void UnpauseGame()
     {
         Time.timeScale = 1;
+        currentState = GameState.MidMatch;
     }
 }

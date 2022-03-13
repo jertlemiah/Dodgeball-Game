@@ -17,10 +17,12 @@ public class InputManager : Singleton<InputManager>
     void Awake()
     {
         _input = new InputActions();
+        _input.Player.Pause.performed += context => GameManager.Instance.TogglePause();
         EventManagerSO.E_PauseGame += EnableMouse;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
         EventManagerSO.E_UnpauseGame += DisableMouse;
     }
+    
     
     private void OnEnable()
     {
@@ -29,6 +31,7 @@ public class InputManager : Singleton<InputManager>
     private void OnDisable()
     {
         _input.Disable();
+        _input.Player.Pause.performed -= context => GameManager.Instance.TogglePause();
         EventManagerSO.E_PauseGame -= EnableMouse;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
         EventManagerSO.E_UnpauseGame -= DisableMouse;
@@ -48,6 +51,7 @@ public class InputManager : Singleton<InputManager>
         cursorLocked = true;
         cursorInputForLook = true;
     }
+
 
     public void OnMove(InputValue value)
     {
