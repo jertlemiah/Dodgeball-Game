@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using TMPro;
 
 public enum MenuScreen {Title,Play,Settings,Credits,LevelDetails}
 public class MainMenuController : Singleton<MainMenuController>
@@ -10,6 +12,9 @@ public class MainMenuController : Singleton<MainMenuController>
     [SerializeField] GameObject titleScreenGO;
     [SerializeField] GameObject playScreenGO;
     [SerializeField] GameObject settingsScreenGO;
+    [SerializeField] Image levelDetailsImage;
+    [SerializeField] TMP_Text levelDetailsText;
+    [SerializeField] GameObject levelDetailsMask;
     [SerializeField] float screenWidth = 1000f;
     [SerializeField] float screenHeight = 600f;
     [SerializeField] float screenTransitionTime = 1f;
@@ -33,11 +38,26 @@ public class MainMenuController : Singleton<MainMenuController>
         
     //     playScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
     // }
-    public void Play_LevelDetailsButton(LevelPanelController levelPanelController) 
+    public void LoadLevelDetails(LevelPanelController levelPanelController) 
     {
         // GameSceneManager.Instance.LoadScene(sceneIndex);
-        levelPanelController.GetComponent<RectTransform>().DOSizeDelta(new Vector2(screenWidth,screenHeight),screenTransitionTime);
+        // levelPanelController.GetComponent<RectTransform>().DOSizeDelta(new Vector2(screenWidth,screenHeight),screenTransitionTime);
+        LevelDataSO levelData = levelPanelController.levelData;
+        RectTransform panelRT = levelPanelController.GetComponent<RectTransform>();
+        RectTransform maskRT = levelDetailsMask.GetComponent<RectTransform>();
+
+        levelDetailsImage.sprite = levelData.panelImage;
+        levelDetailsText.text = "LEVEL - "+levelData.levelName;
+        maskRT.position = panelRT.position;
+
+        // maskRT.SetSizeWithCurrentAnchors( RectTranform.Axis.Vertical, myHeight);
     }
+    // public void LoadLevelDetails(LevelDataSO levelData)
+    // {
+    //     levelDetailsImage.sprite = levelData.panelImage;
+    //     levelDetailsText.text = "LEVEL - "+levelData.levelName;
+    //     levelDetailsMask
+    // }
     public void Title_PlayButton()
     {
         // titleScreenGO.GetComponent<RectTransform>().DOMoveX(-offscreenHorizontal,screenTransitionTime);

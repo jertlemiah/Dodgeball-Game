@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256506bca0828754cb52dd31deee26bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSceneData: {fileID: 0}
+  levelData: {fileID: 0}
   UiSelector: {fileID: 1325101788883466601}
   UiSelected: {fileID: 1325101788883466601}
   UiPressed: {fileID: 0}

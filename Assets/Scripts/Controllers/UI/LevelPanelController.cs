@@ -8,7 +8,7 @@ using DG.Tweening;
 public class LevelPanelController : MonoBehaviour,
     ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] public LevelDataSO buttonSceneData;
+    [SerializeField] public LevelDataSO levelData;
     [SerializeField] public  GameObject UiSelector, UiSelected, UiPressed;
     
     [SerializeField] public  Color colorDarkText, colorLightText;
@@ -36,7 +36,7 @@ public class LevelPanelController : MonoBehaviour,
     }
     public void LevelDetailsButton() 
     {
-        MainMenuController.Instance.Play_LevelDetailsButton(this);
+        MainMenuController.Instance.LoadLevelDetails(this);
     }
 
     // void SetAlpha
