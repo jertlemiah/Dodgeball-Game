@@ -13,14 +13,21 @@ public class PickUpZoneController : MonoBehaviour
         if(!hasBall)
         {
             if(other.gameObject.CompareTag("Ball"))
-            {
-                if (other.gameObject.GetComponentInParent<Animator>() != null)
+            {   
+                DodgeballController controller = other.gameObject.GetComponentInParent<DodgeballController>();
+                if(!controller.hasOwner)
                 {
-                    other.gameObject.GetComponentInParent<Animator>().enabled = false;
+                    if (other.gameObject.GetComponentInParent<Animator>() != null)
+                    {
+                        other.gameObject.GetComponentInParent<Animator>().enabled = false;
+                    }
+                    ball = other.gameObject;
+                    foundBall= true;
+                    controller.hasOwner = true;
+                    // GameManager.Instance.TEMP_TurnOnBallHUD();
+
                 }
-                ball = other.gameObject;
-                foundBall= true;
-                // GameManager.Instance.TEMP_TurnOnBallHUD();
+                
             }
         }
 
