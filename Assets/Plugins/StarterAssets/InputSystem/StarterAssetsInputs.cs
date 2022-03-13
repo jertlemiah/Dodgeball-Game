@@ -15,6 +15,8 @@ namespace StarterAssets
 		public bool aim;
 		public bool throw_bool;
 
+		public bool pickup;
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -57,6 +59,11 @@ namespace StarterAssets
 		{	
 			ThrowInput(value.isPressed);
 		}
+
+		public void OnPickUp(InputValue value)
+		{
+			PickUpInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -90,6 +97,11 @@ namespace StarterAssets
 		public void ThrowInput(bool newThrowState)
 		{
 			throw_bool = newThrowState;
+		}
+
+		public void PickUpInput(bool newPickUpState)
+		{
+			pickup = newPickUpState;
 		}
 
 
