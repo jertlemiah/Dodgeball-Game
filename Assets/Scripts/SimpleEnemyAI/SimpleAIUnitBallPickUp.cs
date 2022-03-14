@@ -26,7 +26,8 @@ public class SimpleAIUnitBallPickUp : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Ball")) // filter out everything else except balls
         {
             DodgeballController controller = other.gameObject.GetComponentInParent<DodgeballController>();
-            if (!controller.hasOwner && ballHoldSpot.transform.childCount < 1) // if the dodgeball isn't already being carried and we also don't already have a ball
+            // if the dodgeball isn't already being carried and we also don't already have a ball and it isn't thrown
+            if (!controller.hasOwner && ballHoldSpot.transform.childCount < 1 && controller.isThrown == false) 
             {
                 ball = other.gameObject.transform.parent.gameObject; // all this ball grabbing code pulled straight from ThirdPersonShooterController
                 ball.transform.parent = ballHoldSpot.transform;  
@@ -50,6 +51,8 @@ public class SimpleAIUnitBallPickUp : MonoBehaviour
     {
         ball.transform.parent = null;  // all this is ball throwing code is pulled straight from ThirdPersonShooterController
         ball.GetComponent<DodgeballController>().hasOwner = false;
+        ball.GetComponent<DodgeballController>().isThrown = true;
+        ball.GetComponent<DodgeballController>().thrownBy = this.transform.parent.gameObject;
         ball = null;
         ballRb.isKinematic = false;
         ballRb.velocity = Vector3.zero;

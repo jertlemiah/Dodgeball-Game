@@ -18,6 +18,8 @@ public class DodgeballController : MonoBehaviour
     RandomAudioClip randomLoudAudioClip = new RandomAudioClip();
 
     public bool hasOwner = false;
+    public bool isThrown = false;
+    public GameObject thrownBy;
     
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,20 @@ public class DodgeballController : MonoBehaviour
     void OnCollisionEnter(Collision c)
     {
         PlayRandomHitSound();
+        if (c.gameObject.layer == LayerMask.NameToLayer("Map")) // as soon as the ball touches the wall/floor/ceiling, it is a dead ball (no damage after that)
+        {
+            isThrown = false;
+        }
+        // upon hitting a AI/player, call the Player's PlayerController TakeDamage() function. Make sure the "colliding" ball wasn't thrown by the same person its colliding with
+        else if (c.gameObject.layer == LayerMask.NameToLayer("Player") && isThrown == true && c.gameObject != thrownBy) 
+        {
+            PlayerController pc = c.gameObject.GetComponent<PlayerController>();
+            if (pc != null)
+            {
+                pc.TakeDamage(25); // fixed damage for now
+                isThrown = false; // eliminate taking damage twice before the ball hits the ground
+            }
+        }
     }
 
     private void PlayRandomHitSound()

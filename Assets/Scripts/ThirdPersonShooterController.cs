@@ -50,6 +50,8 @@ public class ThirdPersonShooterController : MonoBehaviour
         anim.SetBool("Throw", false);
 
         ball.GetComponent<DodgeballController>().hasOwner = false;
+        ball.GetComponent<DodgeballController>().isThrown = true; // the ball can now cause damage on collision
+        ball.GetComponent<DodgeballController>().thrownBy = this.gameObject; // to let the dodgeball know not to damage the person who threw it on exit from hand
     }
 
     /* PickUpBall() - Triggered through animation events

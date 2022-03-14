@@ -33,6 +33,13 @@ public class EventManagerSO : ScriptableObject
 
     public delegate void FinishedLoadingHandler();
     public static event FinishedLoadingHandler E_FinishedLoading;
+
+    public delegate void HideHUDHandler();
+    public static event HideHUDHandler E_HideHUD;
+
+    public delegate void UnhideHUDHandler();
+    public static event UnhideHUDHandler E_UnhideHUD;
+    
     public static void GiveTeamPoints(Team team, int points)
     {
         if(E_GiveTeamPoints != null){
@@ -104,5 +111,19 @@ public class EventManagerSO : ScriptableObject
             Debug.Log("Triggering Event 'E_FinishedLoading()'"); 
             E_FinishedLoading();
         }   
+    }
+    public static void TriggerEvent_UnhideHUD()
+    {       
+        if(E_UnhideHUD != null){
+            Debug.Log("Triggering Event 'E_UnhideHUD()'");
+            E_UnhideHUD();
+        }
+    }
+    public static void TriggerEvent_HideHUD()
+    {       
+        if(E_HideHUD != null){
+            Debug.Log("Triggering Event 'E_HideHUD()'");
+            E_HideHUD();
+        }
     }
 }
