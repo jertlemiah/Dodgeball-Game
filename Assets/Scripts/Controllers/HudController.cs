@@ -41,6 +41,8 @@ public class HudController : MonoBehaviour
         EventManagerSO.E_FinishedLoading += DisableHUD;
         EventManagerSO.E_StartMatch += EnableHUD;
         EventManagerSO.E_EndMatch += EndMatch;
+        EventManagerSO.E_HideHUD += DisableHUD;
+        // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
         // GameManager.SetTimer += SetTimerUI;
@@ -55,12 +57,13 @@ public class HudController : MonoBehaviour
         EventManagerSO.E_FinishedLoading -= DisableHUD;
         EventManagerSO.E_StartMatch -= EnableHUD;
         EventManagerSO.E_EndMatch -= EndMatch;
+        EventManagerSO.E_HideHUD -= DisableHUD;
+        // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
         // GameManager.PickupBall -= DisplayHeldBall;
         // GameManager.RemoveBall -= HideHeldBall;
     }
-  
     // Update is called once per frame
     void Update()
     {
