@@ -22,6 +22,7 @@ public class MainMenuController : Singleton<MainMenuController>
     [SerializeField] float screenWidth = 1000f;
     [SerializeField] float screenHeight = 600f;
     [SerializeField] float screenTransitionTime = 1f;
+    [SerializeField] float screenScaleDiff = 0.3f;
     Dictionary<MenuScreen, GameObject> menuScreenDict = new Dictionary<MenuScreen, GameObject>();
     // Start is called before the first frame update
     void Start()
@@ -53,25 +54,31 @@ public class MainMenuController : Singleton<MainMenuController>
             GameObject newScreenGO = menuScreenDict[newScreen];
             
             Vector2 offscreenPos = new Vector2(-screenWidth,0);
+            float scaleDiff = screenScaleDiff;
             if(forwards){
                 screenHistory.Add(newScreen);
             } else {
                 offscreenPos = -offscreenPos;
+                scaleDiff = -scaleDiff;
                 screenHistory.RemoveAt(screenHistory.Count-1);
             }
 
             // First place the screens in the correct places for transitions
-            newScreenGO.GetComponent<RectTransform>().anchoredPosition = -offscreenPos;
+            
+            newScreenGO.GetComponent<RectTransform>().anchoredPosition = -offscreenPos*(1+scaleDiff/2);//*(1/3f);
             newScreenGO.SetActive(true);
-            titleScreenGO.GetComponent<CanvasGroup>().alpha = 0;
+            newScreenGO.GetComponent<CanvasGroup>().alpha = 0;
+            newScreenGO.transform.localScale = Vector3.one*(1-scaleDiff);
             
 
             // Then transition to the new screen
-            curScreenGO.GetComponent<RectTransform>().DOAnchorPos(offscreenPos,screenTransitionTime);
+            curScreenGO.GetComponent<RectTransform>().DOAnchorPos(offscreenPos*(1+scaleDiff/2),screenTransitionTime);
             curScreenGO.GetComponent<CanvasGroup>().DOFade(0,screenTransitionTime*0.5f);
+            curScreenGO.transform.DOScale(1f+scaleDiff,screenTransitionTime);
             // curScreenGO.SetActive(false);
             newScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
             newScreenGO.GetComponent<CanvasGroup>().DOFade(1,screenTransitionTime*1.5f);
+            newScreenGO.transform.DOScale(1f,screenTransitionTime);
 
             currentScreen = newScreen;
         }
