@@ -5,58 +5,34 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody m_Rigidbody;
-    private float m_Speed;
-    private float movementX;
-    private float movementY;  
-    public Vector2 _look;
-    // public GameObject FollowTarget;
     public int health = 100;
-    public bool respawn = false;
 
     private SpawnManager spawnManager;
-    [SerializeField] public GameObject player;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_Speed = 0.01f;
         spawnManager = SpawnManager.Instance;
     }
 
-    private void OnMove(InputValue movementValue)
-    {
-        Vector2 movementVector = movementValue.Get<Vector2>();
-        movementX = movementVector.x;
-        movementY = movementVector.y;
-    }
-    public void OnLook(InputValue value)
-    {
-        _look = value.Get<Vector2>();
-    }
-
-
     // Update is called once per frame
     private void Update()
-    {
-        // rotate the camera
-        transform.position = transform.position + new Vector3(movementX*m_Speed, 0, movementY*m_Speed);
-        
+    {   
         if (health <= 0) {
+            if (player.GetComponent<CharacterController>() != null)
+            {
+                player.GetComponent<CharacterController>().enabled = false;
+            }
             var spawnPoint = spawnManager.GetSpawnLocation();
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
             health = 100;
+            if (player.GetComponent<CharacterController>() != null)
+            {
+                player.GetComponent<CharacterController>().enabled = true;
+            }
         }
-        
-
-
-        // if (movementX < 0.1f && movementX < 0.1f)
-        // {
-        //     FollowTarget.transform.RotateAround(transform.position, Vector3.up, _look.x);
-        // }
-        
     }
 
     public void TakeDamage (int damage) {
