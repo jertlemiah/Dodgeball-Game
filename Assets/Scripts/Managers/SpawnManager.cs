@@ -2,7 +2,7 @@
  using System.Collections.Generic;
  using UnityEngine;
  
- [CreateAssetMenu(fileName = "SpawnManagerSO", menuName = "SO Channels/SpawnManager", order = 1)]
+//  [CreateAssetMenu(fileName = "SpawnManagerSO", menuName = "SO Channels/SpawnManager", order = 1)]
  public class SpawnManager : Singleton<SpawnManager>
  {
      private int spawnIndex;

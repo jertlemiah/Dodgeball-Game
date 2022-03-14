@@ -63,11 +63,15 @@ public class MainMenuController : Singleton<MainMenuController>
             // First place the screens in the correct places for transitions
             newScreenGO.GetComponent<RectTransform>().anchoredPosition = -offscreenPos;
             newScreenGO.SetActive(true);
+            titleScreenGO.GetComponent<CanvasGroup>().alpha = 0;
+            
 
             // Then transition to the new screen
             curScreenGO.GetComponent<RectTransform>().DOAnchorPos(offscreenPos,screenTransitionTime);
+            curScreenGO.GetComponent<CanvasGroup>().DOFade(0,screenTransitionTime*0.5f);
             // curScreenGO.SetActive(false);
             newScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
+            newScreenGO.GetComponent<CanvasGroup>().DOFade(1,screenTransitionTime*1.5f);
 
             currentScreen = newScreen;
         }
