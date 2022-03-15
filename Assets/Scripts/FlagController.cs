@@ -66,7 +66,7 @@ public class FlagController : MonoBehaviour
             // false bc team does not actively have flag
             Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
             EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
-            EventManagerSO.GiveTeamPoints(team, 1);
+            EventManagerSO.TriggerEvent_GiveTeamPoints(team, 1);
             
             
             

@@ -8,8 +8,12 @@ using TMPro;
 public enum MenuScreen {Title,Play,Settings,Credits,LevelDetails}
 public class MainMenuController : Singleton<MainMenuController>
 {
-    [SerializeField] public List<MenuScreen> screenHistory = new List<MenuScreen>();
+    [Header("Current Menu Screen")]
     [SerializeField] public MenuScreen currentScreen;
+    [SerializeField] public List<MenuScreen> screenHistory = new List<MenuScreen>();
+    public LevelDataSO selectedLevel;
+
+    [Space(10f)][Header("Game Object Properties")]
     [SerializeField] GameObject titleScreenGO;
     [SerializeField] GameObject levelSelectScreenGO;
     [SerializeField] GameObject settingsScreenGO;
@@ -18,12 +22,16 @@ public class MainMenuController : Singleton<MainMenuController>
     [SerializeField] Image levelDetailsImage;
     [SerializeField] TMP_Text levelDetailsText;
     [SerializeField] GameObject levelDetailsMask;
-    public LevelDataSO selectedLevel;
-    [SerializeField] float screenWidth = 1000f;
-    [SerializeField] float screenHeight = 600f;
+
+    [Space(10f)][Header("Screen Transition Settings")]
     [SerializeField] float screenTransitionTime = 1f;
     [SerializeField] float screenScaleDiff = 0.3f;
+
+    [Space(10f)][Header("Manual Screen Override")]
+    [SerializeField] public MenuScreen overrideScreen;
     Dictionary<MenuScreen, GameObject> menuScreenDict = new Dictionary<MenuScreen, GameObject>();
+    float screenWidth = 1000f;
+    float screenHeight = 600f;
     // Start is called before the first frame update
     void Start()
     {

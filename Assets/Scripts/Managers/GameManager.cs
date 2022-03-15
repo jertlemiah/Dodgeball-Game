@@ -9,21 +9,31 @@ public struct TeamData
     public int teamScore;
     public List<UnitController> teamMembers;
 }
+/// <summary> 
+///     GameManager is a singleton responsible for managing various attributes used in a match, such as the game timer or team scores.
+/// </summary>
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameConstantsSO gameConstants;
+
+    [Space(10)][Header("Current Status")]
     public GameState currentState;
+
+    [Space(10)][Header("Game Timer")]
     public float timeRemaining = 60; // seconds
     public bool timerIsRunning = false;
+
+    [Space(10)][Header("Team Scores")]
     public int team1Score;
     public int team2Score;
     public bool useStartingScores = false;
+
     public Dictionary<Team, TeamData> teamDict;
     public delegate void PickupBallHandler(); // This is temporary
     public static event PickupBallHandler PickupBall;// This is temporary
     public delegate void RemoveBallHandler(); // This is temporary
     public static event RemoveBallHandler RemoveBall;// This is temporary
-    // Start is called before the first frame update
+
     void Start()
     {
         // StartTimer(timeRemaining);
@@ -33,6 +43,7 @@ public class GameManager : Singleton<GameManager>
         else
             EventManagerSO.TriggerEvent_SetScore(0,0);
     }
+
     void Awake()
     {
         teamDict = new Dictionary<Team, TeamData>();
@@ -41,8 +52,10 @@ public class GameManager : Singleton<GameManager>
             TeamData teamData = new TeamData();
             teamDict.Add(team,teamData);
         }
+        
         if(!gameConstants)
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
+
         EventManagerSO.E_SetScore += SetScore;
         EventManagerSO.E_EndMatch += EndGame;
         EventManagerSO.E_GiveTeamPoints += GiveTeamPoints;
@@ -55,6 +68,7 @@ public class GameManager : Singleton<GameManager>
         // GameManager.PickupBall += DisplayHeldBall;
         // GameManager.RemoveBall += HideHeldBall;
     } 
+
     void OnDisable()
     {
         EventManagerSO.E_SetScore -= SetScore;

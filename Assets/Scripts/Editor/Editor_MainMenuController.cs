@@ -9,11 +9,12 @@ public class Editor_MainMenuController : Editor
 {
     public override void OnInspectorGUI()
 	{
-		GameManager manager = target as GameManager;
+		MainMenuController mainMenu = target as MainMenuController;
         base.OnInspectorGUI();
         if (GUILayout.Button("Change Active Screen"))
 		{
-			Debug.Log("'Change Active Screen' doesn't do anything right now");
+			// Debug.Log("'Change Active Screen' doesn't do anything right now");
+			mainMenu.SwitchToScreen(mainMenu.overrideScreen,true);
 		}
 	}
 }
