@@ -1,28 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 
 public class PickUpZoneController : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool hasBall = false;
     public bool foundBall = false;
-    public GameObject ball; 
+    public GameObject ball;
+    private bool ballNear = false;
+    private DodgeballController controller;
+    private StarterAssetsInputs starterAssetsInputs;
+
+    private void Awake()
+    {
+        starterAssetsInputs = GetComponentInParent<StarterAssetsInputs>();
+    }
+
+    private void Update()
+    {
+        if(ballNear && starterAssetsInputs.pickup)
+        {
+            foundBall = true;
+            controller.hasOwner = true;
+            ballNear = false;
+            // GameManager.Instance.TEMP_TurnOnBallHUD();
+        }
+    } 
     private void OnTriggerEnter(Collider other)
     {   
         if(!hasBall)
         {
             if(other.gameObject.CompareTag("Ball"))
-            {
-                if (other.gameObject.GetComponentInParent<Animator>() != null)
+            {   
+                controller = other.gameObject.GetComponentInParent<DodgeballController>();
+                if(!controller.hasOwner)
                 {
-                    other.gameObject.GetComponentInParent<Animator>().enabled = false;
+                    if (other.gameObject.GetComponentInParent<Animator>() != null){
+                        other.gameObject.GetComponentInParent<Animator>().enabled = false;
+                    }
+                    ball = other.gameObject;
+                    ballNear = true;
                 }
-                ball = other.gameObject;
-                foundBall= true;
-                // GameManager.Instance.TEMP_TurnOnBallHUD();
+                
             }
         }
 
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject == ball)
+        {
+            ballNear = false;
+        }
+
+    }
+
 }

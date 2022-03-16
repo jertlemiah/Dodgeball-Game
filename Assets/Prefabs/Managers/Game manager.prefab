@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConstants: {fileID: 11400000, guid: 481dfb3e77250a847b2a0f82686ecdc1, type: 2}
-  timeRemaining: 10
+  currentState: 0
+  timeRemaining: 300
   timerIsRunning: 0
-  team1Score: 0
-  team2Score: 0
+  team1Score: 8
+  team2Score: 1
   useStartingScores: 0

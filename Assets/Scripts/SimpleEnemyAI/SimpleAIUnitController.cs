@@ -13,9 +13,21 @@ public class SimpleAIUnitController : MonoBehaviour
     public float currentTimeInState; // current time in the state we are in
 
     private enum SimpleAIState {Idle, UpdateTarget, ChaseBall, ChasePlayer}; // 4 states, ctf not implemented yet. Gonna complicate things
-    private SimpleAIState state; // our current state
+    [SerializeField] private SimpleAIState state; // our current state
     private Vector3 forwardDirection; // the forward direction of our AI unit, used for throwing direction. See ThrowBall()
     public bool hasBall; // Does this AI unit currently have a ball
+    // void Awake()
+    // {
+    //     EventManagerSO.E_StartMatch += StartMatch;
+    // }
+    // void Disable()
+    // {
+    //     EventManagerSO.E_StartMatch -= StartMatch;
+    // }
+    void StartMatch()
+    {
+        state = SimpleAIState.ChaseBall;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +78,8 @@ public class SimpleAIUnitController : MonoBehaviour
         {
             if (Vector3.Distance(this.transform.position, activeDodgeballs[i].transform.position) < currentShortest) // if the current dodgeball is closer than our previous closest
             {
-                if (activeDodgeballs[i].transform.parent == null) // if this dodgeball doesn't have a parent (AKA its not being held by somebody else right now)
+                // if (activeDodgeballs[i].transform.parent == null) // if this dodgeball doesn't have a parent (AKA its not being held by somebody else right now)
+                if (activeDodgeballs[i].GetComponent<DodgeballController>().hasOwner == false) // if this dodgeball doesn't have a parent (AKA its not being held by somebody else right now)
                 {
                     currentShortest = Vector3.Distance(this.transform.position, activeDodgeballs[i].transform.position); // set its distance as new "current shortest"
                     currentShortestIdx = i; // set its idx as new "current shortest idx"

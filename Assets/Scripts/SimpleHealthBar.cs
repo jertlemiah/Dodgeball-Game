@@ -9,12 +9,12 @@ public class SimpleHealthBar : MonoBehaviour
     private int playerHealth;
 
     void Start() {
-        // playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().health;
-        // healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
+         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().health;
+         healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
     }
 
     // TODO: We probably dont want this updating every tick, but for now its fine
     void Update() {
-        // healthBar.value = playerHealth;
+         healthBar.value = playerHealth;
     }
 }

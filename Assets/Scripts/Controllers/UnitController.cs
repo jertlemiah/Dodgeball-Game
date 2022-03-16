@@ -32,12 +32,12 @@ public class UnitController : MonoBehaviour
         if(team == Team.Team1)
         {
             // GameManager.Instance.GiveTeam2Points(1);
-            EventManagerSO.GiveTeamPoints(Team.Team2,1);
+            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
         }
         else
         {
             // GameManager.Instance.GiveTeam1Points(1);
-            EventManagerSO.GiveTeamPoints(Team.Team1,1);
+            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
         }
     }
 

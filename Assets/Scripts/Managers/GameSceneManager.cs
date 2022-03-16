@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public enum SceneIndex {MANAGER = 0, TITLE_SCREEN = 1, LEVEL_GYM = 2}
+public enum SceneIndex {MANAGER = 0, TITLE_SCREEN = 1, LEVEL_GYM = 2, LEVEL_TEST = 3}
 public class GameSceneManager : Singleton<GameSceneManager>
 {
     [SerializeField] GameObject loadingScreenGO;
@@ -17,9 +17,23 @@ public class GameSceneManager : Singleton<GameSceneManager>
     List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
     public float totalLoadingProgress = 0f;
     public float timeScale = 0f;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
+        // List<Scene> openScenes = new List<Scene>();
+        // bool titleSceneOpen = false;
+        // for(int i = 0; i < SceneManager.sceneCount; i++){
+        //     // openScenes.Add(SceneManager.GetSceneAt(i));
+        //     if(SceneManager.GetSceneAt(i).buildIndex == (int)SceneIndex.TITLE_SCREEN){
+        //         titleSceneOpen = true;
+        //     }
+        // }
+
+        // if(!titleSceneOpen){
+        if(SceneManager.sceneCount == 1){
+            SceneManager.LoadSceneAsync((int)SceneIndex.TITLE_SCREEN, LoadSceneMode.Additive);
+            EventManagerSO.TriggerEvent_HideHUD();
+        }     
         
     }
 
@@ -45,6 +59,9 @@ public class GameSceneManager : Singleton<GameSceneManager>
             scenesLoading.Add(SceneManager.UnloadSceneAsync(scene.buildIndex));
         }
         scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneIndex, LoadSceneMode.Additive));
+        if(sceneIndex == SceneIndex.TITLE_SCREEN){
+            EventManagerSO.TriggerEvent_HideHUD();
+        }
 
         StartCoroutine(GetSceneLoadProgress(sceneIndex));
     }

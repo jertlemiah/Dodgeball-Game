@@ -107,7 +107,6 @@ GameObject:
   - component: {fileID: 6798270961093539279}
   - component: {fileID: 6798270961093539272}
   - component: {fileID: 6798270961093539273}
-  - component: {fileID: 6798270961093539278}
   - component: {fileID: 6798270961093539275}
   m_Layer: 9
   m_Name: FlagLight
@@ -179,19 +178,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6798270961093539278
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6798270961093539276}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.7
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &6798270961093539275
 TrailRenderer:
   serializedVersion: 2

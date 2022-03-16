@@ -3,55 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+/// <summary> 
+///<para>AudioManager accepts an array of AudioTrack scriptable objects and plays those tracks acrross all scenes.</para>
+///<para>When a track is finished, the next in the array is automatically played.</para>
+///<para>By default, the array is shuffled before playing the first track.</para>
+/// </summary>
+public class AudioManager : Singleton<AudioManager>
 {
-    // public List<
-    [SerializeField] public AudioTrack[] backgroundTracks;
-    private int currentTrackIndex = 0;
-    [SerializeField] string currentTrack;
-    [SerializeField] public AudioSource musicAudioSource;
-    public AudioMixer mixer;
-    public static AudioManager _instance;
+    [Header("Fill these out")]
+    [Tooltip("The array of AudioTrack scriptable objects the audio manager will play.")] 
+    [SerializeField] public AudioTrack[] backgroundTracks; 
 
+    [SerializeField] public AudioSource musicAudioSource;
+
+    [SerializeField] public AudioMixer mixer;
+
+    [SerializeField] bool shuffleList = true;
+    
+
+    [Space(10)][Header("Status Info")]
+    [SerializeField] string currentTrack; // This is purely for relaying the name of the track to the inspector for readability
+
+    private int currentTrackIndex = 0;
+    
     void Awake()
     {
-        
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-        DontDestroyOnLoad(gameObject);
-        if(!musicAudioSource)
-        {
-            musicAudioSource = GetComponent<AudioSource>();
+        if(!musicAudioSource) {
+            musicAudioSource = GetComponent<AudioSource>(); // This will just grab the default audioSource
         } 
     }
     void Start()
     {
-        Shuffle();
+        if(shuffleList)
+            Shuffle();
         
-        // backgroundTracks.
+        currentTrackIndex = -1; // Must start on -1 because PlayNextTrack increments currentTrackIndex before using it
         PlayNextTrack();
-    }
-    public void Shuffle() {
-        for (int i = 0; i < backgroundTracks.Length; i++) {
-            int rnd = Random.Range(0, backgroundTracks.Length);
-            AudioTrack temp = backgroundTracks[rnd];
-            backgroundTracks[rnd] = backgroundTracks[i];
-            backgroundTracks[i] = temp;
-        }
-    }
-    public void SetVolMaster(float sliderValue)
-    {
-        mixer.SetFloat("VolMusic",Mathf.Log10(sliderValue)*20);
-    }
-    public void SetVolMusic(float sliderValue)
-    {
-        mixer.SetFloat("VolMaster",Mathf.Log10(sliderValue)*20);
     }
     void Update()
     {
@@ -60,14 +47,53 @@ public class AudioManager : MonoBehaviour
             PlayNextTrack();
         }
     }
+
+    /// <summary> 
+    /// <para>Shuffles the array of AudioTracks.</para>
+    /// </summary>
+    public void Shuffle() {
+        for (int i = 0; i < backgroundTracks.Length; i++) {
+            int rnd = Random.Range(0, backgroundTracks.Length);
+            AudioTrack temp = backgroundTracks[rnd];
+            backgroundTracks[rnd] = backgroundTracks[i];
+            backgroundTracks[i] = temp;
+        }
+    }
+
+    /// <summary> 
+    /// <para>Sets the Master volume for the AudioMixer, used by a UI volume slider.</para>
+    /// <para>  float sliderValue - New value for Master volume. Value clamped between 0.0001f and 1f.</para>
+    /// </summary>
+    /// <param name="sliderValue">New value for Master volume. Intended with use of UI slider. Value clamped between 0.0001f and 1f.</param>
+    public void SetVolMaster(float sliderValue)
+    {
+        sliderValue = Mathf.Clamp(sliderValue,0.0001f,1f);
+        mixer.SetFloat("VolMusic",Mathf.Log10(sliderValue)*20);
+    }
+
+    /// <summary> 
+    /// <para>Sets the Music volume for the AudioMixer, used by a UI volume slider.</para>
+    /// <para>  float sliderValue - New value for Music volume. Value clamped between 0.0001f and 1f.</para>
+    /// </summary>
+    /// <param name="sliderValue">New value for Music volume. Intended with use of UI slider. Value clamped between 0.0001f and 1f.</param>
+    public void SetVolMusic(float sliderValue)
+    {
+        sliderValue = Mathf.Clamp(sliderValue,0.0001f,1f);
+        mixer.SetFloat("VolMaster",Mathf.Log10(sliderValue)*20);
+    }
+
+    /// <summary> 
+    /// <para>Simply plays the next track in backgroundTracks. Loops to start of array on hitting the end.</para>
+    /// </summary>
     public void PlayNextTrack()
     {
+        currentTrackIndex++;
+        if(currentTrackIndex >= backgroundTracks.Length) { currentTrackIndex=0;}
+
         musicAudioSource.clip = backgroundTracks[currentTrackIndex].audioClip;
         musicAudioSource.volume = backgroundTracks[currentTrackIndex].volume;
         musicAudioSource.pitch = backgroundTracks[currentTrackIndex].pitch;
         currentTrack = backgroundTracks[currentTrackIndex].trackName;
-        musicAudioSource.Play();
-        currentTrackIndex++;
-        if(currentTrackIndex >= backgroundTracks.Length) { currentTrackIndex=0;}
+        musicAudioSource.Play(); 
     }
 }

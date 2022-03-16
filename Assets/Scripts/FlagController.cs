@@ -34,7 +34,6 @@ public class FlagController : MonoBehaviour
             PlayerWithFlag = player;
             transform.position = player.transform.Find("Skeleton/FlagCarryTarget").transform.position;
             transform.SetParent(player.transform.Find("Skeleton/FlagCarryTarget").transform);
-            this.GetComponent<Collider>().enabled = false; 
             //this.GetComponent<Collider>().isKinematic = true;
 
             // true bc team actively has flag
@@ -51,7 +50,7 @@ public class FlagController : MonoBehaviour
      * Returns: True if the "scoring the flag" action is successful, false if the flag cannot be scored
      */
     public bool FlagScored()
-    {
+   {
         if (!InTransit) // add conditions where we don't want to score the flag here
         {
             return false;
@@ -67,15 +66,14 @@ public class FlagController : MonoBehaviour
             // false bc team does not actively have flag
             Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
             EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
-            EventManagerSO.GiveTeamPoints(team, 1);
-
+            EventManagerSO.TriggerEvent_GiveTeamPoints(team, 1);
+            
             
             
             PlayerWithFlag = null;
             transform.position = startingPosition;
             transform.rotation = startingRotation;
             InTransit = false;
-            this.GetComponent<Collider>().enabled = true;
             return true;
         }
     }
@@ -104,7 +102,6 @@ public class FlagController : MonoBehaviour
             PlayerWithFlag = null; // null out PlayerWithFlag
             transform.position = new Vector3(transform.position.x, startingPosition.y, transform.position.z); // lower it to the ground
             transform.rotation = startingRotation;
-            this.GetComponent<Collider>().enabled = true; // re enable collider so it can be picked up again
             InTransit = false; // no longer in transit
             return true;
         }
@@ -134,7 +131,6 @@ public class FlagController : MonoBehaviour
             PlayerWithFlag = null;
             transform.position = startingPosition;
             transform.rotation = startingRotation;
-            this.GetComponent<Collider>().enabled = true;
             InTransit = false;
             return true;
         }
@@ -145,7 +141,6 @@ public class FlagController : MonoBehaviour
         InTransit = false;
         startingPosition = transform.position; 
         startingRotation = transform.rotation;
-        this.GetComponent<Collider>().enabled = true;
     }
 
     // Update is called once per frame

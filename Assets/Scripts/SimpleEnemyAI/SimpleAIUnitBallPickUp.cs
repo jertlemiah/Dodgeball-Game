@@ -20,16 +20,14 @@ public class SimpleAIUnitBallPickUp : MonoBehaviour
      *      1) the ball isn't already held (on your way to ball, if you collide with player holding different ball, don't take theirs)
      *      2) you don't already have a ball (somebody throws a ball at you while you are holding one)
      * The rest of the code is pulled from ThirdPersonShooterController PickUpBall(). 
-     * However, there are some issues. It begins the pickup animation without letting anything else know that the dodgeball is now spoken for. Also, it doesn't check to see if the dodgeball is spoken for.  
-     * That means that if we have 2 players attempt to pick up the ball at the same time, whoever begins their animation last will rip the ball from the other's hand. 
-     * Now both players have references to the same Dodgeball object, and the player without the ball can "throw" the ball from the other's hand
      */
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Ball")) // filter out everything else except balls
         {
-            
-            if (other.gameObject.transform.parent.transform.parent == null && ballHoldSpot.transform.childCount < 1) // if the dodgeball isn't already being carried and we also don't already have a ball
+            DodgeballController controller = other.gameObject.GetComponentInParent<DodgeballController>();
+            // if the dodgeball isn't already being carried and we also don't already have a ball and it isn't thrown
+            if (!controller.hasOwner && ballHoldSpot.transform.childCount < 1 && controller.isThrown == false) 
             {
                 ball = other.gameObject.transform.parent.gameObject; // all this ball grabbing code pulled straight from ThirdPersonShooterController
                 ball.transform.parent = ballHoldSpot.transform;  
@@ -38,6 +36,7 @@ public class SimpleAIUnitBallPickUp : MonoBehaviour
                 ballRb = ball.GetComponent<Rigidbody>();
                 ballRb.isKinematic = true;
                 this.transform.GetComponentInParent<SimpleAIUnitController>().hasBall = true;
+                controller.hasOwner = true;
             }
         }
     }
@@ -51,6 +50,9 @@ public class SimpleAIUnitBallPickUp : MonoBehaviour
     public void ThrowBall(Vector3 throwingDirection)
     {
         ball.transform.parent = null;  // all this is ball throwing code is pulled straight from ThirdPersonShooterController
+        ball.GetComponent<DodgeballController>().hasOwner = false;
+        ball.GetComponent<DodgeballController>().isThrown = true;
+        ball.GetComponent<DodgeballController>().thrownBy = this.transform.parent.gameObject;
         ball = null;
         ballRb.isKinematic = false;
         ballRb.velocity = Vector3.zero;

@@ -2,23 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using TMPro;
 
-public class MainMenuController : MonoBehaviour
+public enum MenuScreen {Title,Play,Settings,Credits,LevelDetails}
+public class MainMenuController : Singleton<MainMenuController>
 {
+    [Header("Current Menu Screen")]
+    [SerializeField] public MenuScreen currentScreen;
+    [SerializeField] public List<MenuScreen> screenHistory = new List<MenuScreen>();
+    public LevelDataSO selectedLevel;
+
+    [Space(10f)][Header("Game Object Properties")]
     [SerializeField] GameObject titleScreenGO;
-    [SerializeField] GameObject playScreenGO;
+    [SerializeField] GameObject levelSelectScreenGO;
     [SerializeField] GameObject settingsScreenGO;
-    [SerializeField] float offscreenHorizontal = 1000f;
-    [SerializeField] float offscreenVertical = 600f;
+    [SerializeField] GameObject creditsScreenGO;
+    [SerializeField] GameObject levelDetailsScreenGO;
+    [SerializeField] Image levelDetailsImage;
+    [SerializeField] TMP_Text levelDetailsText;
+    [SerializeField] GameObject levelDetailsMask;
+
+    [Space(10f)][Header("Screen Transition Settings")]
     [SerializeField] float screenTransitionTime = 1f;
+    [SerializeField] float screenScaleDiff = 0.3f;
+
+    [Space(10f)][Header("Manual Screen Override")]
+    [SerializeField] public MenuScreen overrideScreen;
+    Dictionary<MenuScreen, GameObject> menuScreenDict = new Dictionary<MenuScreen, GameObject>();
+    float screenWidth = 1000f;
+    float screenHeight = 600f;
     // Start is called before the first frame update
     void Start()
     {
         RectTransform rt = titleScreenGO.GetComponent<RectTransform>();
-        offscreenHorizontal = rt.rect.width * rt.localScale.x;
-        offscreenVertical = rt.rect.height * rt.localScale.y;
-        playScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(offscreenHorizontal,0);
-        settingsScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,offscreenVertical);
+        screenWidth = rt.rect.width * rt.localScale.x;
+        screenHeight = rt.rect.height * rt.localScale.y;
+        menuScreenDict.Add(MenuScreen.Title,titleScreenGO);
+        menuScreenDict.Add(MenuScreen.Play,levelSelectScreenGO);
+        menuScreenDict.Add(MenuScreen.Settings,settingsScreenGO);
+        menuScreenDict.Add(MenuScreen.Credits,creditsScreenGO);
+        menuScreenDict.Add(MenuScreen.LevelDetails,levelDetailsScreenGO);
+        currentScreen = MenuScreen.Title;
+        screenHistory.Add(currentScreen);
+        titleScreenGO.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        // SwitchToScreen(MenuScreen.Title);
     }
 
     // Update is called once per frame
@@ -26,7 +54,79 @@ public class MainMenuController : MonoBehaviour
     {
         
     }
-    public void Title_PlayButton()
+    public void SwitchToScreen(MenuScreen newScreen, bool forwards) 
+    {
+        if(menuScreenDict.ContainsKey(newScreen)){
+            Debug.Log(currentScreen.ToString()+" switching to screen '"+newScreen.ToString()+"'");
+            GameObject curScreenGO = menuScreenDict[currentScreen];
+            GameObject newScreenGO = menuScreenDict[newScreen];
+            
+            Vector2 offscreenPos = new Vector2(-screenWidth,0);
+            float scaleDiff = screenScaleDiff;
+            if(forwards){
+                screenHistory.Add(newScreen);
+            } else {
+                offscreenPos = -offscreenPos;
+                scaleDiff = -scaleDiff;
+                screenHistory.RemoveAt(screenHistory.Count-1);
+            }
+
+            // First place the screens in the correct places for transitions
+            
+            newScreenGO.GetComponent<RectTransform>().anchoredPosition = -offscreenPos*(1+scaleDiff/2);//*(1/3f);
+            newScreenGO.SetActive(true);
+            newScreenGO.GetComponent<CanvasGroup>().alpha = 0;
+            newScreenGO.transform.localScale = Vector3.one*(1-scaleDiff);
+            
+
+            // Then transition to the new screen
+            curScreenGO.GetComponent<RectTransform>().DOAnchorPos(offscreenPos*(1+scaleDiff/2),screenTransitionTime);
+            curScreenGO.GetComponent<CanvasGroup>().DOFade(0,screenTransitionTime*0.5f);
+            curScreenGO.transform.DOScale(1f+scaleDiff,screenTransitionTime);
+            // curScreenGO.SetActive(false);
+            newScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
+            newScreenGO.GetComponent<CanvasGroup>().DOFade(1,screenTransitionTime*1.5f);
+            newScreenGO.transform.DOScale(1f,screenTransitionTime);
+
+            currentScreen = newScreen;
+        }
+        else {
+            Debug.Log("Screen '"+newScreen.ToString()+"' does not exist, staying on current Screen '"+currentScreen.ToString()+"'");
+        }
+    }
+    // public void OverrideScreenSwitch(MenuScreen newScreen)
+    // {
+        
+    //     playScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
+    // }
+    public void ReturnButton()
+    {
+        if(screenHistory.Count > 1){
+            SwitchToScreen(screenHistory[screenHistory.Count-2],false);
+        }
+    }
+    public void LoadLevelDetails(LevelPanelController levelPanelController) 
+    {
+        // GameSceneManager.Instance.LoadScene(sceneIndex);
+        // levelPanelController.GetComponent<RectTransform>().DOSizeDelta(new Vector2(screenWidth,screenHeight),screenTransitionTime);
+        selectedLevel = levelPanelController.levelData;
+        RectTransform panelRT = levelPanelController.GetComponent<RectTransform>();
+        // RectTransform maskRT = levelDetailsMask.GetComponent<RectTransform>();
+
+        levelDetailsImage.sprite = selectedLevel.panelImage;
+        levelDetailsText.text = "LEVEL - "+selectedLevel.levelName;
+        SwitchToScreen(MenuScreen.LevelDetails,true);
+        // maskRT.position = panelRT.position;
+
+        // maskRT.SetSizeWithCurrentAnchors( RectTranform.Axis.Vertical, myHeight);
+    }
+    // public void LoadLevelDetails(LevelDataSO levelData)
+    // {
+    //     levelDetailsImage.sprite = levelData.panelImage;
+    //     levelDetailsText.text = "LEVEL - "+levelData.levelName;
+    //     levelDetailsMask
+    // }
+    public void Title_LevelSelectButton()
     {
         // titleScreenGO.GetComponent<RectTransform>().DOMoveX(-offscreenHorizontal,screenTransitionTime);
         // playScreenGO.GetComponent<RectTransform>().DOMoveX(0,screenTransitionTime);
@@ -43,44 +143,26 @@ public class MainMenuController : MonoBehaviour
         // playScreenGO.GetComponent<RectTransform>().DOMoveX(0,screenTransitionTime);
 
         // titleScreenGO.SetActive(false);
-        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-offscreenHorizontal,0),screenTransitionTime);
-        playScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
-    }
-    public void Play_ReturnButton()
-    {
-        // Vector3 rotation = new Vector3(0,45,0);
-        // // titleScreenGO.GetComponent<RectTransform>().DORotate(Vector3.zero,screenTransitionTime);
-        // // titleScreenGO.GetComponent<CanvasGroup>().DOFade(1,screenTransitionTime);
-        // // titleScreenGO.GetComponent<CanvasGroup>().interactable = true;
-        // // titleScreenGO.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        // titleScreenGO.GetComponent<RectTransform>().DOMoveX(0,screenTransitionTime);
-        // // playScreenGO.GetComponent<RectTransform>().DORotate(-rotation,screenTransitionTime);
-        // // playScreenGO.GetComponent<CanvasGroup>().DOFade(0,screenTransitionTime);
-        // // playScreenGO.GetComponent<CanvasGroup>().interactable = false;
-        // // playScreenGO.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        // playScreenGO.GetComponent<RectTransform>().DOMoveX(offscreenHorizontal,screenTransitionTime);
-        // titleScreenGO.SetActive(true);
-        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
-        playScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(offscreenHorizontal,0),screenTransitionTime);
+        // titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-screenWidth,0),screenTransitionTime);
+        // playScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
+        SwitchToScreen(MenuScreen.Play,true);
     }
     public void Title_SettingsButton()
     {
-        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,-offscreenVertical),screenTransitionTime);
-        settingsScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
-    }
-    public void Settings_ReturnButton()
+        SwitchToScreen(MenuScreen.Settings,true);
+    }   
+    public void Title_CreditsButton()
     {
-        titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
-        settingsScreenGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,offscreenVertical),screenTransitionTime);
-    }
-    
+        SwitchToScreen(MenuScreen.Credits,true);
+    } 
+    public void Level_PlayButton()
+    {
+        Debug.Log("Launching the level '"+selectedLevel.sceneIndex.ToString()+"'");
+        GameSceneManager.Instance.LoadScene(selectedLevel.sceneIndex);
+    } 
     public void QuitButton()
     {
         Debug.Log("Quitting game");
         Application.Quit();
     }
-    // void OnDestroy()
-    // {
-        
-    // }
 }

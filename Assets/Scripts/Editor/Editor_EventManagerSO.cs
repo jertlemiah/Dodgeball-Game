@@ -12,11 +12,11 @@ public class Editor_EventManagerSO : Editor
         base.OnInspectorGUI();
         if (GUILayout.Button("Give team 1 a point"))
 		{
-			EventManagerSO.GiveTeamPoints(Team.Team1,1);
+			EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
 		}
         if (GUILayout.Button("Give team 2 a point"))
 		{
-			EventManagerSO.GiveTeamPoints(Team.Team2,1);
+			EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
 		}
 
 		if (GUILayout.Button("Team 1 Grabs Flag"))

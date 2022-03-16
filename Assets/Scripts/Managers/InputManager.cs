@@ -17,10 +17,13 @@ public class InputManager : Singleton<InputManager>
     void Awake()
     {
         _input = new InputActions();
+        _input.Player.Pause.performed += context => GameManager.Instance.TogglePause();
         EventManagerSO.E_PauseGame += EnableMouse;
+        EventManagerSO.E_StartPrematch += EnableMouse;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
         EventManagerSO.E_UnpauseGame += DisableMouse;
     }
+    
     
     private void OnEnable()
     {
@@ -29,7 +32,9 @@ public class InputManager : Singleton<InputManager>
     private void OnDisable()
     {
         _input.Disable();
+        _input.Player.Pause.performed -= context => GameManager.Instance.TogglePause();
         EventManagerSO.E_PauseGame -= EnableMouse;
+        EventManagerSO.E_StartPrematch -= EnableMouse;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
         EventManagerSO.E_UnpauseGame -= DisableMouse;
     }
@@ -40,14 +45,17 @@ public class InputManager : Singleton<InputManager>
 
     void EnableMouse()
     {
-        cursorLocked = false;
+        // cursorLocked = false;
         cursorInputForLook = false;
+        SetCursorState(cursorInputForLook);
     }
     void DisableMouse()
     {
-        cursorLocked = true;
+        // cursorLocked = true;
         cursorInputForLook = true;
+        SetCursorState(cursorInputForLook);
     }
+
 
     public void OnMove(InputValue value)
     {
@@ -92,7 +100,11 @@ public class InputManager : Singleton<InputManager>
     }
     private void OnApplicationFocus(bool hasFocus)
     {
-        SetCursorState(cursorLocked);
+        if(GameManager.Instance.currentState != GameState.Paused){
+            Debug.Log("locking cursor");
+            SetCursorState(cursorLocked);
+        }
+        
     }
 
     private void SetCursorState(bool newState)
