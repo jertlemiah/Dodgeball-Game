@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
             health = 100;
+            StartCoroutine(Coundowndeath());
             if (player.GetComponent<CharacterController>() != null)
             {
                 player.GetComponent<CharacterController>().enabled = true;
@@ -41,5 +42,10 @@ public class PlayerController : MonoBehaviour
         } else {
             health -= damage;
         }
+    }
+
+    IEnumerator Coundowndeath()
+    {
+      yield return new WaitForSeconds(5f);
     }
 }

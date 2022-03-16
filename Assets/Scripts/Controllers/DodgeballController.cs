@@ -16,15 +16,11 @@ public class DodgeballController : MonoBehaviour
     RandomAudioClip randomQuietAudioClip = new RandomAudioClip();
     RandomAudioClip randomMediumAudioClip = new RandomAudioClip();
     RandomAudioClip randomLoudAudioClip = new RandomAudioClip();
-<<<<<<< HEAD
     public float velocity = 20f;
     public float damage = 0.25f;
-=======
-
     public bool hasOwner = false;
     public bool isThrown = false;
     public GameObject thrownBy;
->>>>>>> ca86f497da1e12572b2e1c9e9a4c6e18a1353b9b
     
     // Start is called before the first frame update
     void Start()
@@ -50,9 +46,6 @@ public class DodgeballController : MonoBehaviour
     void OnCollisionEnter(Collision c)
     {
         PlayRandomHitSound();
-        // I need to add a way to make sure that this is its first hit after being picked up.
-        // Reset bounce counter after in thirdPersonShooterController
-        
         if (c.gameObject.layer == LayerMask.NameToLayer("Map")) // as soon as the ball touches the wall/floor/ceiling, it is a dead ball (no damage after that)
         {
             isThrown = false;
@@ -63,7 +56,14 @@ public class DodgeballController : MonoBehaviour
             PlayerController pc = c.gameObject.GetComponent<PlayerController>();
             if (pc != null)
             {
-                pc.TakeDamage(25); // fixed damage for now
+                pc.TakeDamage(damage); // fixed damage for now
+                isThrown = false; // eliminate taking damage twice before the ball hits the ground
+            }
+
+            EnemyController ec = c.gameObject.GetComponent<EnemyController>();
+            if (ec != null)
+            {
+                ec.TakeDamage(damage); // fixed damage for now
                 isThrown = false; // eliminate taking damage twice before the ball hits the ground
             }
         }

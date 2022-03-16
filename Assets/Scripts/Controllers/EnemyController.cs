@@ -7,6 +7,8 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public float currentHealth = 100f;
     public float totalHealth = 100f;
+    private SpawnManager spawnManager;
+    public Vector3 spawnPos = new Vector3(0,0,0);
     void Start()
     {
         
@@ -15,16 +17,38 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0) {
+            if (player.GetComponent<CharacterController>() != null)
+            {
+                player.GetComponent<CharacterController>().enabled = false;
+            }
+            var spawnPoint = spawnManager.GetSpawnLocation();
+            Debug.Log("spawnPoint" + spawnPoint);
+            player.transform.position = spawnPoint;
+            health = 100;
+            StartCoroutine(Coundowndeath());
+            if (player.GetComponent<CharacterController>() != null)
+            {
+                player.GetComponent<CharacterController>().enabled = true;
+            }
+        }
         
     }
     void OnCollisionEnter(Collision c)
     {
-        // Check if the object is a ball, if so, check if the ball has a hit counter of 0, if so, reduce health.
-        currentHealth = currentHealth - (totalHealth * c.gameObject.GetComponent<DodgeballController>().damage);
-        Debug.Log(currentHealth);
         Debug.Log(gameObject.name+" has been hit by "+c.gameObject.name);
-        // If health is less than 0, return to spawn. 
-            // Find a way to create a spawn timer
-        // Remember to do this in the player controller too.
+    }
+
+    public void TakeDamage (int damage) {
+        if (health - damage < 0) {
+            health = 0;
+        } else {
+            health -= damage;
+        }
+    }
+    
+    IEnumerator Coundowndeath()
+    {
+      yield return new WaitForSeconds(5f);
     }
 }
