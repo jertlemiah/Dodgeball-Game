@@ -8,7 +8,7 @@ public class KillBallController : DodgeballController
     void Start()
     {
         velocity = 20f;
-        damage = 10.0f;
+        damage = 200f;
         
     }
 

@@ -17,7 +17,7 @@ public class DodgeballController : MonoBehaviour
     RandomAudioClip randomMediumAudioClip = new RandomAudioClip();
     RandomAudioClip randomLoudAudioClip = new RandomAudioClip();
     public float velocity = 20f;
-    public float damage = 0.25f;
+    public float damage = 25f;
     public bool hasOwner = false;
     public bool isThrown = false;
     public GameObject thrownBy;
