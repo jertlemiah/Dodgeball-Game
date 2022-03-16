@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Team {Team1,Team2, NoTeam}
-public enum GameState {PreMatch,MidMatch,PostMatch,Paused}
+/// <summary> This enum simply represents the different teams {Team1, Team2, NoTeam}. Option "NoTeam" is a sort of default in case of ties. </summary>
+public enum Team {Team1, Team2, NoTeam}
+
+/// <summary> The current state of the GameManager {PreMatch, MidMatch, PostMatch, Paused}. "PreMatch" is for when the match is being set up. "MidMatch" is literally just while a match is playing.
+/// "PostMatch" is after a match is finished while the MatchResults screen is visible. And "Paused" is when the game is paused. </summary>
+public enum GameState {PreMatch, MidMatch, PostMatch, Paused}
+
+/// <summary> TeamData is a struct that stores data about a specific team. Used in the GameManager in a dict<Team, TeamData> named teamDict. </summary>
 public struct TeamData
 {
     public int teamScore;
     public List<UnitController> teamMembers;
 }
+
 /// <summary> 
 ///     GameManager is a singleton responsible for managing various attributes used in a match, such as the game timer or team scores.
 /// </summary>
@@ -44,6 +51,7 @@ public class GameManager : Singleton<GameManager>
             EventManagerSO.TriggerEvent_SetScore(0,0);
     }
 
+    /// Awake triggers before Start.
     void Awake()
     {
         teamDict = new Dictionary<Team, TeamData>();
@@ -52,10 +60,11 @@ public class GameManager : Singleton<GameManager>
             TeamData teamData = new TeamData();
             teamDict.Add(team,teamData);
         }
-        
+
         if(!gameConstants)
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
 
+        // Event Subscriptions
         EventManagerSO.E_SetScore += SetScore;
         EventManagerSO.E_EndMatch += EndGame;
         EventManagerSO.E_GiveTeamPoints += GiveTeamPoints;
@@ -71,6 +80,7 @@ public class GameManager : Singleton<GameManager>
 
     void OnDisable()
     {
+        // Event Unsubscriptions
         EventManagerSO.E_SetScore -= SetScore;
         EventManagerSO.E_EndMatch -= EndGame;
         EventManagerSO.E_GiveTeamPoints -= GiveTeamPoints;
@@ -83,23 +93,28 @@ public class GameManager : Singleton<GameManager>
         // GameManager.RemoveBall -= HideHeldBall;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (timerIsRunning)
             {RunTimer();}
     }
+
+    /// <summary> Triggered by E_FinishedLoading. Triggers the StartPrematch event once the scene is done loading and changes the gameState to GameState.PreMatch. 
+    ///           These two events were separated out in case we wanted the player to click a button or something like that to actually start the match. </summary>
     void StartPrematch()
     {
         EventManagerSO.TriggerEvent_StartPrematch();
         currentState = GameState.PreMatch;
     }
+
+    /// <summary> Triggered by E_StartMatch. Starts the game timer and changes the gameState to GameState.MidMatch.</summary>
     void StartMatch()
     {
         StartTimer(timeRemaining);
         currentState = GameState.MidMatch;
     }
     
+    /// <summary> Sets the starting time for the timer to (float timerTime), then turns on the timer. </summary>
     public void StartTimer(float timerTime)
     {
         timeRemaining = timerTime;
@@ -107,7 +122,9 @@ public class GameManager : Singleton<GameManager>
         timerIsRunning = true;
     }
     
-    void RunTimer()
+    /// <summary> Decrements the timeRemaining and triggers the E_SetTimer(float timeRemaining) event every Update() call. 
+    /// <para>    When the timer reaches 0, the GameManager checks to see which team won and triggers the E_EndGame(Team winningTeam) event. </para> </summary>
+    private void RunTimer()
     {
         if (timeRemaining > 0)
         {
@@ -130,10 +147,15 @@ public class GameManager : Singleton<GameManager>
             
         }
     }
+
+    /// <summary> Triggered by the E_EndGame(Team winningTeam) event. Currently only sets the gameState to GameState.PostMatch. </summary>
     void EndGame(Team winningTeam)
     {
         currentState = GameState.PostMatch;
     }
+
+    /// <summary> Triggered by the E_GiveTeamPoints(Team team, int points) event since the GameManager is the only accurate place for storing the current team scores.
+    ///           Then triggers the E_SetScore(int team1Score,int team2Score) event. </summary>
     private void GiveTeamPoints(Team team, int points)
     {
         // TeamData teamData = teamDict[team];
@@ -146,6 +168,8 @@ public class GameManager : Singleton<GameManager>
         }
         EventManagerSO.TriggerEvent_SetScore(team1Score,team2Score);
     }
+
+    /// <summary> Triggered by the E_SetScore(int team1Score, int team2Score) event. Determines if the game has ended due to a team receiving enough points to win. </summary>
     private void SetScore(int team1Score, int team2Score)
     {
         // Debug.Log("Setting new score, team1:"+team1Score+" team2: "+team2Score);
@@ -161,6 +185,9 @@ public class GameManager : Singleton<GameManager>
         }
     }    
 
+    /// <summary> Called by the InputManager when the player presses the pause button (start on a controller, Tab on keyboard). 
+    /// <para>  If gameState is GameState.MidMatch, the E_PauseGame() event is triggered. </para>
+    /// <para>  If gamestate is GameState.Paused, the E_UnPauseGame() event is triggered. </para></summary>
     public void TogglePause()
     {
         if(currentState == GameState.MidMatch){
@@ -171,12 +198,16 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    /// <summary> Triggered from the E_PauseGame() Event. 
+    /// Simply sets the current state to GameState.Paused and sets the timescale to 0. </summary>
     void PauseGame()
     {
         Time.timeScale = 0;
         currentState = GameState.Paused;
     }
 
+    /// <summary> Triggered from the E_UnpauseGame() Event. 
+    /// Simply sets the current state to GameState.MidMatch and sets the timescale to 1. </summary>
     void UnpauseGame()
     {
         Time.timeScale = 1;

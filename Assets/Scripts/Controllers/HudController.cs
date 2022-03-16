@@ -17,6 +17,7 @@ public class HudController : MonoBehaviour
     [SerializeField] private TMP_Text textTeam2Score;
     [SerializeField] private Slider sliderTeam2Score;
     [SerializeField] GameObject ballRenderTexture;
+    [SerializeField] GameObject pickUpTextGO;
 
     public GameObject blueFlag;
     public GameObject redFlag;
@@ -42,6 +43,7 @@ public class HudController : MonoBehaviour
         EventManagerSO.E_StartMatch += EnableHUD;
         EventManagerSO.E_EndMatch += EndMatch;
         EventManagerSO.E_HideHUD += DisableHUD;
+        EventManagerSO.E_PickUpText += PickUpTextActive;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
@@ -58,6 +60,7 @@ public class HudController : MonoBehaviour
         EventManagerSO.E_StartMatch -= EnableHUD;
         EventManagerSO.E_EndMatch -= EndMatch;
         EventManagerSO.E_HideHUD -= DisableHUD;
+        EventManagerSO.E_PickUpText -= PickUpTextActive;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
@@ -68,6 +71,12 @@ public class HudController : MonoBehaviour
     void Update()
     {
     }
+
+    private void PickUpTextActive(bool activeStatus)
+    {
+        pickUpTextGO.SetActive(activeStatus);
+    }
+
     private void EnableHUD()
     {
         Vector2 newPos = new Vector2(0,offscreenVertical);

@@ -158,7 +158,7 @@ public class MainMenuController : Singleton<MainMenuController>
     public void Level_PlayButton()
     {
         Debug.Log("Launching the level '"+selectedLevel.sceneIndex.ToString()+"'");
-        GameSceneManager.Instance.LoadScene(selectedLevel.sceneIndex);
+        GameSceneManager.Instance.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
     } 
     public void QuitButton()
     {
