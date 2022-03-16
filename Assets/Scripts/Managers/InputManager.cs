@@ -19,9 +19,10 @@ public class InputManager : Singleton<InputManager>
         _input = new InputActions();
         _input.Player.Pause.performed += context => PausePerformed();
         EventManagerSO.E_PauseGame += EnableMouse;
-        EventManagerSO.E_StartPrematch += EnableMouse;
+        // EventManagerSO.E_StartPrematch += EnableMouse;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
         EventManagerSO.E_UnpauseGame += DisableMouse;
+        DisableMouse();
     }
      
     private void OnEnable()
@@ -33,7 +34,7 @@ public class InputManager : Singleton<InputManager>
         _input.Disable();
         _input.Player.Pause.performed -= context => PausePerformed() ;
         EventManagerSO.E_PauseGame -= EnableMouse;
-        EventManagerSO.E_StartPrematch -= EnableMouse;
+        // EventManagerSO.E_StartPrematch -= EnableMouse;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
         EventManagerSO.E_UnpauseGame -= DisableMouse;
     }
@@ -56,6 +57,7 @@ public class InputManager : Singleton<InputManager>
     void DisableMouse()
     {
         // cursorLocked = true;
+        Debug.Log("Disabling mouse!");
         cursorInputForLook = true;
         SetCursorState(cursorInputForLook);
     }
