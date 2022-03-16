@@ -47,7 +47,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         Vector3 throw_direction = (mouseWorldPosition - ball.transform.position).normalized;
         throw_speed = ball.GetComponent<DodgeballController>().velocity;
         Debug.Log(ball.name);
-        Debug.Log("Test " + throw_speed);
+        Debug.Log("The ball was thrown with a velocity of " + throw_speed);
         rb.AddForce(throw_direction*throw_speed*100f);
         pickUpZoneController.hasBall = false;
         anim.SetBool("Throw", false);

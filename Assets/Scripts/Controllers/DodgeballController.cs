@@ -43,6 +43,8 @@ public class DodgeballController : MonoBehaviour
     void OnCollisionEnter(Collision c)
     {
         PlayRandomHitSound();
+        // I need to add a way to make sure that this is its first hit after being picked up.
+        // Reset bounce counter after in thirdPersonShooterController
     }
 
     private void PlayRandomHitSound()
