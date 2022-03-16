@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float currentHealth = 100f;
-    public float totalHealth = 100f;
+    public float health = 100f;
     private SpawnManager spawnManager;
     public Vector3 spawnPos = new Vector3(0,0,0);
+    public GameObject player;
+    
     void Start()
     {
         
@@ -46,7 +47,7 @@ public class EnemyController : MonoBehaviour
             health -= damage;
         }
     }
-    
+
     IEnumerator Coundowndeath()
     {
       yield return new WaitForSeconds(5f);

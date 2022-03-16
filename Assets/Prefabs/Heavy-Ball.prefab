@@ -8570,7 +8570,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3c75553341b728b47b0c082680db7edf, type: 2}
+  - {fileID: 2100000, guid: 37dd68971f7cf4904b89c4ddf66cc629, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8656,7 +8656,7 @@ Transform:
   m_GameObject: {fileID: 2076340685624309495}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.3, y: 1.172, z: 1.78}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 2076340684479514033}
   m_Father: {fileID: 0}
@@ -8900,4 +8900,7 @@ MonoBehaviour:
   audioSource: {fileID: 851144451}
   loudSpeed: 3
   velocity: 20
-  damage: 0.5
+  damage: 0
+  hasOwner: 0
+  isThrown: 0
+  thrownBy: {fileID: 0}

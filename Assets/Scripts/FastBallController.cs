@@ -8,7 +8,7 @@ public class FastBallController : DodgeballController
     void Start()
     {
         velocity = 40f;
-        damage = 10f;
+        damage = 10;
     }
 
     // Update is called once per frame
