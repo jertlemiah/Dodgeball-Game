@@ -19,7 +19,7 @@ public class InputManager : Singleton<InputManager>
         _input = new InputActions();
         _input.Player.Pause.performed += context => PausePerformed();
         EventManagerSO.E_PauseGame += EnableMouse;
-        // EventManagerSO.E_StartPrematch += EnableMouse;
+        EventManagerSO.E_FinishedLoading += DisableMouse;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
         EventManagerSO.E_UnpauseGame += DisableMouse;
         DisableMouse();
@@ -34,7 +34,7 @@ public class InputManager : Singleton<InputManager>
         _input.Disable();
         _input.Player.Pause.performed -= context => PausePerformed() ;
         EventManagerSO.E_PauseGame -= EnableMouse;
-        // EventManagerSO.E_StartPrematch -= EnableMouse;
+        EventManagerSO.E_FinishedLoading -= DisableMouse;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
         EventManagerSO.E_UnpauseGame -= DisableMouse;
     }
