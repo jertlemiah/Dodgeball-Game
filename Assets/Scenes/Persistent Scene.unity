@@ -947,8 +947,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150556255058229504, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
+      propertyPath: backgroundTracks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
+      propertyPath: backgroundTracks.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 91063b0f37bed5f40a172205a992020d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
 --- !u!4 &2914632625175147625 stripped
