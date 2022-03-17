@@ -249,7 +249,7 @@ Transform:
   - {fileID: 2044986771}
   - {fileID: 1472061745}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &240844704
 PrefabInstance:
@@ -381,7 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b268e81bda131846ad0facf16fcefba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  maxHealth: 50
+  health: 50
   player: {fileID: 240844705}
 --- !u!4 &240844707 stripped
 Transform:
@@ -799,6 +800,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 885945504}
     m_Modifications:
     - target: {fileID: 2484852697093678368, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2484852697093678368, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 726032052}
@@ -1184,6 +1189,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 885945504}
     m_Modifications:
+    - target: {fileID: 2484852697093678368, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2484852697093678368, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: player
       value: 
@@ -1602,6 +1611,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 885945504}
     m_Modifications:
+    - target: {fileID: 2484852697093678368, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2484852697093678368, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: player
       value: 

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] int maxHealth = 50;
     public int health = 100;
 
     private SpawnManager spawnManager;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         spawnManager = SpawnManager.Instance;
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour
             var spawnPoint = spawnManager.GetSpawnLocation();
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
-            health = 100;
+            health = maxHealth;
             if (player.GetComponent<CharacterController>() != null)
             {
                 player.GetComponent<CharacterController>().enabled = true;
