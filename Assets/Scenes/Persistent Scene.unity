@@ -941,6 +941,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2242629955233782498, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 8555695681841550366, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
     - target: {fileID: 3150556255058229504, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
       propertyPath: m_Name
       value: TrackManager
@@ -949,6 +953,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
     - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
       propertyPath: backgroundTracks.Array.size
       value: 1

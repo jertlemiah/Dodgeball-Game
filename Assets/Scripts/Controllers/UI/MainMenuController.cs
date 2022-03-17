@@ -24,6 +24,10 @@ public class MainMenuController : Singleton<MainMenuController>
     [SerializeField] GameObject levelDetailsMask;
     [SerializeField] AudioClip clickSound;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] Slider musicSlider;
+    [SerializeField] Slider masterSlider;
+    [SerializeField] Slider gameSfxSlider;
+    [SerializeField] Slider uiSfxSlider;
 
     [Space(10f)][Header("Screen Transition Settings")]
     [SerializeField] float screenTransitionTime = 1f;
@@ -51,6 +55,7 @@ public class MainMenuController : Singleton<MainMenuController>
         if(!audioSource)
             audioSource = GetComponent<AudioSource>();
         // SwitchToScreen(MenuScreen.Title);
+        SetVolumeSliders();
     }
 
     // Update is called once per frame
@@ -176,5 +181,33 @@ public class MainMenuController : Singleton<MainMenuController>
     {
         Debug.Log("Quitting game");
         Application.Quit();
+    }
+
+    public void SetVolMaster(float newVol)
+    {
+        AudioManager.Instance.SetVolMaster(newVol);
+    }
+
+    public void SetVolGameSFX(float newVol)
+    {
+        AudioManager.Instance.SetVolGameSFX(newVol);
+    }
+
+    public void SetVolUiSFX(float newVol)
+    {
+        AudioManager.Instance.SetVolUiSFX(newVol);
+    }
+
+    public void SetVolMusic(float newVol)
+    {
+        AudioManager.Instance.SetVolMusic(newVol);
+    }
+
+    private void SetVolumeSliders()
+    {
+        musicSlider.value = AudioManager.Instance.GetVolMusic();
+        masterSlider.value = AudioManager.Instance.GetVolMaster();
+        gameSfxSlider.value = AudioManager.Instance.GetVolGameSFX();
+        uiSfxSlider.value = AudioManager.Instance.GetVolUiSFX();
     }
 }

@@ -68,7 +68,7 @@ public class AudioManager : Singleton<AudioManager>
     public void SetVolMaster(float sliderValue)
     {
         sliderValue = Mathf.Clamp(sliderValue,0.0001f,1f);
-        mixer.SetFloat("VolMusic",Mathf.Log10(sliderValue)*20);
+        mixer.SetFloat("VolMaster",Mathf.Log10(sliderValue)*20);
     }
 
     /// <summary> 
@@ -79,7 +79,55 @@ public class AudioManager : Singleton<AudioManager>
     public void SetVolMusic(float sliderValue)
     {
         sliderValue = Mathf.Clamp(sliderValue,0.0001f,1f);
-        mixer.SetFloat("VolMaster",Mathf.Log10(sliderValue)*20);
+        mixer.SetFloat("VolMusic",Mathf.Log10(sliderValue)*20);
+    }
+
+    /// <summary> 
+    /// <para>Sets the Game Sound Effects volume for the AudioMixer, used by a UI volume slider.</para>
+    /// <para>  float sliderValue - New value for Game SFX volume. Value clamped between 0.0001f and 1f.</para>
+    /// </summary>
+    /// <param name="sliderValue">New value for Game SFX volume. Intended with use of UI slider. Value clamped between 0.0001f and 1f.</param>
+    public void SetVolGameSFX(float sliderValue)
+    {
+        sliderValue = Mathf.Clamp(sliderValue,0.0001f,1f);
+        mixer.SetFloat("VolGameSFX",Mathf.Log10(sliderValue)*20);
+    }
+
+    /// <summary> 
+    /// <para>Sets the UI Sound Effects volume for the AudioMixer, used by a UI volume slider.</para>
+    /// <para>  float sliderValue - New value for UI SFX volume. Value clamped between 0.0001f and 1f.</para>
+    /// </summary>
+    /// <param name="sliderValue">New value for UI SFX  volume. Intended with use of UI slider. Value clamped between 0.0001f and 1f.</param>
+    public void SetVolUiSFX(float sliderValue)
+    {
+        sliderValue = Mathf.Clamp(sliderValue,0.0001f,1f);
+        mixer.SetFloat("VolUiSFX",Mathf.Log10(sliderValue)*20);
+    }
+
+
+    public float GetVolMaster()
+    {
+        float mixerLevel;
+        mixer.GetFloat("VolMaster",out mixerLevel);
+        return Mathf.Pow(10f,mixerLevel/20);
+    }
+    public float GetVolMusic()
+    {
+        float mixerLevel;
+        mixer.GetFloat("VolMusic",out mixerLevel);
+        return Mathf.Pow(10f,mixerLevel/20);
+    }
+    public float GetVolGameSFX()
+    {
+        float mixerLevel;
+        mixer.GetFloat("VolGameSFX",out mixerLevel);
+        return Mathf.Pow(10f,mixerLevel/20);
+    }
+    public float GetVolUiSFX()
+    {
+        float mixerLevel;
+        mixer.GetFloat("VolUiSFX",out mixerLevel);
+        return Mathf.Pow(10f,mixerLevel/20);
     }
 
     /// <summary> 
