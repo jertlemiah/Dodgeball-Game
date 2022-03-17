@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float health = 100f;
+    public int totalHealth = 100;
+    public int currentHealth = 100;
     private SpawnManager spawnManager;
     public Vector3 spawnPos = new Vector3(0,0,0);
     public GameObject player;
@@ -18,7 +19,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0) {
+        if (currentHealth <= 0) {
             if (player.GetComponent<CharacterController>() != null)
             {
                 player.GetComponent<CharacterController>().enabled = false;
@@ -26,12 +27,9 @@ public class EnemyController : MonoBehaviour
             var spawnPoint = spawnManager.GetSpawnLocation();
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
-            health = 100;
-            StartCoroutine(Coundowndeath());
-            if (player.GetComponent<CharacterController>() != null)
-            {
-                player.GetComponent<CharacterController>().enabled = true;
-            }
+            totalHealth = 100;
+            currentHealth = 100;
+            StartCoroutine(CoundownDeath());
         }
         
     }
@@ -41,15 +39,19 @@ public class EnemyController : MonoBehaviour
     }
 
     public void TakeDamage (int damage) {
-        if (health - damage < 0) {
-            health = 0;
+        if (currentHealth - damage < 0) {
+            currentHealth = 0;
         } else {
-            health -= damage;
+            currentHealth -= damage;
         }
     }
 
-    IEnumerator Coundowndeath()
+    IEnumerator CoundownDeath()
     {
-      yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5f);
+        if (player.GetComponent<CharacterController>() != null)
+        {
+            player.GetComponent<CharacterController>().enabled = true;
+        }
     }
 }

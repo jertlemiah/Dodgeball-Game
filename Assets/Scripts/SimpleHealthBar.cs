@@ -9,7 +9,7 @@ public class SimpleHealthBar : MonoBehaviour
     private int playerHealth;
 
     void Start() {
-         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().health;
+         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentHealth;
          healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
     }
 
