@@ -26,6 +26,7 @@ public class PickUpZoneController : MonoBehaviour
             controller.hasOwner = true;
             ballNear = false;
             // GameManager.Instance.TEMP_TurnOnBallHUD();
+            EventManagerSO.TriggerEvent_PickUpText(false);
         }
     } 
     private void OnTriggerEnter(Collider other)
@@ -42,6 +43,7 @@ public class PickUpZoneController : MonoBehaviour
                     }
                     ball = other.gameObject;
                     ballNear = true;
+                    EventManagerSO.TriggerEvent_PickUpText(true);
                 }
                 
             }
@@ -54,6 +56,7 @@ public class PickUpZoneController : MonoBehaviour
         if(other.gameObject == ball)
         {
             ballNear = false;
+            EventManagerSO.TriggerEvent_PickUpText(false);
         }
 
     }

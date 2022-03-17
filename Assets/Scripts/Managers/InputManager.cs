@@ -17,14 +17,14 @@ public class InputManager : Singleton<InputManager>
     void Awake()
     {
         _input = new InputActions();
-        _input.Player.Pause.performed += context => GameManager.Instance.TogglePause();
+        _input.Player.Pause.performed += context => PausePerformed();
         EventManagerSO.E_PauseGame += EnableMouse;
-        EventManagerSO.E_StartPrematch += EnableMouse;
+        EventManagerSO.E_FinishedLoading += DisableMouse;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
         EventManagerSO.E_UnpauseGame += DisableMouse;
+        DisableMouse();
     }
-    
-    
+     
     private void OnEnable()
     {
         _input.Enable();
@@ -32,12 +32,17 @@ public class InputManager : Singleton<InputManager>
     private void OnDisable()
     {
         _input.Disable();
-        _input.Player.Pause.performed -= context => GameManager.Instance.TogglePause();
+        _input.Player.Pause.performed -= context => PausePerformed() ;
         EventManagerSO.E_PauseGame -= EnableMouse;
-        EventManagerSO.E_StartPrematch -= EnableMouse;
+        EventManagerSO.E_FinishedLoading -= DisableMouse;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
         EventManagerSO.E_UnpauseGame -= DisableMouse;
     }
+    private void PausePerformed() {
+        Debug.Log("Toggle Pause button clicked");
+        GameManager.Instance.TogglePause();
+    }
+
     private void EndMatchCleanup(Team NA)
     {
         EnableMouse();
@@ -52,6 +57,7 @@ public class InputManager : Singleton<InputManager>
     void DisableMouse()
     {
         // cursorLocked = true;
+        Debug.Log("Disabling mouse!");
         cursorInputForLook = true;
         SetCursorState(cursorInputForLook);
     }
@@ -100,6 +106,7 @@ public class InputManager : Singleton<InputManager>
     }
     private void OnApplicationFocus(bool hasFocus)
     {
+        Debug.Log("GameManager.Instance.currentState: "+GameManager.Instance.currentState);
         if(GameManager.Instance.currentState != GameState.Paused){
             Debug.Log("locking cursor");
             SetCursorState(cursorLocked);

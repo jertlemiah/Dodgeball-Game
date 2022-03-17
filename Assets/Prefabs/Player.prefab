@@ -573,7 +573,7 @@ MonoBehaviour:
   CameraDistance: 2.8
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1025
   IgnoreTag: Player
   CameraRadius: 0.15
 --- !u!1 &1202531954993456016
@@ -1072,6 +1072,7 @@ MonoBehaviour:
   sprint: 0
   aim: 0
   throw_bool: 0
+  pickup: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -3274,6 +3275,6 @@ MonoBehaviour:
   CameraDistance: 4
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1025
   IgnoreTag: Player
   CameraRadius: 0.15

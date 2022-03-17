@@ -28,6 +28,10 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_SetTimer accepts one argument (float timeRemaining) to specify how much time is left in the match.</summary>
     public static event SetTimerHandler E_SetTimer;
 
+    public delegate void LoadingProgressHandler(float progress);
+    /// <summary> E_SetTimer accepts one argument (float timeRemaining) to specify how much time is left in the match.</summary>
+    public static event LoadingProgressHandler E_LoadingProgress;
+
     public delegate void EndMatchHandler(Team winningTeam);
     /// <summary> E_EndMatch accepts one argument (Team winningTeam) to notify which team has won the match.</summary>
     public static event EndMatchHandler E_EndMatch;
@@ -61,6 +65,11 @@ public class EventManagerSO : ScriptableObject
     public delegate void UnhideHUDHandler();
     /// <summary> E_UnhideHUD is used to show a hidden HUD.</summary>
     public static event UnhideHUDHandler E_UnhideHUD;
+
+    public delegate void PickUpTextHandler(bool activeStatus);
+    /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
+    public static event PickUpTextHandler E_PickUpText;
+
     
     /// <summary> Triggers the E_GiveTeamPoints(Team team, int points) event. </summary>
     public static void TriggerEvent_GiveTeamPoints(Team team, int points)
@@ -86,6 +95,15 @@ public class EventManagerSO : ScriptableObject
         if(E_SetTimer != null){
             // Debug.Log("Triggering Event 'SetTimer("+timeRemaining+")'");  // This gets called way too much, lol          
             E_SetTimer(timeRemaining);
+        }        
+    }
+
+    /// <summary> Triggers the E_LoadingProgress(float progress) event. </summary>
+    public static void TriggerEvent_LoadingProgress(float progress)
+    {
+        if(E_LoadingProgress != null){
+            // Debug.Log("Triggering Event 'SetTimer("+timeRemaining+")'");  // This gets called way too much, lol          
+            E_LoadingProgress(progress);
         }        
     }
 
@@ -167,6 +185,15 @@ public class EventManagerSO : ScriptableObject
         if(E_HideHUD != null){
             Debug.Log("Triggering Event 'E_HideHUD()'");
             E_HideHUD();
+        }
+    }
+
+    /// <summary> Triggers the E_PickUpText() event. </summary>
+    public static void TriggerEvent_PickUpText(bool activeStatus)
+    {       
+        if(E_PickUpText != null){
+            Debug.Log("Triggering Event 'E_PickUpText()'");
+            E_PickUpText(activeStatus);
         }
     }
 }

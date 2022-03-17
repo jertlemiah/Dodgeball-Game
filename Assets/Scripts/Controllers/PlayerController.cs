@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public int totalHealth = 100;
+    [SerializeField] int totalHealth = 100;
     public int currentHealth = 100;
 
     private SpawnManager spawnManager;
@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         spawnManager = SpawnManager.Instance;
+        currentHealth = totalHealth;
     }
 
     // Update is called once per frame

@@ -206,7 +206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6926888611490538281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -812,6 +812,7 @@ MonoBehaviour:
   textTeam2Score: {fileID: 8646821545387585297}
   sliderTeam2Score: {fileID: 8773281321031524150}
   ballRenderTexture: {fileID: 6509902747811599721}
+  pickUpTextGO: {fileID: 5562328242827417332}
   blueFlag: {fileID: 7567441027360759432}
   redFlag: {fileID: 5835909046496923272}
 --- !u!1 &6509902746993484509

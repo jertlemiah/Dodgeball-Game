@@ -22,6 +22,8 @@ public class MainMenuController : Singleton<MainMenuController>
     [SerializeField] Image levelDetailsImage;
     [SerializeField] TMP_Text levelDetailsText;
     [SerializeField] GameObject levelDetailsMask;
+    [SerializeField] AudioClip clickSound;
+    [SerializeField] AudioSource audioSource;
 
     [Space(10f)][Header("Screen Transition Settings")]
     [SerializeField] float screenTransitionTime = 1f;
@@ -46,6 +48,8 @@ public class MainMenuController : Singleton<MainMenuController>
         currentScreen = MenuScreen.Title;
         screenHistory.Add(currentScreen);
         titleScreenGO.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        if(!audioSource)
+            audioSource = GetComponent<AudioSource>();
         // SwitchToScreen(MenuScreen.Title);
     }
 
@@ -57,6 +61,7 @@ public class MainMenuController : Singleton<MainMenuController>
     public void SwitchToScreen(MenuScreen newScreen, bool forwards) 
     {
         if(menuScreenDict.ContainsKey(newScreen)){
+            PlayButtonSound();
             Debug.Log(currentScreen.ToString()+" switching to screen '"+newScreen.ToString()+"'");
             GameObject curScreenGO = menuScreenDict[currentScreen];
             GameObject newScreenGO = menuScreenDict[newScreen];
@@ -94,6 +99,12 @@ public class MainMenuController : Singleton<MainMenuController>
             Debug.Log("Screen '"+newScreen.ToString()+"' does not exist, staying on current Screen '"+currentScreen.ToString()+"'");
         }
     }
+
+    private void PlayButtonSound()
+    {
+        audioSource.PlayOneShot(clickSound);
+    }
+
     // public void OverrideScreenSwitch(MenuScreen newScreen)
     // {
         
@@ -103,6 +114,7 @@ public class MainMenuController : Singleton<MainMenuController>
     {
         if(screenHistory.Count > 1){
             SwitchToScreen(screenHistory[screenHistory.Count-2],false);
+            PlayButtonSound();
         }
     }
     public void LoadLevelDetails(LevelPanelController levelPanelController) 
@@ -158,7 +170,7 @@ public class MainMenuController : Singleton<MainMenuController>
     public void Level_PlayButton()
     {
         Debug.Log("Launching the level '"+selectedLevel.sceneIndex.ToString()+"'");
-        GameSceneManager.Instance.LoadScene(selectedLevel.sceneIndex);
+        GameSceneManager.Instance.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
     } 
     public void QuitButton()
     {

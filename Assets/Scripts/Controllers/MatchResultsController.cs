@@ -63,6 +63,6 @@ public class MatchResultsController : MonoBehaviour
     {
         Debug.Log("Leaving Match");
         // Time.timeScale = 1;
-        GameSceneManager.Instance.LoadScene(SceneIndex.TITLE_SCREEN);
+        GameSceneManager.Instance.LoadScene_LoadingScreen(SceneIndex.TITLE_SCREEN);
     }
 }
