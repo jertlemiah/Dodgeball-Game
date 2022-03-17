@@ -16,7 +16,8 @@ public class DodgeballController : MonoBehaviour
     RandomAudioClip randomQuietAudioClip = new RandomAudioClip();
     RandomAudioClip randomMediumAudioClip = new RandomAudioClip();
     RandomAudioClip randomLoudAudioClip = new RandomAudioClip();
-
+    public float velocity = 20f;
+    public int damage = 25;
     public bool hasOwner = false;
     public bool isThrown = false;
     public GameObject thrownBy;
@@ -55,7 +56,14 @@ public class DodgeballController : MonoBehaviour
             PlayerController pc = c.gameObject.GetComponent<PlayerController>();
             if (pc != null)
             {
-                pc.TakeDamage(25); // fixed damage for now
+                pc.TakeDamage(damage); // fixed damage for now
+                isThrown = false; // eliminate taking damage twice before the ball hits the ground
+            }
+
+            EnemyController ec = c.gameObject.GetComponent<EnemyController>();
+            if (ec != null)
+            {
+                ec.TakeDamage(damage); // fixed damage for now
                 isThrown = false; // eliminate taking damage twice before the ball hits the ground
             }
         }
