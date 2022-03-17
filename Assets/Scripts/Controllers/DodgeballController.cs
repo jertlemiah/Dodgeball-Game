@@ -60,10 +60,10 @@ public class DodgeballController : MonoBehaviour
                 isThrown = false; // eliminate taking damage twice before the ball hits the ground
             }
 
-            EnemyController ec = c.gameObject.GetComponent<EnemyController>();
-            if (ec != null)
+            UnitController unit = c.gameObject.GetComponent<UnitController>();
+            if (unit != null)
             {
-                ec.TakeDamage(damage); // fixed damage for now
+                unit.TakeDamage(damage); // fixed damage for now
                 isThrown = false; // eliminate taking damage twice before the ball hits the ground
             }
         }

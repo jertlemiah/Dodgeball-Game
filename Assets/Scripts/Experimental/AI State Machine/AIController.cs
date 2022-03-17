@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 public class AIController : MonoBehaviour
 {
-    [SerializeField] public List<AIState> states;
-    [SerializeField] public UnitController controller  => GetComponent<UnitController>();
     public GameObject targetPlayerGO;
-    [SerializeField] public NavMeshAgent navMeshAgent;
-    [SerializeField] public PredictedPositionController predictionController;
+    public NavMeshAgent navMeshAgent;
+    public PredictedPositionController predictionController;
+    public  List<AIState> states;
     // Start is called before the first frame update
     void Start()
     {

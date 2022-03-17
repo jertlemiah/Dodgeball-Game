@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1202531955121058267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5255be36e50644310ac932aec45e9fd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a7d5a467950ea2449dbb1ea77089613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aimVirtualCamera: {fileID: 1202531956353198955}
@@ -3126,7 +3126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1202531956702175399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d8c2b8c0cc624ed0a174be8d0e837cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 536c49e02146ac843acf52e276190f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hasBall: 0
