@@ -23,7 +23,7 @@ public class DodgeballController : MonoBehaviour
     public GameObject thrownBy;
     
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         if(dodgeballClipsQuiet.Length > 0)
             randomQuietAudioClip.audioClipArray = dodgeballClipsQuiet;
@@ -72,13 +72,16 @@ public class DodgeballController : MonoBehaviour
     private void PlayRandomHitSound()
     {
         AudioClip randClip;
-        if(rb.velocity.magnitude > loudSpeed){
+        if(rb.velocity.magnitude > loudSpeed & randomLoudAudioClip.audioClipArray.Length>0){
             randClip = randomLoudAudioClip.GetRandomAudioClip();
         }
-        else if (rb.velocity.magnitude > loudSpeed){
+        else if (rb.velocity.magnitude > loudSpeed  & randomMediumAudioClip.audioClipArray.Length>0){
             randClip = randomMediumAudioClip.GetRandomAudioClip();
-        } else {
+        } else if(randomQuietAudioClip.audioClipArray.Length>0) {
             randClip = randomQuietAudioClip.GetRandomAudioClip();
+        } else {
+            Debug.Log("No appropriate sounds were assigned for this object: "+gameObject.name);
+            return;
         }
         
         // Debug.Log("Dodgeball hit, vel is "+rb.velocity.magnitude+", playing clip: "+randClip);

@@ -5,8 +5,9 @@ using UnityEngine;
 public class HeavyBallController : DodgeballController
 {
     // Start is called before the first frame update
-    void Start()
+    new public void Start()
     {
+        base.Start(); 
         velocity = 8.5f;
         damage = 50;
     }
