@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 0d31b0ee6f1fbf14eb6c6bc844f70f3c, type: 2}
+--- !u!1 &30978099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2076340685624309495, guid: 684f9615e32e0b84ca48dc069dc5c845, type: 3}
+  m_PrefabInstance: {fileID: 1807231479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &36753248
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +450,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1202531955121058243, guid: 8d86a627479954f41bab67b9cbb129b4, type: 3}
   m_PrefabInstance: {fileID: 240844704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &283200873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2076340685624309495, guid: 684f9615e32e0b84ca48dc069dc5c845, type: 3}
+  m_PrefabInstance: {fileID: 496160327}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &373941631
 PrefabInstance:
@@ -996,13 +1006,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 240844705}
     - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: activeDodgeballs.Array.data[0]
       value: 
       objectReference: {fileID: 1414572911}
     - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: activeDodgeballs.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 30978099}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[2]
+      value: 
+      objectReference: {fileID: 283200873}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[3]
+      value: 
+      objectReference: {fileID: 1137937519}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[4]
+      value: 
+      objectReference: {fileID: 809155649}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[5]
+      value: 
+      objectReference: {fileID: 1104568828}
     - target: {fileID: 2484852697592664330, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1337,6 +1367,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 453e3429dba1e48358d32e05efe18710, type: 3}
+--- !u!1 &809155649 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2076340685624309495, guid: 4d86b406911234917a54932ba5432401, type: 3}
+  m_PrefabInstance: {fileID: 941853820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &885945503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,13 +1566,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1311754684}
     - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: activeDodgeballs.Array.data[0]
       value: 
       objectReference: {fileID: 1414572911}
     - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: activeDodgeballs.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 30978099}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[2]
+      value: 
+      objectReference: {fileID: 283200873}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[3]
+      value: 
+      objectReference: {fileID: 1137937519}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[4]
+      value: 
+      objectReference: {fileID: 809155649}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[5]
+      value: 
+      objectReference: {fileID: 1104568828}
     - target: {fileID: 2484852697592664330, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1548,6 +1603,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2484852697093678372, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
   m_PrefabInstance: {fileID: 1100913118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1104568828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2076340685624309495, guid: 28ec5b6850a39471291ac469300f6328, type: 3}
+  m_PrefabInstance: {fileID: 2102489978}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1104847143
 GameObject:
@@ -1744,6 +1804,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127311193}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1137937519 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2076340685624309495, guid: 4aee0ac315a894e27badedc864dce41f, type: 3}
+  m_PrefabInstance: {fileID: 455943805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1267099211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1963,13 +2028,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 710139441}
     - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: activeDodgeballs.Array.data[0]
       value: 
       objectReference: {fileID: 1414572911}
     - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: activeDodgeballs.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 30978099}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[2]
+      value: 
+      objectReference: {fileID: 283200873}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[3]
+      value: 
+      objectReference: {fileID: 1137937519}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[4]
+      value: 
+      objectReference: {fileID: 809155649}
+    - target: {fileID: 2484852697093678379, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
+      propertyPath: activeDodgeballs.Array.data[5]
+      value: 
+      objectReference: {fileID: 1104568828}
     - target: {fileID: 2484852697592664330, guid: 38313c6d90a61964a8aa2c797baf6b8c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

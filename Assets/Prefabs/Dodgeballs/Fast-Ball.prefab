@@ -8881,7 +8881,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2076340685624309495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d201286eeda2a45f0b78e4e05af7f912, type: 3}
+  m_Script: {fileID: 11500000, guid: ddae80104714c3f43bf110fbc8d960a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2076340685624309512}
@@ -8898,9 +8898,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e4d9df4c560350342906cea39abcf571, type: 3}
   - {fileID: 8300000, guid: 6d0c022e32716dd46a3949f84761f4d0, type: 3}
   audioSource: {fileID: 851144451}
-  loudSpeed: 3
-  velocity: 40
-  damage: 0
+  loudSpeed: 0.3
+  velocity: 20
+  damage: 25
   hasOwner: 0
   isThrown: 0
   thrownBy: {fileID: 0}
