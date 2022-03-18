@@ -421,7 +421,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82567347}
-  m_LocalRotation: {x: 0.14830083, y: -0.063551575, z: 0.009550318, w: 0.986852}
+  m_LocalRotation: {x: 0.14830083, y: -0.063551605, z: 0.009550323, w: 0.986852}
   m_LocalPosition: {x: 5.7299995, y: 4.74, z: -3.3400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10201,7 +10201,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961160873}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -10729,8 +10729,8 @@ MonoBehaviour:
   masterSlider: {fileID: 1191352173}
   gameSfxSlider: {fileID: 1972944875}
   uiSfxSlider: {fileID: 1783582996}
-  screenTransitionTime: 0.75
-  screenScaleDiff: 0.3
+  screenTransitionTime: 0.55
+  screenScaleDiff: 0.75
   overrideScreen: 0
 --- !u!82 &2004207323
 AudioSource:
@@ -12874,11 +12874,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2448570727028696073, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.063551575
+      value: -0.063551605
       objectReference: {fileID: 0}
     - target: {fileID: 2448570727028696073, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.009550318
+      value: 0.009550323
       objectReference: {fileID: 0}
     - target: {fileID: 2448570727028696073, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

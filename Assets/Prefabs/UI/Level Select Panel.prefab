@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256506bca0828754cb52dd31deee26bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 0}
+  levelData: {fileID: 11400000, guid: f9a0f0d3e009b204aa2289b14975e12f, type: 2}
   UiSelector: {fileID: 1325101788883466601}
   UiSelected: {fileID: 1325101788883466601}
   UiPressed: {fileID: 0}
@@ -234,6 +234,9 @@ MonoBehaviour:
   panelSelectedScale: 1.1
   scalingDuration: 0.2
   disableVisuals: 0
+  panelOutline: {fileID: 1325101787890647924}
+  panelImage: {fileID: 1935252201992883598}
+  panelTitle: {fileID: 1325101787881691048}
 --- !u!1 &1325101787881691054
 GameObject:
   m_ObjectHideFlags: 0

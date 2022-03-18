@@ -65,7 +65,10 @@ public class MainMenuController : Singleton<MainMenuController>
     }
     public void SwitchToScreen(MenuScreen newScreen, bool forwards) 
     {
-        if(menuScreenDict.ContainsKey(newScreen)){
+        if(!menuScreenDict.ContainsKey(newScreen)){
+            Debug.Log("Screen '"+newScreen.ToString()+"' does not exist, staying on current Screen '"+currentScreen.ToString()+"'");
+        }
+        else {
             PlayButtonSound();
             Debug.Log(currentScreen.ToString()+" switching to screen '"+newScreen.ToString()+"'");
             GameObject curScreenGO = menuScreenDict[currentScreen];
@@ -83,25 +86,27 @@ public class MainMenuController : Singleton<MainMenuController>
 
             // First place the screens in the correct places for transitions
             
-            newScreenGO.GetComponent<RectTransform>().anchoredPosition = -offscreenPos*(1+scaleDiff/2);//*(1/3f);
+            newScreenGO.GetComponent<RectTransform>().anchoredPosition = -0.5f*offscreenPos*(1+scaleDiff/2);//*(1/3f);
             newScreenGO.SetActive(true);
             newScreenGO.GetComponent<CanvasGroup>().alpha = 0;
             newScreenGO.transform.localScale = Vector3.one*(1-scaleDiff);
             
 
             // Then transition to the new screen
-            curScreenGO.GetComponent<RectTransform>().DOAnchorPos(offscreenPos*(1+scaleDiff/2),screenTransitionTime);
-            curScreenGO.GetComponent<CanvasGroup>().DOFade(0,screenTransitionTime*0.5f);
+            curScreenGO.GetComponent<RectTransform>().DOAnchorPos(offscreenPos*(1+scaleDiff/4),screenTransitionTime);
+            curScreenGO.GetComponent<CanvasGroup>().DOFade(0,screenTransitionTime);
             curScreenGO.transform.DOScale(1f+scaleDiff,screenTransitionTime);
             // curScreenGO.SetActive(false);
             newScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,screenTransitionTime);
             newScreenGO.GetComponent<CanvasGroup>().DOFade(1,screenTransitionTime*1.5f);
             newScreenGO.transform.DOScale(1f,screenTransitionTime);
 
+
+            // Sequence mySequence = DOTween.Sequence();
+            // mySequence.Append(transform.DOMoveX(45, 1))
+            //     .Append(transform.DORotate(new Vector3(0,180,0), 1));
+
             currentScreen = newScreen;
-        }
-        else {
-            Debug.Log("Screen '"+newScreen.ToString()+"' does not exist, staying on current Screen '"+currentScreen.ToString()+"'");
         }
     }
 

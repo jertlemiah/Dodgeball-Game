@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class LevelPanelController : MonoBehaviour,
     ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -20,6 +21,9 @@ public class LevelPanelController : MonoBehaviour,
     [SerializeField] float scalingDuration = 1f;
 
     [SerializeField] public bool disableVisuals = false;
+    [SerializeField] Image panelOutline;
+    [SerializeField] Image panelImage;
+    [SerializeField] TMP_Text panelTitle;
 
     //private MenuManager menuManager;
 
@@ -33,6 +37,14 @@ public class LevelPanelController : MonoBehaviour,
             }
         }
         //menuManager = MenuManager.Instance;
+        if(levelData == null) {
+            Debug.LogError("Button '" + this.name + "' requires a levelData reference.");
+        }
+        else {
+            panelImage.sprite = levelData.panelImage;
+            panelOutline.color = levelData.panelColor;
+            panelTitle.text = levelData.levelName;
+        }
     }
     public void LevelDetailsButton() 
     {
