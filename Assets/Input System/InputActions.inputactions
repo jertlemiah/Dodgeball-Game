@@ -25,7 +25,7 @@
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "0e097a27-c770-443f-8ebb-ae3e05351bf2",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -36,14 +36,14 @@
                     "name": "Sprint",
                     "type": "PassThrough",
                     "id": "9598453e-ff62-4c5f-bc11-0bbda047606e",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Throw",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "a2df009d-7c9d-48fc-8e27-44602ccf95f1",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -54,14 +54,14 @@
                     "name": "Aim",
                     "type": "PassThrough",
                     "id": "796b6aa2-317f-4762-8ba2-8bc36e2402eb",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Crouch",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "cd37f033-a401-4dfe-9910-61f4857f7238",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -70,8 +70,17 @@
                 },
                 {
                     "name": "Pause",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "6734086b-5f16-4f24-ab94-8f6f7d64c657",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PickUp",
+                    "type": "PassThrough",
+                    "id": "b5cb2523-3033-4d80-a0eb-58a91881d3e3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -329,6 +338,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b4dfaca-59b9-48fd-a435-97c122ebdd41",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64e0c8f5-48f1-4caf-969e-b5014daa3e6a",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

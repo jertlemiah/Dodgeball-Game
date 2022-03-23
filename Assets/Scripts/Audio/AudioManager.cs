@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[RequireComponent(typeof(AudioSource))]
 /// <summary> 
 ///<para>AudioManager accepts an array of AudioTrack scriptable objects and plays those tracks acrross all scenes.</para>
 ///<para>When a track is finished, the next in the array is automatically played.</para>
