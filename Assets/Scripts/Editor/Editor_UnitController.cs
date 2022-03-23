@@ -12,10 +12,10 @@ public class Editor_UnitController : Editor
         base.OnInspectorGUI();
         DrawUILine(Color.gray);
         // EditorGUILayout.PropertyField(serializedObject.pro)
-        if (GUILayout.Button("Give team 1 a point"))
-		{
+        // if (GUILayout.Button("This button "))
+		// {
 			
-		}
+		// }
 	}
     public static void DrawUILine(Color color, int thickness = 2, int padding = 10)
     {

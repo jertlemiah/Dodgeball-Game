@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
 [Serializable]
 public struct Input
@@ -24,9 +25,14 @@ public struct Input
 [RequireComponent(typeof(CharacterController))]
 public class UnitController : MonoBehaviour
 {
-    public bool useMainCamera = false;
-    [Header("_________Player__________________")]
-    [Header("_________Player__________________")]
+    [Header("               Controller Input")]
+        [Tooltip("The currently supplied input for the controller")] 
+        public Input input;
+    
+    [Header("               Controller Settings")][Space(15)]
+        [Tooltip("Setting this to false will stop the player from moving")] 
+        public bool canMove = true;
+
         [Tooltip("Sensitivity of player input to character output.")] 
         public float Sensitivity = 1f;
 
@@ -42,39 +48,80 @@ public class UnitController : MonoBehaviour
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
 
+    [Space(10)]
+        [Tooltip("The height the player can jump")]
+        public float JumpHeight = 1.2f;
+
+        [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
+        public float Gravity = -15.0f;
 
     [Space(10)]
-    [Tooltip("The height the player can jump")]
-    public float JumpHeight = 1.2f;
-    [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-    public float Gravity = -15.0f;
+        [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+        public float JumpTimeout = 0.50f;
 
-    [Space(10)]
-    [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-    public float JumpTimeout = 0.50f;
-    [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
-    public float FallTimeout = 0.15f;
+        [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+        public float FallTimeout = 0.15f;
 
-    [Header("Player Grounded")]
-    [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
-    public bool Grounded = true;
-    [Tooltip("Useful for rough ground")]
-    public float GroundedOffset = -0.14f;
-    [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
-    public float GroundedRadius = 0.28f;
-    [Tooltip("What layers the character uses as ground")]
-    public bool canMove = true;
-    public LayerMask GroundLayers;
-    private Animator _animator;
-	private CharacterController _controller;
-    public int healthCurrent = 2;
-    public int healthMax = 2;
-    public bool hasBall = false;
-    // Need to create a reference to the type of ball
-    public GameObject heldBallGO;
-    // Start is called before the first frame update
-    public Team team = Team.Team1;
-    public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
+
+    [Header("           Player Grounded")][Space(15)]
+        [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+        public bool Grounded = true;
+
+        [Tooltip("Useful for rough ground")]
+        public float GroundedOffset = -0.14f;
+
+        [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
+        public float GroundedRadius = 0.28f;
+
+        [Tooltip("What layers the character uses as ground")]
+        public LayerMask GroundLayers;
+
+    [Header("           Cinemachine")][Space(15)]
+        [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+        public GameObject CinemachineCameraTarget;
+
+        [Tooltip("How far in degrees can you move the camera up")]
+        public float TopClamp = 70.0f;
+
+        [Tooltip("How far in degrees can you move the camera down")]
+        public float BottomClamp = -30.0f;
+
+        [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
+        public float CameraAngleOverride = 0.0f;
+
+        [Tooltip("For locking the camera position on all axis")]
+        public bool LockCameraPosition = false;
+
+        [Tooltip("Will snap player controls to the mainCamera instead of it's own local camera")]
+        public bool useMainCamera = false;
+
+        [Tooltip("The controller's local camera")]
+        public Camera unitCamera;
+
+
+    [Header("           Player Attributes")][Space(15)]
+        [Tooltip("The health the player will start with each time he respawns.")]
+        public int healthMax = 2;
+
+        [Tooltip("The current health of the player set at runtime")]
+        public int healthCurrent = 2;
+
+        public Team team = Team.Team1;        
+        public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
+    
+
+    [Header("           Shooter Settings")][Space(15)]
+        [SerializeField] string ballHoldSpotName = "BallHoldSpot";
+        [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
+        [SerializeField] private float normalSensitivity = 2;
+        [SerializeField] private float aimSensitivity = 0.5f;
+        [SerializeField] private LayerMask aimColliderLayerMask;
+
+        [SerializeField] private GameObject handSpot;
+        [SerializeField] private Transform debugTransform;
+        public bool hasBall = false;
+        public GameObject heldBallGO;
+        
 
     // player
     private float _speed;
@@ -84,30 +131,30 @@ public class UnitController : MonoBehaviour
     private float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
     private bool _rotateOnMove = true;
+    private const float _threshold = 0.01f;
+    private bool _hasAnimator;
+    private Animator _animator;
+	private CharacterController _controller;
 
     // animation IDs
     private int _animIDSpeed;
     private int _animIDGrounded;
     private int _animIDJump;
     private int _animIDFreeFall;
-    private int _animIDMotionSpeed;
+    private int _animIDMotionSpeed;   
 
-    [Header("Cinemachine")]
-    [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-    public GameObject CinemachineCameraTarget;
-    [Tooltip("How far in degrees can you move the camera up")]
-    public float TopClamp = 70.0f;
-    [Tooltip("How far in degrees can you move the camera down")]
-    public float BottomClamp = -30.0f;
-    [Tooltip("Additional degress to override the camera. Useful for fine tuning camera position when locked")]
-    public float CameraAngleOverride = 0.0f;
-    [Tooltip("For locking the camera position on all axis")]
-    public bool LockCameraPosition = false;
+    // timeout deltatime
+    private float _jumpTimeoutDelta;
+    private float _fallTimeoutDelta;
+
     
+    // cinemachine
+    private float _cinemachineTargetYaw;
+    private float _cinemachineTargetPitch;
+    
+    private PickUpZoneController pickUpZoneController;
+    private Vector3 mouseWorldPosition;
 
-    private const float _threshold = 0.01f;
-
-    public Input input;
 
     void Start()
     {
@@ -119,33 +166,124 @@ public class UnitController : MonoBehaviour
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
+        pickUpZoneController = GetComponentInChildren<PickUpZoneController>();
+        if(handSpot == null) {
+            handSpot = transform.Find(ballHoldSpotName).gameObject;
+            if(handSpot == null)
+                Debug.LogError(gameObject.name+" does not have its handSpot game object set, and could not find one in children.");
+        }
+        if(aimVirtualCamera == null) {
+            Debug.LogError(gameObject.name+" does not have its virtual Cinemachine aim camera set.");
+        }
+        if(aimColliderLayerMask != LayerMask.GetMask("Map")){
+            Debug.LogWarning(gameObject.name+" has its aim layermask not set to map only. Be careful changing this mask.");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         JumpAndGravity();
         GroundedCheck();
         Move();
+        PickupBall();
+        AimAndThrow();
     }
     private void LateUpdate()
     {
         CameraRotation();
     }
 
-    public void TakeDamage(int damage)
+    void AimAndThrow()
     {
-        // This will need to be swapped out for the real system at some point
-        if(team == Team.Team1)
+        // Find the new Mouse World Position to use for aiming
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Ray ray = unitCamera.ScreenPointToRay(screenCenterPoint);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
-            // GameManager.Instance.GiveTeam2Points(1);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
+            //debugTransform.position = raycastHit.point;
+            mouseWorldPosition = raycastHit.point;
         }
-        else
+
+        // If holding a ball &
+        if(input.aim && pickUpZoneController.hasBall)
+        {   
+            _animator.SetBool("Aim", true);
+            aimVirtualCamera.gameObject.SetActive(true);
+            Sensitivity = aimSensitivity;
+            _rotateOnMove = false;
+
+            Vector3 worldAimTarget =  new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z);
+            Vector3 aimDirection = (worldAimTarget - transform.position);
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+             
+            if(input.throw_bool){
+                _animator.SetBool("Throw", true);
+                //rb.constraints = RigidbodyConstraints.None;
+            }
+           
+        }
+        else{
+            _animator.SetBool("Aim", false);
+            aimVirtualCamera.gameObject.SetActive(false);
+            Sensitivity = normalSensitivity;
+            _rotateOnMove = true;
+        }
+    }
+
+    void PickupBall()
+    {
+        if(pickUpZoneController.ballNear && input.pickup)
         {
-            // GameManager.Instance.GiveTeam1Points(1);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
+            pickUpZoneController.dodgeball.hasOwner = true;
+            pickUpZoneController.ballNear = false;
+            // GameManager.Instance.TEMP_TurnOnBallHUD();   
+            heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
+            _animator.SetBool("PickUp", true);
+            canMove = false;
+            EventManagerSO.TriggerEvent_PickUpText(false); 
         }
+
+        if(_animator.GetBool("PickUp"))
+        {
+            transform.forward = heldBallGO.transform.position-transform.position;
+        }
+    }
+
+    void AnimTrigger_Throw()
+    {
+        heldBallGO.transform.parent = null;
+        Rigidbody ballRb = heldBallGO.GetComponent<Rigidbody>();
+        ballRb.isKinematic = false;
+        ballRb.velocity = Vector3.zero;
+        ballRb.angularVelocity = Vector3.zero;
+
+        Vector3 throw_direction = (mouseWorldPosition - heldBallGO.transform.position).normalized;
+        float throw_speed = heldBallGO.GetComponent<DodgeballController>().velocity;
+        Debug.Log(heldBallGO.name);
+        Debug.Log("The ball was thrown with a velocity of " + throw_speed);
+        ballRb.AddForce(throw_direction*throw_speed*100f);
+        pickUpZoneController.hasBall = false;
+        _animator.SetBool("Throw", false);
+
+        heldBallGO.GetComponent<DodgeballController>().hasOwner = false;
+        heldBallGO.GetComponent<DodgeballController>().isThrown = true; // the ball can now cause damage on collision
+        heldBallGO.GetComponent<DodgeballController>().thrownBy = this.gameObject; // to let the dodgeball know not to damage the person who threw it on exit from hand
+    }
+
+    void AnimTrigger_Pickup()
+    {
+        heldBallGO.transform.parent = handSpot.transform;
+        heldBallGO.transform.localPosition = Vector3.zero;
+        heldBallGO.transform.localRotation = Quaternion.identity;
+
+        Rigidbody ballRb = heldBallGO.GetComponent<Rigidbody>();
+        ballRb.isKinematic = true;
+
+        pickUpZoneController.hasBall = true;
+        pickUpZoneController.foundBall = false;
+
+        _animator.SetBool("PickUp", false);
+        canMove = true;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -163,6 +301,21 @@ public class UnitController : MonoBehaviour
         _animIDJump = Animator.StringToHash("Jump");
         _animIDFreeFall = Animator.StringToHash("FreeFall");
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+    }
+
+    public void TakeDamage(int damage)
+    {
+        // This will need to be swapped out for the real system at some point
+        if(team == Team.Team1)
+        {
+            // GameManager.Instance.GiveTeam2Points(1);
+            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
+        }
+        else
+        {
+            // GameManager.Instance.GiveTeam1Points(1);
+            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
+        }
     }
 
     private void CameraRotation()
@@ -198,17 +351,6 @@ public class UnitController : MonoBehaviour
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
-
-    // timeout deltatime
-    private float _jumpTimeoutDelta;
-    private float _fallTimeoutDelta;
-
-    public Camera unitCamera;
-    // cinemachine
-    private float _cinemachineTargetYaw;
-    private float _cinemachineTargetPitch;
-    private bool _hasAnimator;
-
 
     private void Move()
     {
@@ -347,276 +489,4 @@ public class UnitController : MonoBehaviour
             _verticalVelocity += Gravity * Time.deltaTime;
         }
     }
-
-//     public void Move(Vector2 moveDir, bool sprint, Vector3 facingAngleEuler)
-//     {
-//         // set target speed based on move speed, sprint speed and if sprint is pressed
-//         float targetSpeed = sprint ? SprintSpeed : MoveSpeed;
-
-//         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
-//         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-//         // if there is no input, set the target speed to 0
-//         if (moveDir == Vector2.zero) targetSpeed = 0.0f;
-
-//         // a reference to the players current horizontal velocity
-//         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
-
-//         float speedOffset = 0.1f;
-//         // float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-//         float inputMagnitude = 1f;
-
-//         // accelerate or decelerate to target speed
-//         if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
-//         {
-//             // creates curved result rather than a linear one giving a more organic speed change
-//             // note T in Lerp is clamped, so we don't need to clamp our speed
-//             _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
-
-//             // round speed to 3 decimal places
-//             _speed = Mathf.Round(_speed * 1000f) / 1000f;
-//         }
-//         else
-//         {
-//             _speed = targetSpeed;
-//         }
-//         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-
-//         // normalise input direction
-//         Vector3 inputDirection = new Vector3(moveDir.x, 0.0f, moveDir.y).normalized;
-
-//         // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-//         // if there is a move input rotate player when the player is moving
-//         if (moveDir != Vector2.zero)
-//         {
-//             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + facingAngleEuler.y;
-//             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
-
-//             // rotate to face input direction relative to camera position
-//             if (_rotateOnMove)
-//             {
-//                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-//             }
-//         }
-
-
-//         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-
-//         // move the player
-//         if(canMove)
-//         {
-//             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-//         }
-
-//         // update animator if using character
-//         _animator.SetFloat(_animIDSpeed, _animationBlend);
-//         _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-
-//     }
-
-//     Vector3 m_GroundNormal;
-//     float m_TurnAmount;
-//     float m_ForwardAmount;
-//     bool m_Crouching;
-//     Vector3 m_CapsuleCenter;
-//     CapsuleCollider m_Capsule;
-//     Rigidbody m_Rigidbody;
-//     float m_CapsuleHeight;
-//     const float k_Half = 0.5f;
-//     float m_OrigGroundCheckDistance;
-//     [SerializeField] float m_GroundCheckDistance = 0.2f;
-//     [SerializeField] float m_RunCycleLegOffset = 0.2f; //specific to the character in sample assets, will need to be modified to work with others
-//     [SerializeField] float m_MoveSpeedMultiplier = 1f;
-//     [SerializeField] float m_AnimSpeedMultiplier = 1f;
-//     [Range(1f, 4f)][SerializeField] float m_GravityMultiplier = 2f;
-//     [SerializeField] float m_MovingTurnSpeed = 360;
-//     [SerializeField] float m_StationaryTurnSpeed = 180;
-//     [SerializeField] float m_JumpPower = 6f;
-
-//     public void Move(Vector3 move, bool crouch, bool jump)
-//     {
-
-//         // convert the world relative moveInput vector into a local-relative
-//         // turn amount and forward amount required to head in the desired
-//         // direction.
-//         if (move.magnitude > 1f) move.Normalize();
-//         move = transform.InverseTransformDirection(move);
-//         CheckGroundStatus();
-//         move = Vector3.ProjectOnPlane(move, m_GroundNormal);
-//         m_TurnAmount = Mathf.Atan2(move.x, move.z);
-//         m_ForwardAmount = move.z;
-
-//         ApplyExtraTurnRotation();
-
-//         // control and velocity handling is different when grounded and airborne:
-//         if (Grounded)
-//         {
-//             HandleGroundedMovement(crouch, jump);
-//         }
-//         else
-//         {
-//             HandleAirborneMovement();
-//         }
-
-//         ScaleCapsuleForCrouching(crouch);
-//         PreventStandingInLowHeadroom();
-
-//         // send input and other state parameters to the animator
-//         UpdateAnimator(move);
-//     }
-
-
-//     void ScaleCapsuleForCrouching(bool crouch)
-//     {
-//         if (Grounded && crouch)
-//         {
-//             if (m_Crouching) return;
-//             m_Capsule.height = m_Capsule.height / 2f;
-//             m_Capsule.center = m_Capsule.center / 2f;
-//             m_Crouching = true;
-//         }
-//         else
-//         {
-//             Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
-//             float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-//             if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-//             {
-//                 m_Crouching = true;
-//                 return;
-//             }
-//             m_Capsule.height = m_CapsuleHeight;
-//             m_Capsule.center = m_CapsuleCenter;
-//             m_Crouching = false;
-//         }
-//     }
-
-//     void PreventStandingInLowHeadroom()
-//     {
-//         // prevent standing up in crouch-only zones
-//         if (!m_Crouching)
-//         {
-//             Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
-//             float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-//             if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-//             {
-//                 m_Crouching = true;
-//             }
-//         }
-//     }
-
-
-//     void UpdateAnimator(Vector3 move)
-//     {
-//         // update the animator parameters
-//         _animator.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
-//         _animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
-//         _animator.SetBool("Crouch", m_Crouching);
-//         _animator.SetBool("OnGround", Grounded);
-//         if (!Grounded)
-//         {
-//             _animator.SetFloat("Jump", m_Rigidbody.velocity.y);
-//         }
-
-//         // calculate which leg is behind, so as to leave that leg trailing in the jump animation
-//         // (This code is reliant on the specific run cycle offset in our animations,
-//         // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
-//         float runCycle =
-//             Mathf.Repeat(
-//                 _animator.GetCurrentAnimatorStateInfo(0).normalizedTime + m_RunCycleLegOffset, 1);
-//         float jumpLeg = (runCycle < k_Half ? 1 : -1) * m_ForwardAmount;
-//         if (Grounded)
-//         {
-//             _animator.SetFloat("JumpLeg", jumpLeg);
-//         }
-
-//         // the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
-//         // which affects the movement speed because of the root motion.
-//         if (Grounded && move.magnitude > 0)
-//         {
-//             _animator.speed = m_AnimSpeedMultiplier;
-//         }
-//         else
-//         {
-//             // don't use that while airborne
-//             _animator.speed = 1;
-//         }
-//     }
-
-
-//     void HandleAirborneMovement()
-//     {
-//         // apply extra gravity from multiplier:
-//         Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
-//         m_Rigidbody.AddForce(extraGravityForce);
-
-//         m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
-//     }
-
-
-//     void HandleGroundedMovement(bool crouch, bool jump)
-//     {
-//         // check whether conditions are right to allow a jump:
-//         if (jump && !crouch && _animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
-//         {
-//             // jump!
-//             m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
-//             Grounded = false;
-//             _animator.applyRootMotion = false;
-//             m_GroundCheckDistance = 0.1f;
-//         }
-//     }
-
-//     void ApplyExtraTurnRotation()
-//     {
-//         // help the character turn faster (this is in addition to root rotation in the animation)
-//         float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
-//         transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
-//     }
-
-
-//     public void OnAnimatorMove()
-//     {
-//         // we implement this function to override the default root motion.
-//         // this allows us to modify the positional speed before it's applied.
-//         if (Grounded && Time.deltaTime > 0)
-//         {
-//             Vector3 v = (_animator.deltaPosition * m_MoveSpeedMultiplier) / Time.deltaTime;
-
-//             // we preserve the existing y part of the current velocity.
-//             v.y = m_Rigidbody.velocity.y;
-//             m_Rigidbody.velocity = v;
-//         }
-//     }
-
-
-//     void CheckGroundStatus()
-//     {
-//         RaycastHit hitInfo;
-// #if UNITY_EDITOR
-//         // helper to visualise the ground check ray in the scene view
-//         Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
-// #endif
-//         // 0.1f is a small offset to start the ray from inside the character
-//         // it is also good to note that the transform position in the sample assets is at the base of the character
-//         if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
-//         {
-//             m_GroundNormal = hitInfo.normal;
-//             Grounded = true;
-//             _animator.applyRootMotion = true;
-//         }
-//         else
-//         {
-//             Grounded = false;
-//             m_GroundNormal = Vector3.up;
-//             _animator.applyRootMotion = false;
-//         }
-//     }
-//     public void Jump()
-//     {
-
-//     }
-//     public void Throw(Vector3 direction)
-//     {
-
-//     }
 }

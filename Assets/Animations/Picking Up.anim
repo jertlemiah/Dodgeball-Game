@@ -77452,7 +77452,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2.2
-    functionName: PickUpBall
+    functionName: AnimTrigger_Pickup
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

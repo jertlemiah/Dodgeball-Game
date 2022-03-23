@@ -38,6 +38,11 @@ public class DodgeballController : MonoBehaviour
             rb = GetComponent<Rigidbody>();
     }
 
+    public void PickupByPlayer(UnitController unitController)
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {

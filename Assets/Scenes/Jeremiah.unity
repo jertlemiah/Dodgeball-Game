@@ -489,6 +489,170 @@ Transform:
   m_Father: {fileID: 1350284216}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &35335672
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: pb_Mesh-4622
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 36
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 24
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 0200030001000200010000000600070005000600050004000a000b0009000a00090008000e000f000d000e000d000c00120013001100120011001000160017001500160015001400
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 24
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 40
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 1152
+    _typelessdata: 000000bf000000bf0000003f0000000000000000000080bf0000803f0000000000000000000080bf000000bf000000bf0000003f000000bf0000003f0000000000000000000080bf0000803f0000000000000000000080bf0000003f000000bf000000bf0000003f0000003f0000000000000000000080bf0000803f0000000000000000000080bf000000bf0000003f0000003f0000003f0000003f0000000000000000000080bf0000803f0000000000000000000080bf0000003f0000003f0000003f000000bf0000003f000080bf00000000000000000000000000000000000080bf000080bf000000bf000000bf0000003f000000bf000000bf000080bf00000000000000000000000000000000000080bf000080bf0000003f000000bf0000003f0000003f0000003f000080bf00000000000000000000000000000000000080bf000080bf000000bf0000003f0000003f0000003f000000bf000080bf00000000000000000000000000000000000080bf000080bf0000003f0000003f0000003f000000bf000000bf00000000000000000000803f000080bf0000000000000000000080bf000000bf000000bf000000bf000000bf000000bf00000000000000000000803f000080bf0000000000000000000080bf0000003f000000bf0000003f0000003f000000bf00000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f000000bf0000003f000000bf00000000000000000000803f000080bf0000000000000000000080bf0000003f0000003f000000bf000000bf000000bf0000803f000000000000000000000000000000000000803f000080bf000000bf000000bf000000bf000000bf0000003f0000803f000000000000000000000000000000000000803f000080bf0000003f000000bf000000bf0000003f000000bf0000803f000000000000000000000000000000000000803f000080bf000000bf0000003f000000bf0000003f0000003f0000803f000000000000000000000000000000000000803f000080bf0000003f0000003f000000bf0000003f0000003f00000000000080bf00000000000080bf0000000000000000000080bf0000003f0000003f0000003f0000003f0000003f00000000000080bf00000000000080bf0000000000000000000080bf000000bf0000003f000000bf0000003f000000bf00000000000080bf00000000000080bf0000000000000000000080bf0000003f000000bf0000003f0000003f000000bf00000000000080bf00000000000080bf0000000000000000000080bf000000bf000000bf000000bf000000bf000000bf000000000000803f000000000000803f0000000000000000000080bf000000bf000000bf0000003f000000bf000000bf000000000000803f000000000000803f0000000000000000000080bf0000003f000000bf000000bf000000bf0000003f000000000000803f000000000000803f0000000000000000000080bf000000bf0000003f0000003f000000bf0000003f000000000000803f000000000000803f0000000000000000000080bf0000003f0000003f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &51651574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,6 +2163,8 @@ MonoBehaviour:
   hasBall: 0
   foundBall: 0
   ball: {fileID: 0}
+  ballNear: 0
+  dodgeball: {fileID: 0}
 --- !u!136 &327217380
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2492,7 +2658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60df73ebe9ac74041b16876211baae53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _input: {fileID: 0}
   newInput:
     sprint: 0
     move: {x: 0, y: 0}
@@ -2504,6 +2669,9 @@ MonoBehaviour:
     jump: 0
     cursorLocked: 0
     cursorInputForLook: 0
+  analogMovement: 0
+  cursorLocked: 1
+  cursorInputForLook: 1
 --- !u!114 &379531065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,7 +2684,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fae1716d96161f4dbc00cebc550c714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMainCamera: 0
+  input:
+    sprint: 0
+    move: {x: 0, y: 0}
+    look: {x: 0, y: 0}
+    aim: 0
+    throw_bool: 0
+    pickup: 0
+    analogMovement: 0
+    jump: 0
+    cursorLocked: 0
+    cursorInputForLook: 0
+  canMove: 1
   Sensitivity: 1
   MoveSpeed: 2
   SprintSpeed: 5.335
@@ -2529,33 +2708,31 @@ MonoBehaviour:
   Grounded: 1
   GroundedOffset: -0.14
   GroundedRadius: 0.28
-  canMove: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1024
-  healthCurrent: 2
-  healthMax: 2
-  hasBall: 0
-  heldBallGO: {fileID: 0}
-  team: 0
-  DAMAGE_SPEED: 5
   CinemachineCameraTarget: {fileID: 1114245527}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  input:
-    sprint: 0
-    move: {x: 0, y: 0}
-    look: {x: 0, y: 0}
-    aim: 0
-    throw_bool: 0
-    pickup: 0
-    analogMovement: 0
-    jump: 0
-    cursorLocked: 0
-    cursorInputForLook: 0
+  useMainCamera: 0
   unitCamera: {fileID: 2089833426}
+  healthMax: 2
+  healthCurrent: 2
+  team: 0
+  DAMAGE_SPEED: 5
+  ballHoldSpotName: BallHoldSpot
+  aimVirtualCamera: {fileID: 0}
+  normalSensitivity: 0
+  aimSensitivity: 0
+  aimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  handSpot: {fileID: 0}
+  debugTransform: {fileID: 0}
+  hasBall: 0
+  heldBallGO: {fileID: 0}
 --- !u!136 &379531066
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2934,170 +3111,6 @@ Transform:
   m_Father: {fileID: 1841994116}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &408393743
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4620
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 36
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 24
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 0200030001000200010000000600070005000600050004000a000b0009000a00090008000e000f000d000e000d000c00120013001100120011001000160017001500160015001400
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 24
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 40
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 1152
-    _typelessdata: 000000bf000000bf0000003f0000000000000000000080bf0000803f0000000000000000000080bf000000bf000000bf0000003f000000bf0000003f0000000000000000000080bf0000803f0000000000000000000080bf0000003f000000bf000000bf0000003f0000003f0000000000000000000080bf0000803f0000000000000000000080bf000000bf0000003f0000003f0000003f0000003f0000000000000000000080bf0000803f0000000000000000000080bf0000003f0000003f0000003f000000bf0000003f000080bf00000000000000000000000000000000000080bf000080bf000000bf000000bf0000003f000000bf000000bf000080bf00000000000000000000000000000000000080bf000080bf0000003f000000bf0000003f0000003f0000003f000080bf00000000000000000000000000000000000080bf000080bf000000bf0000003f0000003f0000003f000000bf000080bf00000000000000000000000000000000000080bf000080bf0000003f0000003f0000003f000000bf000000bf00000000000000000000803f000080bf0000000000000000000080bf000000bf000000bf000000bf000000bf000000bf00000000000000000000803f000080bf0000000000000000000080bf0000003f000000bf0000003f0000003f000000bf00000000000000000000803f000080bf0000000000000000000080bf000000bf0000003f000000bf0000003f000000bf00000000000000000000803f000080bf0000000000000000000080bf0000003f0000003f000000bf000000bf000000bf0000803f000000000000000000000000000000000000803f000080bf000000bf000000bf000000bf000000bf0000003f0000803f000000000000000000000000000000000000803f000080bf0000003f000000bf000000bf0000003f000000bf0000803f000000000000000000000000000000000000803f000080bf000000bf0000003f000000bf0000003f0000003f0000803f000000000000000000000000000000000000803f000080bf0000003f0000003f000000bf0000003f0000003f00000000000080bf00000000000080bf0000000000000000000080bf0000003f0000003f0000003f0000003f0000003f00000000000080bf00000000000080bf0000000000000000000080bf000000bf0000003f000000bf0000003f000000bf00000000000080bf00000000000080bf0000000000000000000080bf0000003f000000bf0000003f0000003f000000bf00000000000080bf00000000000080bf0000000000000000000080bf000000bf000000bf000000bf000000bf000000bf000000000000803f000000000000803f0000000000000000000080bf000000bf000000bf0000003f000000bf000000bf000000000000803f000000000000803f0000000000000000000080bf0000003f000000bf000000bf000000bf0000003f000000000000803f000000000000803f0000000000000000000080bf000000bf0000003f0000003f000000bf0000003f000000000000803f000000000000803f0000000000000000000080bf0000003f0000003f
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &420965667
 GameObject:
   m_ObjectHideFlags: 0
@@ -3268,34 +3281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fae1716d96161f4dbc00cebc550c714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMainCamera: 0
-  Sensitivity: 1
-  MoveSpeed: 2
-  SprintSpeed: 5.335
-  RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
-  JumpHeight: 1.2
-  Gravity: -15
-  JumpTimeout: 0.5
-  FallTimeout: 0.15
-  Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
-  canMove: 1
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 1024
-  healthCurrent: 2
-  healthMax: 2
-  hasBall: 0
-  heldBallGO: {fileID: 0}
-  team: 0
-  DAMAGE_SPEED: 5
-  CinemachineCameraTarget: {fileID: 1202531954913803259}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 0
-  LockCameraPosition: 0
   input:
     sprint: 0
     move: {x: 0, y: 0}
@@ -3307,37 +3292,44 @@ MonoBehaviour:
     jump: 0
     cursorLocked: 0
     cursorInputForLook: 0
+  canMove: 1
+  Sensitivity: 1
+  MoveSpeed: 5
+  SprintSpeed: 8
+  RotationSmoothTime: 0.12
+  SpeedChangeRate: 10
+  JumpHeight: 1.5
+  Gravity: -17
+  JumpTimeout: 0.5
+  FallTimeout: 0.15
+  Grounded: 1
+  GroundedOffset: -0.14
+  GroundedRadius: 0.28
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  CinemachineCameraTarget: {fileID: 1202531954913803259}
+  TopClamp: 70
+  BottomClamp: -30
+  CameraAngleOverride: 0
+  LockCameraPosition: 0
+  useMainCamera: 0
   unitCamera: {fileID: 2089833426}
---- !u!136 &475860657
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202531955595738998}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.28
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.96, z: 0}
---- !u!54 &475860658
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202531955595738998}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  healthMax: 2
+  healthCurrent: 2
+  team: 0
+  DAMAGE_SPEED: 5
+  ballHoldSpotName: BallHoldSpot
+  aimVirtualCamera: {fileID: 1202531956548560326}
+  normalSensitivity: 2
+  aimSensitivity: 0.5
+  aimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  handSpot: {fileID: 1202531955629678593}
+  debugTransform: {fileID: 0}
+  hasBall: 0
+  heldBallGO: {fileID: 0}
 --- !u!114 &475860659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3350,7 +3342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60df73ebe9ac74041b16876211baae53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _input: {fileID: 0}
   newInput:
     sprint: 0
     move: {x: 0, y: 0}
@@ -3362,6 +3353,9 @@ MonoBehaviour:
     jump: 0
     cursorLocked: 0
     cursorInputForLook: 0
+  analogMovement: 0
+  cursorLocked: 1
+  cursorInputForLook: 1
 --- !u!1 &481068201
 GameObject:
   m_ObjectHideFlags: 0
@@ -3878,7 +3872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60df73ebe9ac74041b16876211baae53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _input: {fileID: 0}
   newInput:
     sprint: 0
     move: {x: 0, y: 0}
@@ -3890,6 +3883,9 @@ MonoBehaviour:
     jump: 0
     cursorLocked: 0
     cursorInputForLook: 0
+  analogMovement: 0
+  cursorLocked: 1
+  cursorInputForLook: 1
 --- !u!114 &532932202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3902,7 +3898,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fae1716d96161f4dbc00cebc550c714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMainCamera: 0
+  input:
+    sprint: 0
+    move: {x: 0, y: 0}
+    look: {x: 0, y: 0}
+    aim: 0
+    throw_bool: 0
+    pickup: 0
+    analogMovement: 0
+    jump: 0
+    cursorLocked: 0
+    cursorInputForLook: 0
+  canMove: 1
   Sensitivity: 1
   MoveSpeed: 2
   SprintSpeed: 5.335
@@ -3915,33 +3922,31 @@ MonoBehaviour:
   Grounded: 1
   GroundedOffset: -0.14
   GroundedRadius: 0.28
-  canMove: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1024
-  healthCurrent: 2
-  healthMax: 2
-  hasBall: 0
-  heldBallGO: {fileID: 0}
-  team: 0
-  DAMAGE_SPEED: 5
   CinemachineCameraTarget: {fileID: 1983470358}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  input:
-    sprint: 0
-    move: {x: 0, y: 0}
-    look: {x: 0, y: 0}
-    aim: 0
-    throw_bool: 0
-    pickup: 0
-    analogMovement: 0
-    jump: 0
-    cursorLocked: 0
-    cursorInputForLook: 0
+  useMainCamera: 0
   unitCamera: {fileID: 2089833426}
+  healthMax: 2
+  healthCurrent: 2
+  team: 0
+  DAMAGE_SPEED: 5
+  ballHoldSpotName: BallHoldSpot
+  aimVirtualCamera: {fileID: 0}
+  normalSensitivity: 0
+  aimSensitivity: 0
+  aimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  handSpot: {fileID: 0}
+  debugTransform: {fileID: 0}
+  hasBall: 0
+  heldBallGO: {fileID: 0}
 --- !u!136 &532932203
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9550,6 +9555,8 @@ MonoBehaviour:
   hasBall: 0
   foundBall: 0
   ball: {fileID: 0}
+  ballNear: 0
+  dodgeball: {fileID: 0}
 --- !u!136 &1706171634
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10329,7 +10336,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fae1716d96161f4dbc00cebc550c714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMainCamera: 0
+  input:
+    sprint: 0
+    move: {x: 0, y: 0}
+    look: {x: 0, y: 0}
+    aim: 0
+    throw_bool: 0
+    pickup: 0
+    analogMovement: 0
+    jump: 0
+    cursorLocked: 0
+    cursorInputForLook: 0
+  canMove: 1
   Sensitivity: 1
   MoveSpeed: 2
   SprintSpeed: 5.335
@@ -10342,33 +10360,31 @@ MonoBehaviour:
   Grounded: 1
   GroundedOffset: -0.14
   GroundedRadius: 0.28
-  canMove: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 0
-  healthCurrent: 2
-  healthMax: 2
-  hasBall: 0
-  heldBallGO: {fileID: 0}
-  team: 1
-  DAMAGE_SPEED: 5
   CinemachineCameraTarget: {fileID: 0}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  input:
-    sprint: 0
-    move: {x: 0, y: 0}
-    look: {x: 0, y: 0}
-    aim: 0
-    throw_bool: 0
-    pickup: 0
-    analogMovement: 0
-    jump: 0
-    cursorLocked: 0
-    cursorInputForLook: 0
+  useMainCamera: 0
   unitCamera: {fileID: 0}
+  healthMax: 2
+  healthCurrent: 2
+  team: 1
+  DAMAGE_SPEED: 5
+  ballHoldSpotName: BallHoldSpot
+  aimVirtualCamera: {fileID: 0}
+  normalSensitivity: 0
+  aimSensitivity: 0
+  aimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  handSpot: {fileID: 0}
+  debugTransform: {fileID: 0}
+  hasBall: 0
+  heldBallGO: {fileID: 0}
 --- !u!143 &1893594893
 CharacterController:
   m_ObjectHideFlags: 0
@@ -11548,7 +11564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2129973651
 Transform:
   m_ObjectHideFlags: 0
@@ -11964,7 +11980,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202531954614767024}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.39999998, y: 1.625, z: -3.9999995}
+  m_LocalPosition: {x: 0.39999998, y: 1.575, z: -3.2000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1202531956249542937}
@@ -12352,7 +12368,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1202531954768505032
 Transform:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12366,7 +12382,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1202531954768505033
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12377,9 +12393,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.25, z: 0.3}
-  ShoulderOffset: {x: 0.7, y: 0.6, z: 0}
+  ShoulderOffset: {x: 0.7, y: 0.4, z: 1}
   VerticalArmLength: 0
-  CameraSide: 0.9
+  CameraSide: 0.8
   CameraDistance: 2.8
   CameraCollisionFilter:
     serializedVersion: 2
@@ -12388,7 +12404,7 @@ MonoBehaviour:
   CameraRadius: 0.15
 --- !u!114 &1202531954768505034
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12405,7 +12421,7 @@ MonoBehaviour:
   mNoiseOffsets: {x: -451.37964, y: 684.7062, z: 648.0488}
 --- !u!114 &1202531954768505035
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12417,7 +12433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!1 &1202531954768505039
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -13688,28 +13704,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1202531955595738993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202531955595738998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e087ecce43ebbff45a1b360637807d93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
-  jump: 0
-  sprint: 0
-  aim: 0
-  throw_bool: 0
-  pickup: 0
-  analogMovement: 0
-  cursorLocked: 1
-  cursorInputForLook: 1
 --- !u!1 &1202531955595738998
 GameObject:
   m_ObjectHideFlags: 0
@@ -13721,11 +13715,7 @@ GameObject:
   - component: {fileID: 1202531955595738990}
   - component: {fileID: 1202531955595738989}
   - component: {fileID: 1202531955595738988}
-  - component: {fileID: 1202531955595738993}
   - component: {fileID: 1202531955595738992}
-  - component: {fileID: 1202531955595738999}
-  - component: {fileID: 475860658}
-  - component: {fileID: 475860657}
   - component: {fileID: 475860656}
   - component: {fileID: 475860659}
   m_Layer: 8
@@ -13735,30 +13725,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1202531955595738999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202531955595738998}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a7d5a467950ea2449dbb1ea77089613, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aimVirtualCamera: {fileID: 1202531956548560326}
-  normalSensitivity: 2
-  aimSensitivity: 0.5
-  aimColliderLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  handSpot: {fileID: 1202531955629678593}
-  debugTransform: {fileID: 0}
-  shift_x: 0.4
-  shift_y: 1.4
-  shift_z: 0.4
-  throw_speed: 20
 --- !u!1 &1202531955629678593
 GameObject:
   m_ObjectHideFlags: 0
@@ -14236,6 +14202,8 @@ MonoBehaviour:
   hasBall: 0
   foundBall: 0
   ball: {fileID: 0}
+  ballNear: 0
+  dodgeball: {fileID: 0}
 --- !u!136 &1202531956228943365
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -14453,7 +14421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.25, z: 0.3}
-  ShoulderOffset: {x: 1, y: 0.25, z: 0}
+  ShoulderOffset: {x: 1, y: 0.2, z: 0.8}
   VerticalArmLength: 0
   CameraSide: 0.7
   CameraDistance: 4
@@ -14877,7 +14845,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1202531956548560325}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.42000002, y: 1.625, z: -2.5}
+  m_LocalPosition: {x: 0.42000002, y: 1.7750001, z: -1.7999997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1202531954768505032}
@@ -15879,7 +15847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5364654617072903774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8035259, y: 1.6250002, z: -4.1272063}
+  m_LocalPosition: {x: 0.39999998, y: 1.575, z: -3.2000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1202531955595738990}
@@ -15946,7 +15914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &5452925608867273283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26820,7 +26788,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fae1716d96161f4dbc00cebc550c714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useMainCamera: 0
+  input:
+    sprint: 0
+    move: {x: 0, y: 0}
+    look: {x: 0, y: 0}
+    aim: 0
+    throw_bool: 0
+    pickup: 0
+    analogMovement: 0
+    jump: 0
+    cursorLocked: 0
+    cursorInputForLook: 0
+  canMove: 1
   Sensitivity: 1
   MoveSpeed: 2
   SprintSpeed: 5.335
@@ -26833,33 +26812,31 @@ MonoBehaviour:
   Grounded: 1
   GroundedOffset: -0.14
   GroundedRadius: 0.28
-  canMove: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 0
-  healthCurrent: 2
-  healthMax: 2
-  hasBall: 0
-  heldBallGO: {fileID: 0}
-  team: 0
-  DAMAGE_SPEED: 5
   CinemachineCameraTarget: {fileID: 0}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
-  input:
-    sprint: 0
-    move: {x: 0, y: 0}
-    look: {x: 0, y: 0}
-    aim: 0
-    throw_bool: 0
-    pickup: 0
-    analogMovement: 0
-    jump: 0
-    cursorLocked: 0
-    cursorInputForLook: 0
+  useMainCamera: 0
   unitCamera: {fileID: 0}
+  healthMax: 2
+  healthCurrent: 2
+  team: 0
+  DAMAGE_SPEED: 5
+  ballHoldSpotName: BallHoldSpot
+  aimVirtualCamera: {fileID: 0}
+  normalSensitivity: 0
+  aimSensitivity: 0
+  aimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  handSpot: {fileID: 0}
+  debugTransform: {fileID: 0}
+  hasBall: 0
+  heldBallGO: {fileID: 0}
 --- !u!143 &5819069309668288601
 CharacterController:
   m_ObjectHideFlags: 0
@@ -27711,11 +27688,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2448570727028696073, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.24999952
+      value: 0.19999957
       objectReference: {fileID: 0}
     - target: {fileID: 2448570727028696073, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.02
+      value: 1.8199999
       objectReference: {fileID: 0}
     - target: {fileID: 2448570727028696073, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_LocalRotation.w
@@ -27748,6 +27725,10 @@ PrefabInstance:
     - target: {fileID: 2448570727028696076, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
       propertyPath: m_Name
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448570727028696078, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
+      propertyPath: field of view
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8dc5c932b11b194d83ae4b749519040, type: 3}
