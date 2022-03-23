@@ -10,6 +10,13 @@ public class InputManager : Singleton<InputManager>
     public Vector2 look;
     public bool jump;
     public bool sprint;
+    public bool aim;
+    public bool throw_bool;
+
+    public bool pickup;
+
+    [Header("Movement Settings")]
+    public bool analogMovement;
     
     [Header("Mouse Cursor Settings")]
     public bool cursorLocked = true;
@@ -18,11 +25,28 @@ public class InputManager : Singleton<InputManager>
     {
         _input = new InputActions();
         _input.Player.Pause.performed += context => PausePerformed();
+        // _input.Player.Move.performed += context => MoveInput(context);
         EventManagerSO.E_PauseGame += EnableMouse;
         EventManagerSO.E_FinishedLoading += DisableMouse;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
         EventManagerSO.E_UnpauseGame += DisableMouse;
         DisableMouse();
+    }
+
+    void LateUpdate()
+    {
+        // move = _input.Player.Move.ReadValue<Vector2>();
+        // look = _input.Player.Look.ReadValue<Vector2>();
+        // jump = _input.Player.Jump.ReadValue<bool>();
+        // sprint = _input.Player.Sprint.ReadValue<bool>();
+        // aim = _input.Player.Aim.ReadValue<bool>();
+        // throw_bool = _input.Player.Throw.ReadValue<bool>();
+        // pickup = _input.Player.PickUp.ReadValue<bool>();
+        // jump = false;
+        // sprint = false;
+        // aim = false;
+        // throw_bool = false;
+        // pickup = false;
     }
      
     private void OnEnable()
@@ -63,19 +87,6 @@ public class InputManager : Singleton<InputManager>
     }
 
 
-    public void OnMove(InputValue value)
-    {
-        MoveInput(value.Get<Vector2>());
-    }
-
-    public void OnLook(InputValue value)
-    {
-        if(cursorInputForLook)
-        {
-            LookInput(value.Get<Vector2>());
-        }
-    }
-
     public void OnJump(InputValue value)
     {
         JumpInput(value.isPressed);
@@ -85,6 +96,33 @@ public class InputManager : Singleton<InputManager>
     {
         SprintInput(value.isPressed);
     }
+
+    public void OnAim(InputValue value)
+    {
+        AimInput(value.isPressed);
+    }
+
+    public void OnThrow(InputValue value)
+    {	
+        ThrowInput(value.isPressed);
+    }
+
+    public void OnPickUp(InputValue value)
+    {
+        PickUpInput(value.isPressed);
+    }
+    // public void OnSprint(InputValue value)
+    // {
+    //     SprintInput(value.isPressed);
+    // }
+    // public void OnSprint(InputValue value)
+    // {
+    //     SprintInput(value.isPressed);
+    // }
+    // public void OnSprint(InputValue value)
+    // {
+    //     SprintInput(value.isPressed);
+    // }
     public void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
@@ -103,6 +141,20 @@ public class InputManager : Singleton<InputManager>
     public void SprintInput(bool newSprintState)
     {
         sprint = newSprintState;
+    }
+    public void AimInput(bool newAimState)
+    {
+        aim = newAimState;
+    }
+
+    public void ThrowInput(bool newThrowState)
+    {
+        throw_bool = newThrowState;
+    }
+
+    public void PickUpInput(bool newPickUpState)
+    {
+        pickup = newPickUpState;
     }
     private void OnApplicationFocus(bool hasFocus)
     {
