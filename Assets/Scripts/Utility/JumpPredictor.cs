@@ -136,7 +136,10 @@ public class JumpPredictor : MonoBehaviour
                     NavMesh.SamplePosition(newPoint,out navHit,4f, NavMesh.AllAreas);
                 }
 
-                landingSpot.transform.position = navHit.position;
+                if((landingSpot.transform.position - navHit.position).magnitude < 100f){
+                    landingSpot.transform.position = navHit.position;
+                }
+                
             }
         }
         

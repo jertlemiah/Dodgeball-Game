@@ -10,10 +10,10 @@ public class Editor_AIController : Editor
 	{
 		AIController controller = target as AIController;
         base.OnInspectorGUI();
-        if (GUILayout.Button("Move to target Transform"))
+        if (GUILayout.Button("Toggle move to target Transform"))
 		{
 			// EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
-            controller.MoveToTarget();
+            controller.moveToTarget = !controller.moveToTarget;
 		}
 	}
 }
