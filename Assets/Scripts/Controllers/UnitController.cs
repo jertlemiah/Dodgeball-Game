@@ -9,6 +9,7 @@ public struct Input
 {
     public bool sprint;
     public Vector2 move;
+    public bool moveRelative; //Humans supply input relative to a camera, but bots supply a global direction
     public Vector2 look;
     public bool aim;
     public bool throw_bool;
@@ -36,11 +37,14 @@ public class UnitController : MonoBehaviour
         [Tooltip("Sensitivity of player input to character output.")] 
         public float Sensitivity = 1f;
 
-        [Tooltip("Move speed of the character in m/s")] 
-        public float MoveSpeed = 2.0f;
+        [Tooltip("Current move speed of the character in m/s")] 
+        public float MoveSpeed = 5.0f;
+
+        [Tooltip("Normal speed of the character in m/s")] 
+        public float NormalSpeed = 5.0f;
 
         [Tooltip("Sprint speed of the character in m/s")] 
-        public float SprintSpeed = 5.335f;
+        public float SprintSpeed = 8.0f;
 
         [Tooltip("How fast the character turns to face movement direction")] 
         [Range(0.0f, 0.3f)] public float RotationSmoothTime = 0.12f;
@@ -355,13 +359,13 @@ public class UnitController : MonoBehaviour
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = input.sprint ? SprintSpeed : MoveSpeed;
+        MoveSpeed = input.sprint ? SprintSpeed : NormalSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is no input, set the target speed to 0
-        if (input.move == Vector2.zero) targetSpeed = 0.0f;
+        if (input.move == Vector2.zero) MoveSpeed = 0.0f;
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -370,20 +374,20 @@ public class UnitController : MonoBehaviour
         float inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
 
         // accelerate or decelerate to target speed
-        if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+        if (currentHorizontalSpeed < MoveSpeed - speedOffset || currentHorizontalSpeed > MoveSpeed + speedOffset)
         {
             // creates curved result rather than a linear one giving a more organic speed change
             // note T in Lerp is clamped, so we don't need to clamp our speed
-            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+            _speed = Mathf.Lerp(currentHorizontalSpeed, MoveSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
 
             // round speed to 3 decimal places
             _speed = Mathf.Round(_speed * 1000f) / 1000f;
         }
         else
         {
-            _speed = targetSpeed;
+            _speed = MoveSpeed;
         }
-        _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+        _animationBlend = Mathf.Lerp(_animationBlend, MoveSpeed, Time.deltaTime * SpeedChangeRate);
 
         // normalise input direction
         Vector3 inputDirection = new Vector3(input.move.x, 0.0f, input.move.y).normalized;
@@ -392,7 +396,10 @@ public class UnitController : MonoBehaviour
         // if there is a move input rotate player when the player is moving
         if (input.move != Vector2.zero)
         {
-            if(useMainCamera)
+            if(!input.moveRelative){
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z)* Mathf.Rad2Deg;
+            }
+            else if(useMainCamera)
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
             else
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + unitCamera.transform.eulerAngles.y;

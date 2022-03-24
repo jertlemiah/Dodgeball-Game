@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class HumanInput : MonoBehaviour
 {
-    private InputActions _input;
+    private InputActions _inputActions;
     UnitController unitController;
 
     [Header("Character Input Values")]
@@ -21,7 +21,7 @@ public class HumanInput : MonoBehaviour
         public bool cursorInputForLook = true;
     void Awake()
     {
-        _input = new InputActions();
+        _inputActions = new InputActions();
         // _input.Player.Pause.performed += context => PausePerformed();
         // _input.Player.Move.performed += context => MoveInput(context);
         EventManagerSO.E_PauseGame += EnableMouse;
@@ -35,6 +35,7 @@ public class HumanInput : MonoBehaviour
     {
         unitController = GetComponent<UnitController>();
         unitController.input = newInput;
+        newInput.moveRelative = true;
     }
 
     void Update()
@@ -44,11 +45,11 @@ public class HumanInput : MonoBehaviour
      
     private void OnEnable()
     {
-        _input.Enable();
+        _inputActions.Enable();
     }
     private void OnDisable()
     {
-        _input.Disable();
+        _inputActions.Disable();
         // _input.Player.Pause.performed -= context => PausePerformed() ;
         EventManagerSO.E_PauseGame -= EnableMouse;
         EventManagerSO.E_FinishedLoading -= DisableMouse;
