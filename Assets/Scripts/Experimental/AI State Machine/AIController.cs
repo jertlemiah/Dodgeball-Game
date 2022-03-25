@@ -71,6 +71,7 @@ public class AIController : MonoBehaviour
     Vector3 nextNextPoint = Vector3.zero;
     Vector3 nextNextNextPoint = Vector3.zero;
     public float wantToJumpRadius = 3f;
+    public float wantToJumpAngle = 90;
     void DetermineIfJump()
     {
         bool edge = false;
@@ -79,21 +80,11 @@ public class AIController : MonoBehaviour
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(testPoint+Vector3.up*1f, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, unitController.GroundLayers))
         {
-            // Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            // Debug.Log("Did Hit");
-            // transform.position = new Vector3(transform.position.x,transform.position.y - hit.distance + 0.2f, transform.position.z);
             edge = (hit.distance > minLedgeHeight);
         }
-        // } else {
-        //     edge = true;
-        // } 
-        bool wantToJump = false;
 
-        //Need to figure out if the ai WANTS to fall straight down
-        Vector2 unitTopDown = new Vector2(unitController.transform.position.x, unitController.transform.position.z);
-        Vector2 nextTopDown = new Vector2(nextNextNextPoint.x, nextNextNextPoint.z);
-        wantToJump = (unitTopDown - nextTopDown).magnitude >= wantToJumpRadius;
-        // wantToJump = (unitController.transform.position.y - targetTransform.position.y) <= 1f;
+        Vector3 futureLine = (nextNextPoint-nextPoint);
+        bool wantToJump = Mathf.Abs(Vector3.Angle(unitController.direction,futureLine))<wantToJumpAngle;
 
         if(edge & wantToJump){
             newInput.jump = true;
@@ -135,7 +126,7 @@ public class AIController : MonoBehaviour
             nextNextPoint = nextPoint;
         }
         if(pathIndex+2 < path.corners.Length){
-            nextNextNextPoint = path.corners[pathIndex+1];  
+            nextNextNextPoint = path.corners[pathIndex+2];  
         } else {
             nextNextNextPoint = nextNextPoint;
         }

@@ -37,6 +37,9 @@ public class UnitController : MonoBehaviour
         [Tooltip("Sensitivity of player input to character output.")] 
         public float Sensitivity = 1f;
 
+        [Tooltip("Current direction vector of the character")] 
+        public Vector3 direction;
+
         [Tooltip("Current move speed of the character in m/s")] 
         public float MoveSpeed = 5.0f;
 
@@ -358,6 +361,7 @@ public class UnitController : MonoBehaviour
 
     private void Move()
     {
+        direction = _controller.velocity;
         // set target speed based on move speed, sprint speed and if sprint is pressed
         MoveSpeed = input.sprint ? SprintSpeed : NormalSpeed;
 
