@@ -41,18 +41,65 @@ public class AIController : MonoBehaviour
              CalculateNewPath();
         }
         DrawDebugPath();
-
-        if(moveToTarget & path != null & path.status == NavMeshPathStatus.PathComplete & path.corners.Length > 1){
-            FollowPath();   
-        }     
-        else{
-            newInput.move = Vector2.zero;
+        DetermineIfJump();
+        if(unitController.Grounded){
+            jumping = false;
         }
+        if(unitController.Grounded){
+            if(moveToTarget & path != null & path.status == NavMeshPathStatus.PathComplete & path.corners.Length > 1){
+                FollowPath();   
+            }     
+            else{
+                newInput.move = Vector2.zero;
+            }
+        }
+        
 
         //Assign the new input to the unitController
         unitController.input = newInput;
     }
 
+    void LateUpdate()
+    {
+        newInput.jump = false;
+    }
+
+    public float jumpCheckDistance = 1f;
+    public float minLedgeHeight = 1f;
+    public bool jumping = false;
+    Vector3 nextPoint = Vector3.zero;
+    Vector3 nextNextPoint = Vector3.zero;
+    Vector3 nextNextNextPoint = Vector3.zero;
+    public float wantToJumpRadius = 3f;
+    void DetermineIfJump()
+    {
+        bool edge = false;
+        Vector3 testPoint = unitController.transform.position + unitController.transform.forward*jumpCheckDistance;
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(testPoint+Vector3.up*1f, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, unitController.GroundLayers))
+        {
+            // Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            // Debug.Log("Did Hit");
+            // transform.position = new Vector3(transform.position.x,transform.position.y - hit.distance + 0.2f, transform.position.z);
+            edge = (hit.distance > minLedgeHeight);
+        }
+        // } else {
+        //     edge = true;
+        // } 
+        bool wantToJump = false;
+
+        //Need to figure out if the ai WANTS to fall straight down
+        Vector2 unitTopDown = new Vector2(unitController.transform.position.x, unitController.transform.position.z);
+        Vector2 nextTopDown = new Vector2(nextNextNextPoint.x, nextNextNextPoint.z);
+        wantToJump = (unitTopDown - nextTopDown).magnitude >= wantToJumpRadius;
+        // wantToJump = (unitController.transform.position.y - targetTransform.position.y) <= 1f;
+
+        if(edge & wantToJump){
+            newInput.jump = true;
+            jumping = true;
+        }
+    }
 
     void CalculateNewPath()
     {
@@ -69,7 +116,7 @@ public class AIController : MonoBehaviour
     public void FollowPath()
     {
         pathSize = path.corners.Length;
-        Vector3 nextPoint = path.corners[pathIndex];
+        nextPoint = path.corners[pathIndex];
 
         // If reached final point, then stop
         if(pathSize-1 == pathIndex & Vector3.Distance(nextPoint,this.transform.position) < stoppingDistance){
@@ -82,6 +129,18 @@ public class AIController : MonoBehaviour
             pathIndex++;
             nextPoint = path.corners[pathIndex];  
         }
+        if(pathIndex+1 < path.corners.Length){
+            nextNextPoint = path.corners[pathIndex+1];  
+        } else {
+            nextNextPoint = nextPoint;
+        }
+        if(pathIndex+2 < path.corners.Length){
+            nextNextNextPoint = path.corners[pathIndex+1];  
+        } else {
+            nextNextNextPoint = nextNextPoint;
+        }
+
+        
 
         Vector3 direction = nextPoint - this.transform.position;
         Vector2 newMove = new Vector2(direction.x, direction.z).normalized;
