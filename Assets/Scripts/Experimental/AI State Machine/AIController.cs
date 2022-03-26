@@ -1,11 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[Serializable]
+public struct RecentEnemy{
+    public UnitController enemyController;
+    public float timeOfSighting;
+
+    public RecentEnemy(UnitController controller, float currentTime){
+        enemyController = controller;
+        timeOfSighting = currentTime;
+    }
+}
+
+[Serializable]
+public struct RecentBall{
+    public DodgeballController dodgeballController;
+    public float timeOfSighting;
+
+    public RecentBall(DodgeballController controller, float currentTime){
+        dodgeballController = controller;
+        timeOfSighting = currentTime;
+    }
+}
+
 [RequireComponent(typeof(UnitController))]
 public class AIController : MonoBehaviour
 {
+    [SerializeField] List<RecentEnemy> recentEnemies = new List<RecentEnemy>();
+    [SerializeField] List<RecentBall> recentBalls = new List<RecentBall>();
+    [SerializeField] AIFieldOfView fow;
+    [SerializeField] GameObject fowPrefab;
+    public float recentMemoryTime = 5f;
     [SerializeField] public List<AIState> states;
     [SerializeField] public UnitController unitController  => GetComponent<UnitController>();
     public GameObject targetPlayerGO;
@@ -31,6 +59,15 @@ public class AIController : MonoBehaviour
             Debug.LogWarning(gameObject.name+"'s AIController only has 1 or 0 possible states assigned");
         }
         newInput.moveRelative = false;
+        if(!fow){
+            if(fowPrefab){
+                Debug.LogWarning("gameObject "+gameObject.name+" does not have an AIFieldOfView assigned. Creating a prefab fow object.");
+                fow = Instantiate(fowPrefab,this.transform).GetComponent<AIFieldOfView>();
+                fow.disableVisuals = true;
+            } else {
+                Debug.LogError("gameObject "+gameObject.name+" does not have an AIFieldOfView assigned and cannot create a fow prefab either.");
+            }
+        }
     }
 
     void Update()
@@ -53,6 +90,9 @@ public class AIController : MonoBehaviour
                 newInput.move = Vector2.zero;
             }
         }
+        if(fow){
+            CheckFOW();
+        }
         
 
         //Assign the new input to the unitController
@@ -62,6 +102,67 @@ public class AIController : MonoBehaviour
     void LateUpdate()
     {
         newInput.jump = false;
+    }
+
+    void CheckFOW()
+    {
+        // Add new visible players
+        foreach (Transform enemyT in fow.visiblePlayers) {
+            bool found = false;
+            foreach (RecentEnemy enemy in recentEnemies){
+                if (enemyT == enemy.enemyController.transform) {
+                    found = true;
+                }
+            }
+            if(!found){
+                recentEnemies.Add(new RecentEnemy(enemyT.GetComponent<UnitController>(),Time.time));
+            }
+        }
+        
+        // Manage the recent memory players
+        List<RecentEnemy> newEnemyList = new List<RecentEnemy>();
+        for (int i = 0; i < recentEnemies.Count; i++) {
+            RecentEnemy enemy = recentEnemies[i];
+            if(fow.visiblePlayers.Contains(enemy.enemyController.transform)){
+                enemy.timeOfSighting = Time.time;
+            }
+
+            if(!((Time.time - enemy.timeOfSighting) > recentMemoryTime)){
+                // recentEnemies.Remove(enemy);
+                newEnemyList.Add(enemy);
+            }
+        }
+        recentEnemies = newEnemyList;
+        
+
+
+        // Add new visible players
+        foreach (Transform ballT in fow.visibleBalls) {
+            bool found = false;
+            foreach (RecentBall ball in recentBalls){
+                if (ballT == ball.dodgeballController.transform) {
+                    found = true;
+                }
+            }
+            if(!found){
+                recentBalls.Add(new RecentBall(ballT.GetComponent<DodgeballController>(),Time.time));
+            }
+        }
+        
+        // Manage the recent memory players
+        List<RecentBall> newBallList = new List<RecentBall>();
+        for (int i = 0; i < recentBalls.Count; i++) {
+            RecentBall ball = recentBalls[i];
+            if(fow.visibleBalls.Contains(ball.dodgeballController.transform)){
+                ball.timeOfSighting = Time.time;
+            }
+
+            if(!((Time.time - ball.timeOfSighting) > recentMemoryTime)){
+                // recentEnemies.Remove(enemy);
+                newBallList.Add(ball);
+            }
+        }
+        recentBalls = newBallList;
     }
 
     public float jumpCheckDistance = 1f;

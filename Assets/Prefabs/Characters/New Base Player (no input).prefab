@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657184208956269562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6568934, y: 0.45003915, z: 1.9561698}
+  m_LocalPosition: {x: -2.4537868, y: 3.0850787, z: 19.802338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6043158950332431050}
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 6043158950142719457}
   - component: {fileID: 6043158950142719459}
   - component: {fileID: 6043158950142719458}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,6 +874,7 @@ MonoBehaviour:
   input:
     sprint: 0
     move: {x: 0, y: 0}
+    moveRelative: 0
     look: {x: 0, y: 0}
     aim: 0
     throw_bool: 0
@@ -884,6 +885,7 @@ MonoBehaviour:
     cursorInputForLook: 0
   canMove: 1
   Sensitivity: 1
+  direction: {x: 0, y: 0, z: 0}
   MoveSpeed: 5
   NormalSpeed: 5
   SprintSpeed: 8
@@ -1304,7 +1306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6043158950508038165}
   - component: {fileID: 6043158950508038166}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2132,7 +2134,7 @@ GameObject:
   - component: {fileID: 6043158951020774576}
   - component: {fileID: 6043158951020774591}
   - component: {fileID: 6043158951020774590}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2279,7 +2281,7 @@ GameObject:
   - component: {fileID: 6043158951033007010}
   - component: {fileID: 6043158951033007009}
   - component: {fileID: 6043158951033007008}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PickUpZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2831,7 +2833,7 @@ GameObject:
   - component: {fileID: 6043158951416878360}
   - component: {fileID: 6043158951416878375}
   - component: {fileID: 6043158951416878374}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
