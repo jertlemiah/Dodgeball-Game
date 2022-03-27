@@ -199,7 +199,8 @@ public class AIFieldOfView : MonoBehaviour
                     if(IsInLayerMask(target.gameObject, playerMask) && !visiblePlayers.Contains(target)) {
                         visiblePlayers.Add(target);
                     } else if(IsInLayerMask(target.gameObject, ballMask) && !visibleBalls.Contains(target.GetComponentInParent<DodgeballController>().transform)) {
-                        visibleBalls.Add(target.parent);
+                        if(!target.GetComponentInParent<DodgeballController>().hasOwner)
+                            visibleBalls.Add(target.parent);
                     } 
                     // else {
                     //     Debug.Log("this object wasn't classified for some reason: "+target.name);

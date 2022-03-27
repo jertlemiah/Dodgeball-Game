@@ -4,56 +4,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[Serializable]
-public struct RecentEnemy{
-    public UnitController enemyController;
-    public float timeOfSighting;
-
-    public RecentEnemy(UnitController controller, float currentTime){
-        enemyController = controller;
-        timeOfSighting = currentTime;
-    }
-}
-
-[Serializable]
-public struct RecentBall{
-    public DodgeballController dodgeballController;
-    public float timeOfSighting;
-
-    public RecentBall(DodgeballController controller, float currentTime){
-        dodgeballController = controller;
-        timeOfSighting = currentTime;
-    }
-}
-
 [RequireComponent(typeof(UnitController))]
 public class AIController : MonoBehaviour
 {
-    [SerializeField] List<RecentEnemy> recentEnemies = new List<RecentEnemy>();
-    [SerializeField] List<RecentBall> recentBalls = new List<RecentBall>();
-    [SerializeField] AIFieldOfView fow;
-    [SerializeField] GameObject fowPrefab;
-    public float recentMemoryTime = 5f;
-    [SerializeField] public List<AIState> states;
-    [SerializeField] public UnitController unitController  => GetComponent<UnitController>();
-    public GameObject targetPlayerGO;
-    public Transform targetTransform;
-    [SerializeField] public NavMeshAgent navMeshAgent  => GetComponent<NavMeshAgent>();    
-    [SerializeField] public PredictedPositionController predictionController;
-    public NavMeshPath path;
-    private float elapsed = 0.0f;
-    [SerializeField] float updatePathTime = 0.1f;
-    [SerializeField] Input newInput = new Input();
-    public int pathSize;
-    public GameObject targetCorner;
-    [SerializeField] float stoppingDistance = 0.5f;
-    public int pathIndex = 1;
-    Vector3[] pathCorners;
-    public bool moveToTarget = false;
-    // NavMeshAgent agent;
+    [Header("           State Machine")][Space(15)]
+        [SerializeField] public List<AIState> states;
+        [SerializeField] public AIState currentState;
+        [SerializeField] public AIStateEnum currentStateEnum;
+        [SerializeField] public AIStateEnum defaultState;
+        public Dictionary<AIStateEnum, AIState> stateDictionary;
+        bool busyChange;
+        [SerializeField] public UnitController unitController  => GetComponent<UnitController>();
+    
+    [Header("           Field of View")][Space(15)]
+        [SerializeField] public List<RecentEnemy> recentEnemies = new List<RecentEnemy>();
+        [SerializeField] public List<RecentBall> recentBalls = new List<RecentBall>();
+        [SerializeField] AIFieldOfView fow;
+        [SerializeField] GameObject fowPrefab;
+        public float recentMemoryTime = 5f;
+
+    [Header("           Pathfinding")][Space(15)]
+        public GameObject targetGO;
+        // public Transform targetTransform;
+        public Vector3 destination;
+    
+        [SerializeField] public PredictedPositionController predictionController;
+        public NavMeshPath path;
+        private float elapsed = 0.0f;
+        [SerializeField] float updatePathTime = 0.1f;
+        [SerializeField] Input newInput = new Input();
+        public int pathSize;
+        public GameObject targetCorner;
+        [SerializeField] float stoppingDistance = 0.5f;
+        public int pathIndex = 1;
+        Vector3[] pathCorners;
+        public bool moveToTarget = false;
+        Vector3 nextPoint = Vector3.zero;
+        Vector3 nextNextPoint = Vector3.zero;
+        Vector3 nextNextNextPoint = Vector3.zero;
+
+    [Header("           Jump Calculations")][Space(15)]
+        public float jumpCheckDistance = 1f;
+        public float minLedgeHeight = 1f;
+        public bool jumping = false;
+        public float wantToJumpAngle = 90;
 
     void Start()
     {
+        StartMachine(states);
         path = new NavMeshPath();
         if(states.Count <= 1){
             Debug.LogWarning(gameObject.name+"'s AIController only has 1 or 0 possible states assigned");
@@ -71,30 +69,22 @@ public class AIController : MonoBehaviour
     }
 
     void Update()
-    {
+    {  
         elapsed += Time.deltaTime;
         if (elapsed > updatePathTime){
             elapsed -= updatePathTime;
-             CalculateNewPath();
+            CalculateNewPath();
         }
         DrawDebugPath();
-        DetermineIfJump();
-        if(unitController.Grounded){
-            jumping = false;
-        }
-        if(unitController.Grounded){
-            if(moveToTarget & path != null & path.status == NavMeshPathStatus.PathComplete & path.corners.Length > 1){
-                FollowPath();   
-            }     
-            else{
-                newInput.move = Vector2.zero;
-            }
-        }
+        
+        // if(moveToTarget && path != null && targetGO != null){
+            Move();
+        // }
+        
         if(fow){
             CheckFOW();
         }
-        
-
+        currentState?.UpdateState();
         //Assign the new input to the unitController
         unitController.input = newInput;
     }
@@ -102,6 +92,63 @@ public class AIController : MonoBehaviour
     void LateUpdate()
     {
         newInput.jump = false;
+    }
+
+    public void SetDestination(Vector3 newDestination)
+    {
+        destination = newDestination;
+    }
+
+    void Move()
+    {
+        DetermineIfJump();
+        if(unitController.Grounded){
+            jumping = false;
+            if(moveToTarget & path != null & path.status == NavMeshPathStatus.PathComplete & path.corners.Length > 1){
+                FollowPath();   
+            }     
+            else{
+                newInput.move = Vector2.zero;
+            }
+        }
+    }
+
+    public void StartMachine(List<AIState> states)
+    {
+        // if(machineStarted) return;
+        stateDictionary = new Dictionary<AIStateEnum, AIState>();
+
+        for (int i = 0; i<states.Count; i++){
+            if (states[i] == null){
+                continue;
+            }
+            states[i].Init(this);
+            if(!stateDictionary.ContainsKey(states[i].aiStateEnum)){
+                stateDictionary.Add(states[i].aiStateEnum, states[i]);
+            }    
+        }
+        currentState = stateDictionary[defaultState];  
+
+        ChangeState(defaultState);
+    }
+
+    public void ChangeState(AIStateEnum newState) //call this function when changing states
+    { 
+        if (!busyChange){
+            StartCoroutine(ChangeStateWait(newState));
+        }
+    }
+
+    public IEnumerator ChangeStateWait(AIStateEnum newState)
+    {
+        busyChange = true;
+        currentState.ExitState();
+        currentState = stateDictionary[newState];
+        currentStateEnum = currentState.aiStateEnum;
+        Debug.Log(gameObject.name +" changing to state "+newState.ToString());
+        currentState.EnterState();
+        yield return new WaitForEndOfFrame();
+        busyChange = false;
     }
 
     void CheckFOW()
@@ -134,8 +181,6 @@ public class AIController : MonoBehaviour
         }
         recentEnemies = newEnemyList;
         
-
-
         // Add new visible players
         foreach (Transform ballT in fow.visibleBalls) {
             bool found = false;
@@ -164,15 +209,7 @@ public class AIController : MonoBehaviour
         }
         recentBalls = newBallList;
     }
-
-    public float jumpCheckDistance = 1f;
-    public float minLedgeHeight = 1f;
-    public bool jumping = false;
-    Vector3 nextPoint = Vector3.zero;
-    Vector3 nextNextPoint = Vector3.zero;
-    Vector3 nextNextNextPoint = Vector3.zero;
-    public float wantToJumpRadius = 3f;
-    public float wantToJumpAngle = 90;
+    
     void DetermineIfJump()
     {
         bool edge = false;
@@ -195,7 +232,8 @@ public class AIController : MonoBehaviour
 
     void CalculateNewPath()
     {
-        NavMesh.CalculatePath(transform.position, targetTransform.position, NavMesh.AllAreas, path);
+        // NavMesh.CalculatePath(transform.position, targetGO.transform.position, NavMesh.AllAreas, path);
+        NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
         path.GetCornersNonAlloc(pathCorners);
         pathIndex = 0;  
     }
@@ -241,5 +279,43 @@ public class AIController : MonoBehaviour
         if(targetCorner){
             targetCorner.transform.position = nextPoint;
         }
+    }
+
+    public float GetPathLength(NavMeshPath _path)
+    {
+        float totalLength = 0;
+
+        Vector3 prevPoint = _path.corners[0];
+        Vector3 newPoint;
+        for(int i = 1; i < _path.corners.Length; i++){
+            newPoint = _path.corners[i];
+            totalLength += Vector3.Distance(prevPoint,newPoint);
+            prevPoint = _path.corners[i];
+        }
+
+
+        return totalLength;
+    }
+}
+
+[Serializable]
+public struct RecentEnemy{
+    public UnitController enemyController;
+    public float timeOfSighting;
+
+    public RecentEnemy(UnitController controller, float currentTime){
+        enemyController = controller;
+        timeOfSighting = currentTime;
+    }
+}
+
+[Serializable]
+public struct RecentBall{
+    public DodgeballController dodgeballController;
+    public float timeOfSighting;
+
+    public RecentBall(DodgeballController controller, float currentTime){
+        dodgeballController = controller;
+        timeOfSighting = currentTime;
     }
 }
