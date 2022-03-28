@@ -23,6 +23,7 @@ public struct Input
 
 // [RequireComponent(typeof(Rigidbody))]
 // [RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(AimIK))]
 [RequireComponent(typeof(CharacterController))]
 public class UnitController : MonoBehaviour
 {
@@ -123,11 +124,13 @@ public class UnitController : MonoBehaviour
         [SerializeField] private float normalSensitivity = 2;
         [SerializeField] private float aimSensitivity = 0.5f;
         [SerializeField] private LayerMask aimColliderLayerMask;
+        public Transform overrideTargetTransform;
 
         [SerializeField] private GameObject handSpot;
         [SerializeField] private Transform debugTransform;
         public bool hasBall = false;
         public GameObject heldBallGO;
+        AimIK aimIK => GetComponent<AimIK>();
         
 
     // player
@@ -159,7 +162,7 @@ public class UnitController : MonoBehaviour
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
     
-    private PickUpZoneController pickUpZoneController;
+    public PickUpZoneController pickUpZoneController;
     private Vector3 mouseWorldPosition;
 
 
@@ -185,6 +188,9 @@ public class UnitController : MonoBehaviour
         if(aimColliderLayerMask != LayerMask.GetMask("Map")){
             Debug.LogWarning(gameObject.name+" has its aim layermask not set to map only. Be careful changing this mask.");
         }
+        if(aimIK.humanBones.Length == 0){
+            Debug.LogWarning(gameObject.name+" does not have its aimIK bones set properly. Set at least one bone with a weight (i.e. Spine to 0.2)");
+        }
     }
 
     void Update()
@@ -205,19 +211,26 @@ public class UnitController : MonoBehaviour
         // Find the new Mouse World Position to use for aiming
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = unitCamera.ScreenPointToRay(screenCenterPoint);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        if(!input.moveRelative){
+            mouseWorldPosition = overrideTargetTransform.position;      
+        } 
+        else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
             //debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
         }
 
         // If holding a ball &
-        if(input.aim && pickUpZoneController.hasBall)
+        if(input.aim && hasBall)
         {   
+            aimIK.enableIK = true;
+            aimIK.overrideTarget = true;
+            aimIK.targetOverridePosition = mouseWorldPosition;
             _animator.SetBool("Aim", true);
             aimVirtualCamera.gameObject.SetActive(true);
             Sensitivity = aimSensitivity;
             _rotateOnMove = false;
+
 
             Vector3 worldAimTarget =  new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z);
             Vector3 aimDirection = (worldAimTarget - transform.position);
@@ -225,11 +238,14 @@ public class UnitController : MonoBehaviour
              
             if(input.throw_bool){
                 _animator.SetBool("Throw", true);
+                // hasBall = false;  
                 //rb.constraints = RigidbodyConstraints.None;
             }
            
         }
         else{
+            aimIK.enableIK = false;
+            aimIK.overrideTarget = false;
             _animator.SetBool("Aim", false);
             aimVirtualCamera.gameObject.SetActive(false);
             Sensitivity = normalSensitivity;
@@ -239,11 +255,12 @@ public class UnitController : MonoBehaviour
 
     void PickupBall()
     {
-        if(pickUpZoneController.ballNear && input.pickup)
+        if(pickUpZoneController.ballNear && input.pickup && Grounded)
         {
             pickUpZoneController.dodgeball.hasOwner = true;
             pickUpZoneController.ballNear = false;
-            // GameManager.Instance.TEMP_TurnOnBallHUD();   
+            // GameManager.Instance.TEMP_TurnOnBallHUD(); 
+            // hasBall = true;  
             heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
             _animator.SetBool("PickUp", true);
             canMove = false;
@@ -253,6 +270,7 @@ public class UnitController : MonoBehaviour
         if(_animator.GetBool("PickUp"))
         {
             transform.forward = heldBallGO.transform.position-transform.position;
+            // hasBall = true;
         }
     }
 
@@ -269,27 +287,31 @@ public class UnitController : MonoBehaviour
         Debug.Log(heldBallGO.name);
         Debug.Log("The ball was thrown with a velocity of " + throw_speed);
         ballRb.AddForce(throw_direction*throw_speed*100f);
-        pickUpZoneController.hasBall = false;
+        hasBall = false;
         _animator.SetBool("Throw", false);
 
         heldBallGO.GetComponent<DodgeballController>().hasOwner = false;
         heldBallGO.GetComponent<DodgeballController>().isThrown = true; // the ball can now cause damage on collision
         heldBallGO.GetComponent<DodgeballController>().thrownBy = this.gameObject; // to let the dodgeball know not to damage the person who threw it on exit from hand
+        heldBallGO = null;
     }
 
     void AnimTrigger_Pickup()
     {
+        // heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
         heldBallGO.transform.parent = handSpot.transform;
         heldBallGO.transform.localPosition = Vector3.zero;
         heldBallGO.transform.localRotation = Quaternion.identity;
+        
 
         Rigidbody ballRb = heldBallGO.GetComponent<Rigidbody>();
         ballRb.isKinematic = true;
 
-        pickUpZoneController.hasBall = true;
-        pickUpZoneController.foundBall = false;
+        
+        // foundBall = false;
 
         _animator.SetBool("PickUp", false);
+        hasBall = true;
         canMove = true;
     }
 

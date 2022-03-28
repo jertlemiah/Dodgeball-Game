@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiController: {fileID: 0}
   aiStateEnum: 4
+  waypointStoppingDist: 2
+  currentTarget: {x: -8.724675, y: 0.023666669, z: -8.157856}
   wanderRadius: 25
-  wanderTimer: 3
+  wanderTimer: 20
+  interestTagName: Points of Interest
+  pointsOfInterest: []
+  index: -1

@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 657184208956269567, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.575
+      value: 1.7250001
       objectReference: {fileID: 0}
     - target: {fileID: 657184208956269567, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22,7 +22,7 @@ PrefabInstance:
     - target: {fileID: 4858783102945889044, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: unitCamera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5125387841349667844}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -80,6 +80,11 @@ PrefabInstance:
 --- !u!1 &2153386463530325294 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6043158950332431058, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
+  m_PrefabInstance: {fileID: 5638437018851962876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &5125387841349667844 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 657184208956269560, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
   m_PrefabInstance: {fileID: 5638437018851962876}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &4912618978103973804
@@ -195,6 +200,7 @@ MonoBehaviour:
   newInput:
     sprint: 0
     move: {x: 0, y: 0}
+    moveRelative: 0
     look: {x: 0, y: 0}
     aim: 0
     throw_bool: 0

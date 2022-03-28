@@ -15,6 +15,7 @@ public class AIController : MonoBehaviour
         public Dictionary<AIStateEnum, AIState> stateDictionary;
         bool busyChange;
         [SerializeField] public UnitController unitController  => GetComponent<UnitController>();
+
     
     [Header("           Field of View")][Space(15)]
         [SerializeField] public List<RecentEnemy> recentEnemies = new List<RecentEnemy>();
@@ -23,7 +24,12 @@ public class AIController : MonoBehaviour
         [SerializeField] GameObject fowPrefab;
         public float recentMemoryTime = 5f;
 
+    [Header("           Shooter settings")][Space(15)]
+        [SerializeField] Transform aimAtThis;
+
+
     [Header("           Pathfinding")][Space(15)]
+        public GameObject destinationIndicator;
         public GameObject targetGO;
         // public Transform targetTransform;
         public Vector3 destination;
@@ -32,22 +38,27 @@ public class AIController : MonoBehaviour
         public NavMeshPath path;
         private float elapsed = 0.0f;
         [SerializeField] float updatePathTime = 0.1f;
-        [SerializeField] Input newInput = new Input();
+        [SerializeField] public Input newInput = new Input();
         public int pathSize;
-        public GameObject targetCorner;
-        [SerializeField] float stoppingDistance = 0.5f;
+        public GameObject targetPathCorner;
+        [SerializeField] public float stoppingDistance = 0.5f;
         public int pathIndex = 1;
         Vector3[] pathCorners;
         public bool moveToTarget = false;
         Vector3 nextPoint = Vector3.zero;
         Vector3 nextNextPoint = Vector3.zero;
         Vector3 nextNextNextPoint = Vector3.zero;
+        public bool stuck = false;
+        public float minStuckSpeed = 0.5f;
 
     [Header("           Jump Calculations")][Space(15)]
         public float jumpCheckDistance = 1f;
         public float minLedgeHeight = 1f;
         public bool jumping = false;
         public float wantToJumpAngle = 90;
+        public float wantToJumpDistance = 1;
+
+    NavMeshAgent _agent;
 
     void Start()
     {
@@ -66,6 +77,13 @@ public class AIController : MonoBehaviour
                 Debug.LogError("gameObject "+gameObject.name+" does not have an AIFieldOfView assigned and cannot create a fow prefab either.");
             }
         }
+        if(!aimAtThis){
+            GameObject newObj = new GameObject("Aim At This Transform");
+            Instantiate(newObj, this.transform);
+            aimAtThis = newObj.transform;
+        }
+        // this._agent = this.gameObject.GetComponent<NavMeshAgent>();
+        // this._agent.destination = this.transform.position;
     }
 
     void Update()
@@ -76,7 +94,40 @@ public class AIController : MonoBehaviour
             CalculateNewPath();
         }
         DrawDebugPath();
+        CheckIfStuck();
+
+        // If not doing anything & has no targets, then wander
+
+        // If no ball but ball in sight, then go to a ball
+        // if(!unitController.hasBall && recentBalls.Count>0){
+        //     targetGO = recentBalls[0].dodgeballController.gameObject;
+        //     moveToTarget = true;
+        // }
+
         
+        // if(unitController.pickUpZoneController.ballNear) {
+        //     moveToTarget = false;
+        //     newInput.pickup = true;
+        // } else {
+        //     newInput.pickup = false;
+        // }
+        
+        // if(unitController.hasBall && recentEnemies.Count>0){
+        //     targetGO = recentEnemies[0].enemyController.gameObject;
+        //     AimAtTarget();
+        // } else {
+        //     newInput.aim = false;
+        // }
+
+        // if(unitController.input.aim && unitController.hasBall ){ //&&within range & line of sight{
+        //     newInput.throw_bool = true;
+        // } else {
+        //     newInput.throw_bool = false;
+        // }
+        
+
+        
+
         // if(moveToTarget && path != null && targetGO != null){
             Move();
         // }
@@ -94,26 +145,86 @@ public class AIController : MonoBehaviour
         newInput.jump = false;
     }
 
+    //_______________Public Member Functions_______________
+
     public void SetDestination(Vector3 newDestination)
     {
+        destinationIndicator.transform.position = newDestination + Vector3.up*1f;
         destination = newDestination;
     }
 
-    void Move()
+    public void ChangeState(AIStateEnum newState) //call this function when changing states
+    { 
+        if (!busyChange){
+            StartCoroutine(ChangeStateWait(newState));
+        }
+    }
+
+    //_______________Private Functions_______________
+    public float stuckTimer;
+    public float minStuckTime = 1f;
+    void CheckIfStuck()
     {
-        DetermineIfJump();
+        stuckTimer += Time.time;
+        if(GetComponent<CharacterController>().velocity.magnitude > minStuckSpeed){
+            stuckTimer = 0;
+        }
+
+        stuck = (stuckTimer > minStuckTime);
+    }
+
+    private void AimAtTarget()
+    {
+        // SetDestination(targetGO.transform.position);
+        unitController.overrideTargetTransform = targetGO.transform;
+        if(targetGO.layer == unitController.gameObject.layer){
+            aimAtThis.position = targetGO.transform.position + targetGO.GetComponent<CharacterController>().center;
+        } else {
+            aimAtThis.position = targetGO.transform.position;
+        }
+        
+        unitController.overrideTargetTransform = aimAtThis;
+        newInput.aim = true;
+    }
+
+    private Vector3 _desVelocity;
+    // private bool 
+    private void Move()
+    {
+        // this._agent.destination = this.transform.position;
+        // this._agent.updatePosition = false;
+        // this._agent.updateRotation = false;
+        // this._agent.velocity = this.GetComponent<CharacterController>().velocity; // This is the most important line
+        // _agent.updatePosition
+
         if(unitController.Grounded){
             jumping = false;
             if(moveToTarget & path != null & path.status == NavMeshPathStatus.PathComplete & path.corners.Length > 1){
+                // this._desVelocity = this._agent.desiredVelocity;
+                
+                // this.unitController.Move(this._desVelocity.normalized);
+                // newInput.move = _desVelocity.normalized;
+                // this._agent.SetPath(path);
+                
+
+                DetermineIfJump();
                 FollowPath();   
             }     
             else{
                 newInput.move = Vector2.zero;
             }
+        } 
+        // else if ((nextNextPoint - this.transform.position).magnitude < 1f){
+        //     FollowPath(); 
+        // }
+        if((nextPoint - this.transform.position).magnitude > 1f){
+            newInput.sprint = true;
+        } else {
+            newInput.sprint = false;
         }
     }
 
-    public void StartMachine(List<AIState> states)
+    private void StartMachine(List<AIState> states)
     {
         // if(machineStarted) return;
         stateDictionary = new Dictionary<AIStateEnum, AIState>();
@@ -132,14 +243,9 @@ public class AIController : MonoBehaviour
         ChangeState(defaultState);
     }
 
-    public void ChangeState(AIStateEnum newState) //call this function when changing states
-    { 
-        if (!busyChange){
-            StartCoroutine(ChangeStateWait(newState));
-        }
-    }
+    
 
-    public IEnumerator ChangeStateWait(AIStateEnum newState)
+    private IEnumerator ChangeStateWait(AIStateEnum newState)
     {
         busyChange = true;
         currentState.ExitState();
@@ -151,10 +257,13 @@ public class AIController : MonoBehaviour
         busyChange = false;
     }
 
-    void CheckFOW()
+    private void CheckFOW()
     {
         // Add new visible players
         foreach (Transform enemyT in fow.visiblePlayers) {
+            if(enemyT.GetComponent<UnitController>().team == unitController.team){
+                continue;
+            }
             bool found = false;
             foreach (RecentEnemy enemy in recentEnemies){
                 if (enemyT == enemy.enemyController.transform) {
@@ -209,9 +318,15 @@ public class AIController : MonoBehaviour
         }
         recentBalls = newBallList;
     }
-    
-    void DetermineIfJump()
+
+    private void DetermineIfJump()
     {
+        // stuck = (GetComponent<CharacterController>().velocity.magnitude < minStuckSpeed);
+        // if(stuck){
+        //     newInput.jump = true;
+        //     jumping = true;
+        //     return;
+        // }
         bool edge = false;
         Vector3 testPoint = unitController.transform.position + unitController.transform.forward*jumpCheckDistance;
         RaycastHit hit;
@@ -222,7 +337,8 @@ public class AIController : MonoBehaviour
         }
 
         Vector3 futureLine = (nextNextPoint-nextPoint);
-        bool wantToJump = Mathf.Abs(Vector3.Angle(unitController.direction,futureLine))<wantToJumpAngle;
+        float dist = futureLine.magnitude;
+        bool wantToJump = (Mathf.Abs(Vector3.Angle(unitController.direction,futureLine))<wantToJumpAngle) && dist > wantToJumpDistance;
 
         if(edge & wantToJump){
             newInput.jump = true;
@@ -230,23 +346,37 @@ public class AIController : MonoBehaviour
         }
     }
 
-    void CalculateNewPath()
+    private void CalculateNewPath()
     {
         // NavMesh.CalculatePath(transform.position, targetGO.transform.position, NavMesh.AllAreas, path);
-        NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+        // destination = targetGO.transform.position;
+        destination = destinationIndicator.transform.position;
+        NavMeshHit navmeshHit;
+        NavMesh.SamplePosition(transform.position,out navmeshHit, 1f, NavMesh.AllAreas);
+        Vector3 currentClosestToNavmesh = navmeshHit.position;
+        if(currentClosestToNavmesh.magnitude > 10000f){
+            currentClosestToNavmesh = Vector3.zero;
+        }
+
+        NavMesh.SamplePosition(destination,out navmeshHit, 20f, NavMesh.AllAreas);
+        Vector3 targetClosestToNavmesh = navmeshHit.position;
+
+        NavMesh.CalculatePath(currentClosestToNavmesh, targetClosestToNavmesh, NavMesh.AllAreas, path);
         path.GetCornersNonAlloc(pathCorners);
         pathIndex = 0;  
     }
 
-    void DrawDebugPath()
+    private void DrawDebugPath()
     {
         for (int i = 0; i < path.corners.Length - 1; i++)
-            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+            Debug.DrawLine(path.corners[i]+Vector3.up*navMeshVerticalOffset, path.corners[i + 1]+Vector3.up*navMeshVerticalOffset, Color.red);
     }
-    public void FollowPath()
+    
+    public float navMeshVerticalOffset = 0.2f;
+    private void FollowPath()
     {
         pathSize = path.corners.Length;
-        nextPoint = path.corners[pathIndex];
+        nextPoint = path.corners[pathIndex]+Vector3.up*navMeshVerticalOffset;
 
         // If reached final point, then stop
         if(pathSize-1 == pathIndex & Vector3.Distance(nextPoint,this.transform.position) < stoppingDistance){
@@ -257,15 +387,15 @@ public class AIController : MonoBehaviour
         // If there are multiple corners too close to each other, find the next that is far enough away
         while(pathIndex < (path.corners.Length - 1) & Vector3.Distance(nextPoint,this.transform.position) < stoppingDistance){
             pathIndex++;
-            nextPoint = path.corners[pathIndex];  
+            nextPoint = path.corners[pathIndex]+Vector3.up*navMeshVerticalOffset;  
         }
         if(pathIndex+1 < path.corners.Length){
-            nextNextPoint = path.corners[pathIndex+1];  
+            nextNextPoint = path.corners[pathIndex+1]+Vector3.up*navMeshVerticalOffset;  
         } else {
             nextNextPoint = nextPoint;
         }
         if(pathIndex+2 < path.corners.Length){
-            nextNextNextPoint = path.corners[pathIndex+2];  
+            nextNextNextPoint = path.corners[pathIndex+2]+Vector3.up*navMeshVerticalOffset;  
         } else {
             nextNextNextPoint = nextNextPoint;
         }
@@ -276,8 +406,8 @@ public class AIController : MonoBehaviour
         Vector2 newMove = new Vector2(direction.x, direction.z).normalized;
 
         newInput.move = newMove;
-        if(targetCorner){
-            targetCorner.transform.position = nextPoint;
+        if(targetPathCorner){
+            targetPathCorner.transform.position = nextPoint;
         }
     }
 
