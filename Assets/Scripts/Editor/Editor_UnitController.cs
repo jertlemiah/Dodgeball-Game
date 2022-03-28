@@ -16,6 +16,10 @@ public class Editor_UnitController : Editor
 		// {
 			
 		// }
+         if (GUILayout.Button("Set Player Health to 0"))
+		{
+			controller.TakeDamage(100);
+		}
 	}
     public static void DrawUILine(Color color, int thickness = 2, int padding = 10)
     {

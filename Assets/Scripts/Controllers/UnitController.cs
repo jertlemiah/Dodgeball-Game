@@ -101,10 +101,10 @@ public class UnitController : MonoBehaviour
 
     [Header("           Player Attributes")][Space(15)]
         [Tooltip("The health the player will start with each time he respawns.")]
-        public int healthMax = 2;
+        public int healthMax = 100;
 
         [Tooltip("The current health of the player set at runtime")]
-        public int healthCurrent = 2;
+        public int healthCurrent = 100;
 
         public Team team = Team.Team1;        
         public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
@@ -155,9 +155,13 @@ public class UnitController : MonoBehaviour
     private PickUpZoneController pickUpZoneController;
     private Vector3 mouseWorldPosition;
 
+    public GameObject player;
+    private SpawnManager spawnManager;
+
 
     void Start()
     {
+        spawnManager = SpawnManager.Instance;
         healthCurrent = healthMax;
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
@@ -182,6 +186,7 @@ public class UnitController : MonoBehaviour
 
     void Update()
     {
+        handleCharacterDead();
         JumpAndGravity();
         GroundedCheck();
         Move();
@@ -306,16 +311,21 @@ public class UnitController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         // This will need to be swapped out for the real system at some point
-        if(team == Team.Team1)
-        {
-            // GameManager.Instance.GiveTeam2Points(1);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
+         if (healthCurrent - damage < 0) {
+            healthCurrent = 0;
+        } else {
+            healthCurrent -= damage;
         }
-        else
-        {
-            // GameManager.Instance.GiveTeam1Points(1);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
-        }
+        // if(team == Team.Team1)
+        // {
+        //     // GameManager.Instance.GiveTeam2Points(1);
+        //     EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
+        // }
+        // else
+        // {
+        //     // GameManager.Instance.GiveTeam1Points(1);
+        //     EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
+        // }
     }
 
     private void CameraRotation()
@@ -487,6 +497,29 @@ public class UnitController : MonoBehaviour
         if (_verticalVelocity < _terminalVelocity)
         {
             _verticalVelocity += Gravity * Time.deltaTime;
+        }
+    }
+
+    IEnumerator CoundownDeath()
+    {
+        yield return new WaitForSeconds(5f);
+        if (player.GetComponent<CharacterController>() != null)
+        {
+            player.GetComponent<CharacterController>().enabled = true;
+        }
+    }
+
+    private void handleCharacterDead() {
+        if (healthCurrent <= 0) {
+            if (player.GetComponent<CharacterController>() != null)
+            {
+                player.GetComponent<CharacterController>().enabled = false;
+            }
+            var spawnPoint = spawnManager.GetSpawnLocation();
+            Debug.Log("spawnPoint" + spawnPoint);
+            player.transform.position = spawnPoint;
+            healthCurrent = healthMax;
+            StartCoroutine(CoundownDeath());
         }
     }
 }
