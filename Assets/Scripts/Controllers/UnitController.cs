@@ -9,6 +9,7 @@ public struct Input
 {
     public bool sprint;
     public Vector2 move;
+    public bool moveRelative; //Humans supply input relative to a camera, but bots supply a global direction
     public Vector2 look;
     public bool aim;
     public bool throw_bool;
@@ -22,6 +23,7 @@ public struct Input
 
 // [RequireComponent(typeof(Rigidbody))]
 // [RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(AimIK))]
 [RequireComponent(typeof(CharacterController))]
 public class UnitController : MonoBehaviour
 {
@@ -36,11 +38,17 @@ public class UnitController : MonoBehaviour
         [Tooltip("Sensitivity of player input to character output.")] 
         public float Sensitivity = 1f;
 
-        [Tooltip("Move speed of the character in m/s")] 
-        public float MoveSpeed = 2.0f;
+        [Tooltip("Current direction vector of the character")] 
+        public Vector3 direction;
+
+        [Tooltip("Current move speed of the character in m/s")] 
+        public float MoveSpeed = 5.0f;
+
+        [Tooltip("Normal speed of the character in m/s")] 
+        public float NormalSpeed = 5.0f;
 
         [Tooltip("Sprint speed of the character in m/s")] 
-        public float SprintSpeed = 5.335f;
+        public float SprintSpeed = 8.0f;
 
         [Tooltip("How fast the character turns to face movement direction")] 
         [Range(0.0f, 0.3f)] public float RotationSmoothTime = 0.12f;
@@ -116,11 +124,13 @@ public class UnitController : MonoBehaviour
         [SerializeField] private float normalSensitivity = 2;
         [SerializeField] private float aimSensitivity = 0.5f;
         [SerializeField] private LayerMask aimColliderLayerMask;
+        public Transform overrideTargetTransform;
 
         [SerializeField] private GameObject handSpot;
         [SerializeField] private Transform debugTransform;
         public bool hasBall = false;
         public GameObject heldBallGO;
+        AimIK aimIK => GetComponent<AimIK>();
         
 
     // player
@@ -152,7 +162,7 @@ public class UnitController : MonoBehaviour
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
     
-    private PickUpZoneController pickUpZoneController;
+    public PickUpZoneController pickUpZoneController;
     private Vector3 mouseWorldPosition;
 
     public GameObject player;
@@ -182,6 +192,9 @@ public class UnitController : MonoBehaviour
         if(aimColliderLayerMask != LayerMask.GetMask("Map")){
             Debug.LogWarning(gameObject.name+" has its aim layermask not set to map only. Be careful changing this mask.");
         }
+        if(aimIK.humanBones.Length == 0){
+            Debug.LogWarning(gameObject.name+" does not have its aimIK bones set properly. Set at least one bone with a weight (i.e. Spine to 0.2)");
+        }
     }
 
     void Update()
@@ -203,19 +216,26 @@ public class UnitController : MonoBehaviour
         // Find the new Mouse World Position to use for aiming
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = unitCamera.ScreenPointToRay(screenCenterPoint);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        if(!input.moveRelative){
+            mouseWorldPosition = overrideTargetTransform.position;      
+        } 
+        else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
             //debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
         }
 
         // If holding a ball &
-        if(input.aim && pickUpZoneController.hasBall)
+        if(input.aim && hasBall)
         {   
+            aimIK.enableIK = true;
+            aimIK.overrideTarget = true;
+            aimIK.targetOverridePosition = mouseWorldPosition;
             _animator.SetBool("Aim", true);
             aimVirtualCamera.gameObject.SetActive(true);
             Sensitivity = aimSensitivity;
             _rotateOnMove = false;
+
 
             Vector3 worldAimTarget =  new Vector3(mouseWorldPosition.x, transform.position.y, mouseWorldPosition.z);
             Vector3 aimDirection = (worldAimTarget - transform.position);
@@ -223,11 +243,14 @@ public class UnitController : MonoBehaviour
              
             if(input.throw_bool){
                 _animator.SetBool("Throw", true);
+                // hasBall = false;  
                 //rb.constraints = RigidbodyConstraints.None;
             }
            
         }
         else{
+            aimIK.enableIK = false;
+            aimIK.overrideTarget = false;
             _animator.SetBool("Aim", false);
             aimVirtualCamera.gameObject.SetActive(false);
             Sensitivity = normalSensitivity;
@@ -237,11 +260,12 @@ public class UnitController : MonoBehaviour
 
     void PickupBall()
     {
-        if(pickUpZoneController.ballNear && input.pickup)
+        if(pickUpZoneController.ballNear && input.pickup && Grounded)
         {
             pickUpZoneController.dodgeball.hasOwner = true;
             pickUpZoneController.ballNear = false;
-            // GameManager.Instance.TEMP_TurnOnBallHUD();   
+            // GameManager.Instance.TEMP_TurnOnBallHUD(); 
+            // hasBall = true;  
             heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
             _animator.SetBool("PickUp", true);
             canMove = false;
@@ -251,6 +275,7 @@ public class UnitController : MonoBehaviour
         if(_animator.GetBool("PickUp"))
         {
             transform.forward = heldBallGO.transform.position-transform.position;
+            // hasBall = true;
         }
     }
 
@@ -267,27 +292,31 @@ public class UnitController : MonoBehaviour
         Debug.Log(heldBallGO.name);
         Debug.Log("The ball was thrown with a velocity of " + throw_speed);
         ballRb.AddForce(throw_direction*throw_speed*100f);
-        pickUpZoneController.hasBall = false;
+        hasBall = false;
         _animator.SetBool("Throw", false);
 
         heldBallGO.GetComponent<DodgeballController>().hasOwner = false;
         heldBallGO.GetComponent<DodgeballController>().isThrown = true; // the ball can now cause damage on collision
         heldBallGO.GetComponent<DodgeballController>().thrownBy = this.gameObject; // to let the dodgeball know not to damage the person who threw it on exit from hand
+        heldBallGO = null;
     }
 
     void AnimTrigger_Pickup()
     {
+        // heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
         heldBallGO.transform.parent = handSpot.transform;
         heldBallGO.transform.localPosition = Vector3.zero;
         heldBallGO.transform.localRotation = Quaternion.identity;
+        
 
         Rigidbody ballRb = heldBallGO.GetComponent<Rigidbody>();
         ballRb.isKinematic = true;
 
-        pickUpZoneController.hasBall = true;
-        pickUpZoneController.foundBall = false;
+        
+        // foundBall = false;
 
         _animator.SetBool("PickUp", false);
+        hasBall = true;
         canMove = true;
     }
 
@@ -364,14 +393,15 @@ public class UnitController : MonoBehaviour
 
     private void Move()
     {
+        direction = _controller.velocity;
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = input.sprint ? SprintSpeed : MoveSpeed;
+        MoveSpeed = input.sprint ? SprintSpeed : NormalSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is no input, set the target speed to 0
-        if (input.move == Vector2.zero) targetSpeed = 0.0f;
+        if (input.move == Vector2.zero) MoveSpeed = 0.0f;
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -380,20 +410,20 @@ public class UnitController : MonoBehaviour
         float inputMagnitude = input.analogMovement ? input.move.magnitude : 1f;
 
         // accelerate or decelerate to target speed
-        if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+        if (currentHorizontalSpeed < MoveSpeed - speedOffset || currentHorizontalSpeed > MoveSpeed + speedOffset)
         {
             // creates curved result rather than a linear one giving a more organic speed change
             // note T in Lerp is clamped, so we don't need to clamp our speed
-            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+            _speed = Mathf.Lerp(currentHorizontalSpeed, MoveSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
 
             // round speed to 3 decimal places
             _speed = Mathf.Round(_speed * 1000f) / 1000f;
         }
         else
         {
-            _speed = targetSpeed;
+            _speed = MoveSpeed;
         }
-        _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+        _animationBlend = Mathf.Lerp(_animationBlend, MoveSpeed, Time.deltaTime * SpeedChangeRate);
 
         // normalise input direction
         Vector3 inputDirection = new Vector3(input.move.x, 0.0f, input.move.y).normalized;
@@ -402,7 +432,10 @@ public class UnitController : MonoBehaviour
         // if there is a move input rotate player when the player is moving
         if (input.move != Vector2.zero)
         {
-            if(useMainCamera)
+            if(!input.moveRelative){
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z)* Mathf.Rad2Deg;
+            }
+            else if(useMainCamera)
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
             else
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + unitCamera.transform.eulerAngles.y;

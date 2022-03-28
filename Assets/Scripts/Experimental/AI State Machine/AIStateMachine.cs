@@ -5,7 +5,6 @@ using UnityEngine;
 /// State Machine implementation.
 /// Uses BaseState as base class for storing currently operating state.
 /// </summary>
-public enum AIStateEnum {Idle, ChaseTarget, Waypoint}
 public class AIStateMachine : MonoBehaviour
 {
     [SerializeField] public AIController aiController  => GetComponent<AIController>();
@@ -28,9 +27,7 @@ public class AIStateMachine : MonoBehaviour
             {
                 continue;
             }
-            // states[i] = Instantiate(states[i]) as BaseState;
-            states[i].Init(this);
-            // stateDictionary.Add((MinionStateEnum)i, states[i]);
+            // states[i].Init(this);
             if(!stateDictionary.ContainsKey(states[i].aiStateEnum)){
                 stateDictionary.Add(states[i].aiStateEnum, states[i]);
             }
@@ -78,8 +75,7 @@ public class AIStateMachine : MonoBehaviour
     //     }
     // }
     public void ChangeState(AIStateEnum newState) //call this function when changing states
-    {
-        
+    { 
         if (!busyChange){
             StartCoroutine(ChangeStateWait(newState));
         }
