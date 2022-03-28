@@ -15,6 +15,7 @@ public class PredictedPositionController : MonoBehaviour
     [SerializeField] public GameObject predictedPosGO;
     [SerializeField] float gizmoRadius = 0.2f;
     [SerializeField] Color gizmoColor = Color.green;
+    public LayerMask collidableLayers;
     Vector3 velPrev;
     Vector3 accelPrev;
     Vector3 posPrev;
@@ -41,15 +42,18 @@ public class PredictedPositionController : MonoBehaviour
             // if(velAvg.magnitude <= 0.1f){
             //     return;
             // }
-            if (Physics.Raycast(trackingTargetGO.transform.position, direction, out hit, Mathf.Infinity))
+            if (Physics.Raycast(trackingTargetGO.transform.position+Vector3.up*yOffset, direction, out hit, Mathf.Infinity,collidableLayers))
             {
                 // Below is to prevent predicting a position that would be inside of a wall or floor
-                Debug.DrawRay(trackingTargetGO.transform.position+Vector3.up*1, direction * hit.distance, Color.cyan);
+                Debug.DrawRay(trackingTargetGO.transform.position+Vector3.up*yOffset, direction * hit.distance, Color.cyan);
                 if(useRaycast && hit.distance < (trackingTargetGO.transform.position - newPos).magnitude){
-                    newPos = hit.point - direction*stoppingDistance+Vector3.up*yOffset;
+                    newPos = hit.point - direction*stoppingDistance;//+Vector3.up*yOffset;
                     // newPos = trackingTargetGO.transform.position+((direction*hit.distance- direction*stoppingDistance));
                     // newPos = newPos-(direction*((predictedPosGO.transform.position - newPos).magnitude-hit.distance));
                 }              
+            }
+            else{
+                Debug.DrawRay(trackingTargetGO.transform.position+Vector3.up*yOffset, direction * 20f, Color.cyan);
             }
             // if (Physics.Raycast(trackingTargetGO.transform.position, Vector3.down, out hit, Mathf.Infinity))
             // {

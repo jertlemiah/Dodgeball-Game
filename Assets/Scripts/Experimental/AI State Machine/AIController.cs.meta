@@ -3,7 +3,13 @@ guid: 900a5282eede05d4fac91c92eded4bb0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - fow: {instanceID: 0}
+  - fowPrefab: {fileID: 8856255257582327511, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
+  - targetPlayerGO: {instanceID: 0}
+  - targetTransform: {instanceID: 0}
+  - predictionController: {instanceID: 0}
+  - targetCorner: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

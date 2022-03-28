@@ -10,20 +10,20 @@ public class AIState_ChaseTarget : AIState
     public GameObject targetGO;
     [SerializeField] PredictedPositionController predictionController;
     NavMeshAgent navMeshAgent;
-    AIController parentAI;
+    // AIController parentAI;
     [SerializeField] float minTimeInState = 3f;
     [SerializeField] float maxPredictionTime = 5f;
     float timeInState;
     float enterTime;
     [SerializeField] float remainingDistance;
     [SerializeField] float stoppingDistance = 5f;
-    public override void Init(AIStateMachine aiStateMachine)
+    public override void Init(AIController aiStateMachine)
     {
-        ownerStateMachine = aiStateMachine;
-        parentAI = aiStateMachine.aiController;
-        targetGO = parentAI.targetPlayerGO;
-        navMeshAgent = parentAI.navMeshAgent;
-        predictionController = parentAI.predictionController;
+        aiController = aiStateMachine;
+        // parentAI = aiStateMachine.aiController;
+        // targetGO = parentAI.targetGO;
+        // navMeshAgent = parentAI.navMeshAgent;
+        // predictionController = parentAI.predictionController;
         // parentAI = aiStateMachine.minionAI;
         // navMeshAgent = parentAI.navMeshAgent;
         // predPosCon = parentAI.predPosCon;

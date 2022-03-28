@@ -3,12 +3,13 @@ using UnityEngine;
 /// This is base state script implementation.
 /// StateMachine uses these virtual methods to call state when it needs to prepare itself for operating, updating or even being destroyed.
 /// </summary>
+public enum AIStateEnum {Idle, ChaseTarget, Waypoint, FindBall, Wander}
 public abstract class AIState : ScriptableObject
 {
     // Reference to our state machine.
-    public AIStateMachine ownerStateMachine;
+    public AIController aiController;
     public AIStateEnum aiStateEnum;
-    public abstract void Init(AIStateMachine aiStateMachine);
+    public abstract void Init(AIController aiStateMachine);
 
     /// <summary>
     /// Method called to prepare state to operate - same as Unity's Start()

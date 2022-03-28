@@ -10,13 +10,16 @@ public class HumanBone{
 [RequireComponent(typeof(Animator))]
 public class AimIK : MonoBehaviour
 {
+    public bool enableIK = true;
     [Range(0,1)] [SerializeField] float IKweight = 1f;
     public Transform targetTransform;
+    public bool overrideTarget;
+    public Vector3 targetOverridePosition;
     public Transform aimTransform;
     [SerializeField] int iterations = 10;
     public float angleLimit = 90f;
     public float distanceLimit = 1f;
-    [SerializeField] HumanBone[] humanBones;
+    [SerializeField] public HumanBone[] humanBones;
     Transform[] boneTransforms;    
     // Start is called before the first frame update
     void Start()
@@ -27,10 +30,17 @@ public class AimIK : MonoBehaviour
         {
             boneTransforms[i] = animator.GetBoneTransform(humanBones[i].bone);
         }
+        targetOverridePosition = targetTransform.position;
     }
 
     Vector3 GetTargetPosition() {
-        Vector3 targetDirection = targetTransform.position - aimTransform.position;
+        Vector3 targetPos;
+        if(!overrideTarget){
+            targetPos = targetTransform.position;
+        } else {
+            targetPos = targetOverridePosition;
+        }
+        Vector3 targetDirection = targetPos - aimTransform.position;
         Vector3 aimDirection = aimTransform.forward;
         float blendOut = 0f;
 
@@ -52,7 +62,7 @@ public class AimIK : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(aimTransform == null || targetTransform == null)
+        if(!enableIK || aimTransform == null || (overrideTarget && targetTransform == null))
             return;
         
         Vector3 targetPosition = GetTargetPosition();
