@@ -18,6 +18,8 @@ public struct Input
     public bool jump;
     public bool cursorLocked;
     public bool cursorInputForLook;
+
+    public bool block;
 }
 
 // [RequireComponent(typeof(Rigidbody))]
@@ -119,8 +121,17 @@ public class UnitController : MonoBehaviour
 
         [SerializeField] private GameObject handSpot;
         [SerializeField] private Transform debugTransform;
+
+        [SerializeField] private float block_cooldown;
+        [SerializeField] private float block_time;
         public bool hasBall = false;
         public GameObject heldBallGO;
+
+    private float last_block_time;
+    private bool canBlock = true;
+    private bool isBlocking = false;
+    private float block_start_time;
+    private Renderer blocker_renderer;
         
 
     // player
@@ -166,7 +177,11 @@ public class UnitController : MonoBehaviour
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
+
         pickUpZoneController = GetComponentInChildren<PickUpZoneController>();
+        GameObject Blocker = GameObject.Find("Blocker");
+        blocker_renderer = Blocker.GetComponent<Renderer>();
+
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
             if(handSpot == null)
@@ -187,6 +202,7 @@ public class UnitController : MonoBehaviour
         Move();
         PickupBall();
         AimAndThrow();
+        Block();
     }
     private void LateUpdate()
     {
@@ -227,6 +243,45 @@ public class UnitController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(false);
             Sensitivity = normalSensitivity;
             _rotateOnMove = true;
+        }
+    }
+
+    void Block()
+    {   
+        if(!canBlock)
+        {
+            float elapsed_time = Time.time - last_block_time;
+            if(elapsed_time >= block_cooldown){
+                canBlock = true;
+                Debug.Log("can block again");
+            }
+        }
+
+        if(canBlock && input.block && pickUpZoneController.hasBall)
+        {
+            if(isBlocking){
+                float elapsed_time = Time.time - block_start_time;
+                if(elapsed_time >= block_time){
+                    _animator.SetBool("Block", false);
+                    isBlocking = false;
+                    canBlock = false;
+                    last_block_time = Time.time;
+                    blocker_renderer.enabled = false;
+                }
+            }
+            else{
+                _animator.SetBool("Block", true);
+                isBlocking = true;
+                block_start_time = Time.time;
+                blocker_renderer.enabled = true;
+            }
+        }
+        else if(isBlocking){
+            _animator.SetBool("Block", false);
+            isBlocking = false;
+            canBlock = false;
+            last_block_time = Time.time;
+            blocker_renderer.enabled = false;
         }
     }
 

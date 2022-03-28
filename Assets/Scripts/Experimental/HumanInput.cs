@@ -116,6 +116,11 @@ public class HumanInput : MonoBehaviour
         PickUpInput(value.isPressed);
     }
 
+    public void OnBlock(InputValue value)
+    {
+        BlockInput(value.isPressed);
+    }
+
     public void OnPause(InputValue value)
     {
         PausePerformed();
@@ -160,6 +165,11 @@ public class HumanInput : MonoBehaviour
     {
         // pickup = newPickUpState;
         newInput.pickup = newPickUpState;
+    }
+
+    public void BlockInput(bool newBlockState)
+    {
+        newInput.block = newBlockState;
     }
     private void OnApplicationFocus(bool hasFocus)
     {
