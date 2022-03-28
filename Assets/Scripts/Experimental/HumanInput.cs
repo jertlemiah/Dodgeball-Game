@@ -1,30 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 using UnityEngine.InputSystem;
-public class InputManager : Singleton<InputManager>
+[RequireComponent(typeof(UnitController))]
+[RequireComponent(typeof(PlayerInput))]
+public class HumanInput : MonoBehaviour
 {
     private InputActions _input;
-    [Header("Character Input Values")]
-    public Vector2 move;
-    public Vector2 look;
-    public bool jump;
-    public bool sprint;
-    public bool aim;
-    public bool throw_bool;
+    UnitController unitController;
 
-    public bool pickup;
+    [Header("Character Input Values")]
+        [SerializeField] Input newInput = new Input();
 
     [Header("Movement Settings")]
-    public bool analogMovement;
+        public bool analogMovement;
     
     [Header("Mouse Cursor Settings")]
-    public bool cursorLocked = true;
-	public bool cursorInputForLook = true;
+        public bool cursorLocked = true;
+        public bool cursorInputForLook = true;
     void Awake()
     {
         _input = new InputActions();
-        _input.Player.Pause.performed += context => PausePerformed();
+        // _input.Player.Pause.performed += context => PausePerformed();
         // _input.Player.Move.performed += context => MoveInput(context);
         EventManagerSO.E_PauseGame += EnableMouse;
         EventManagerSO.E_FinishedLoading += DisableMouse;
@@ -33,20 +31,15 @@ public class InputManager : Singleton<InputManager>
         DisableMouse();
     }
 
-    void LateUpdate()
+    void Start()
     {
-        // move = _input.Player.Move.ReadValue<Vector2>();
-        // look = _input.Player.Look.ReadValue<Vector2>();
-        // jump = _input.Player.Jump.ReadValue<bool>();
-        // sprint = _input.Player.Sprint.ReadValue<bool>();
-        // aim = _input.Player.Aim.ReadValue<bool>();
-        // throw_bool = _input.Player.Throw.ReadValue<bool>();
-        // pickup = _input.Player.PickUp.ReadValue<bool>();
-        // jump = false;
-        // sprint = false;
-        // aim = false;
-        // throw_bool = false;
-        // pickup = false;
+        unitController = GetComponent<UnitController>();
+        unitController.input = newInput;
+    }
+
+    void Update()
+    {
+        unitController.input = newInput;
     }
      
     private void OnEnable()
@@ -56,7 +49,7 @@ public class InputManager : Singleton<InputManager>
     private void OnDisable()
     {
         _input.Disable();
-        _input.Player.Pause.performed -= context => PausePerformed() ;
+        // _input.Player.Pause.performed -= context => PausePerformed() ;
         EventManagerSO.E_PauseGame -= EnableMouse;
         EventManagerSO.E_FinishedLoading -= DisableMouse;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
@@ -86,7 +79,18 @@ public class InputManager : Singleton<InputManager>
         SetCursorState(cursorInputForLook);
     }
 
+    public void OnMove(InputValue value)
+    {
+        MoveInput(value.Get<Vector2>());
+    }
 
+    public void OnLook(InputValue value)
+    {
+        if(cursorInputForLook)
+        {
+            LookInput(value.Get<Vector2>());
+        }
+    }
     public void OnJump(InputValue value)
     {
         JumpInput(value.isPressed);
@@ -111,50 +115,51 @@ public class InputManager : Singleton<InputManager>
     {
         PickUpInput(value.isPressed);
     }
-    // public void OnSprint(InputValue value)
-    // {
-    //     SprintInput(value.isPressed);
-    // }
-    // public void OnSprint(InputValue value)
-    // {
-    //     SprintInput(value.isPressed);
-    // }
-    // public void OnSprint(InputValue value)
-    // {
-    //     SprintInput(value.isPressed);
-    // }
+
+    public void OnPause(InputValue value)
+    {
+        PausePerformed();
+    }
+
     public void MoveInput(Vector2 newMoveDirection)
     {
-        move = newMoveDirection;
+        // move = newMoveDirection;
+        newInput.move = newMoveDirection;
     } 
 
     public void LookInput(Vector2 newLookDirection)
     {
-        look = newLookDirection;
+        // look = newLookDirection;
+        newInput.look = newLookDirection;
     }
 
     public void JumpInput(bool newJumpState)
     {
-        jump = newJumpState;
+        // jump = newJumpState;
+        newInput.jump = newJumpState;
     }
 
     public void SprintInput(bool newSprintState)
     {
-        sprint = newSprintState;
+        // sprint = newSprintState;
+        newInput.sprint = newSprintState;
     }
     public void AimInput(bool newAimState)
     {
-        aim = newAimState;
+        // aim = newAimState;
+        newInput.aim = newAimState;
     }
 
     public void ThrowInput(bool newThrowState)
     {
-        throw_bool = newThrowState;
+        // throw_bool = newThrowState;
+        newInput.throw_bool = newThrowState;
     }
 
     public void PickUpInput(bool newPickUpState)
     {
-        pickup = newPickUpState;
+        // pickup = newPickUpState;
+        newInput.pickup = newPickUpState;
     }
     private void OnApplicationFocus(bool hasFocus)
     {

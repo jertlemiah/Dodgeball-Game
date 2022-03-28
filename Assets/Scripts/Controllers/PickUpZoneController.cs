@@ -9,8 +9,8 @@ public class PickUpZoneController : MonoBehaviour
     public bool hasBall = false;
     public bool foundBall = false;
     public GameObject ball;
-    private bool ballNear = false;
-    private DodgeballController controller;
+    public bool ballNear = false;
+    public DodgeballController dodgeball;
     private StarterAssetsInputs starterAssetsInputs;
 
     private void Awake()
@@ -20,14 +20,14 @@ public class PickUpZoneController : MonoBehaviour
 
     private void Update()
     {
-        if(ballNear && starterAssetsInputs.pickup)
-        {
-            foundBall = true;
-            controller.hasOwner = true;
-            ballNear = false;
-            // GameManager.Instance.TEMP_TurnOnBallHUD();
-            EventManagerSO.TriggerEvent_PickUpText(false);
-        }
+        // if(ballNear && starterAssetsInputs.pickup)
+        // {
+        //     foundBall = true;
+        //     dodgeball.hasOwner = true;
+        //     ballNear = false;
+        //     // GameManager.Instance.TEMP_TurnOnBallHUD();
+        //     EventManagerSO.TriggerEvent_PickUpText(false);
+        // }
     } 
     private void OnTriggerEnter(Collider other)
     {   
@@ -35,8 +35,8 @@ public class PickUpZoneController : MonoBehaviour
         {
             if(other.gameObject.CompareTag("Ball"))
             {   
-                controller = other.gameObject.GetComponentInParent<DodgeballController>();
-                if(!controller.hasOwner)
+                dodgeball = other.gameObject.GetComponentInParent<DodgeballController>();
+                if(!dodgeball.hasOwner)
                 {
                     if (other.gameObject.GetComponentInParent<Animator>() != null){
                         other.gameObject.GetComponentInParent<Animator>().enabled = false;
