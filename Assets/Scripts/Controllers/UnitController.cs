@@ -19,6 +19,10 @@ public struct Input
     public bool jump;
     public bool cursorLocked;
     public bool cursorInputForLook;
+
+    public bool block;
+
+    public bool crouch;
 }
 
 // [RequireComponent(typeof(Rigidbody))]
@@ -128,10 +132,28 @@ public class UnitController : MonoBehaviour
 
         [SerializeField] private GameObject handSpot;
         [SerializeField] private Transform debugTransform;
+
+        [SerializeField] private float block_cooldown;
+        [SerializeField] private float block_time;
+
+        [SerializeField] private float crouch_cooldown;
+
         public bool hasBall = false;
         public GameObject heldBallGO;
         AimIK aimIK => GetComponent<AimIK>();
         
+
+    private float last_block_time;
+    private bool canBlock = true;
+    private bool isBlocking = false;
+    private float block_start_time;
+    private Renderer blocker_renderer;
+
+    private bool canCrouch = true;
+
+    private bool isCrouching = false;
+
+    private float last_crouch_time;    
 
     // player
     private float _speed;
@@ -176,7 +198,11 @@ public class UnitController : MonoBehaviour
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
+
         pickUpZoneController = GetComponentInChildren<PickUpZoneController>();
+        GameObject Blocker = GameObject.Find("Blocker");
+        blocker_renderer = Blocker.GetComponent<Renderer>();
+
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
             if(handSpot == null)
@@ -200,6 +226,8 @@ public class UnitController : MonoBehaviour
         Move();
         PickupBall();
         AimAndThrow();
+        Block();
+        Crouch();
     }
     private void LateUpdate()
     {
@@ -253,6 +281,63 @@ public class UnitController : MonoBehaviour
         }
     }
 
+    void Block()
+    {   
+        if(!canBlock)
+        {
+            float elapsed_time = Time.time - last_block_time;
+            if(elapsed_time >= block_cooldown){
+                canBlock = true;
+                Debug.Log("can block again");
+            }
+        }
+
+        if(canBlock && input.block && pickUpZoneController.hasBall)
+        {
+            if(isBlocking){
+                float elapsed_time = Time.time - block_start_time;
+                if(elapsed_time >= block_time){
+                    _animator.SetBool("Block", false);
+                    isBlocking = false;
+                    canBlock = false;
+                    last_block_time = Time.time;
+                    blocker_renderer.enabled = false;
+                }
+            }
+            else{
+                _animator.SetBool("Block", true);
+                isBlocking = true;
+                block_start_time = Time.time;
+                blocker_renderer.enabled = true;
+            }
+        }
+        else if(isBlocking){
+            _animator.SetBool("Block", false);
+            isBlocking = false;
+            canBlock = false;
+            last_block_time = Time.time;
+            blocker_renderer.enabled = false;
+        }
+    }
+
+    void Crouch()
+    {   
+        if(!canCrouch)
+        {
+            float elapsed_time = Time.time - last_crouch_time;
+            if(elapsed_time >= crouch_cooldown){
+                canCrouch = true;
+                Debug.Log("Can crouch again");
+            }
+        }
+        if(input.crouch && canCrouch && !isCrouching)
+        {
+            _animator.SetBool("Crouch", true);
+            isCrouching = true;
+            Debug.Log("started crouching");
+        }
+        
+    }
     void PickupBall()
     {
         if(pickUpZoneController.ballNear && input.pickup && Grounded)
@@ -313,6 +398,15 @@ public class UnitController : MonoBehaviour
         _animator.SetBool("PickUp", false);
         hasBall = true;
         canMove = true;
+    }
+
+    void AnimTrigger_Crouch()
+    {
+        _animator.SetBool("Crouch", false);
+        canCrouch = false;
+        isCrouching = false;
+        last_crouch_time = Time.time;
+        Debug.Log("Crouch done");
     }
 
     void OnCollisionEnter(Collision collision)
