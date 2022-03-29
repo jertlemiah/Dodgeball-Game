@@ -721,6 +721,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 959862541961913576, guid: 32ff13a248b2c9b47860b7601d40342c, type: 3}
+      propertyPath: crouch_cooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2153386463530325294, guid: 32ff13a248b2c9b47860b7601d40342c, type: 3}
       propertyPath: m_Name
       value: New Human Player Variant
