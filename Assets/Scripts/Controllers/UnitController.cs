@@ -293,7 +293,8 @@ public class UnitController : MonoBehaviour
             }
         }
 
-        if(canBlock && input.block && pickUpZoneController.hasBall)
+        // if(canBlock && input.block && pickUpZoneController.hasBall)
+        if(canBlock && input.block && hasBall)
         {
             if(isBlocking){
                 float elapsed_time = Time.time - block_start_time;
