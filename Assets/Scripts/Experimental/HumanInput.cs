@@ -121,6 +121,11 @@ public class HumanInput : MonoBehaviour
         BlockInput(value.isPressed);
     }
 
+    public void OnCrouch(InputValue value)
+    {
+        CrouchInput(value.isPressed);
+    }
+
     public void OnPause(InputValue value)
     {
         PausePerformed();
@@ -170,6 +175,11 @@ public class HumanInput : MonoBehaviour
     public void BlockInput(bool newBlockState)
     {
         newInput.block = newBlockState;
+    }
+
+    public void CrouchInput(bool newCrouchState)
+    {
+        newInput.crouch = newCrouchState;
     }
     private void OnApplicationFocus(bool hasFocus)
     {

@@ -20,6 +20,8 @@ public struct Input
     public bool cursorInputForLook;
 
     public bool block;
+
+    public bool crouch;
 }
 
 // [RequireComponent(typeof(Rigidbody))]
@@ -124,6 +126,9 @@ public class UnitController : MonoBehaviour
 
         [SerializeField] private float block_cooldown;
         [SerializeField] private float block_time;
+
+        [SerializeField] private float crouch_cooldown;
+
         public bool hasBall = false;
         public GameObject heldBallGO;
 
@@ -132,7 +137,12 @@ public class UnitController : MonoBehaviour
     private bool isBlocking = false;
     private float block_start_time;
     private Renderer blocker_renderer;
-        
+
+    private bool canCrouch = true;
+
+    private bool isCrouching = false;
+
+    private float last_crouch_time;    
 
     // player
     private float _speed;
@@ -203,6 +213,7 @@ public class UnitController : MonoBehaviour
         PickupBall();
         AimAndThrow();
         Block();
+        Crouch();
     }
     private void LateUpdate()
     {
@@ -285,6 +296,24 @@ public class UnitController : MonoBehaviour
         }
     }
 
+    void Crouch()
+    {   
+        if(!canCrouch)
+        {
+            float elapsed_time = Time.time - last_crouch_time;
+            if(elapsed_time >= crouch_cooldown){
+                canCrouch = true;
+                Debug.Log("Can crouch again");
+            }
+        }
+        if(input.crouch && canCrouch && !isCrouching)
+        {
+            _animator.SetBool("Crouch", true);
+            isCrouching = true;
+            Debug.Log("started crouching");
+        }
+        
+    }
     void PickupBall()
     {
         if(pickUpZoneController.ballNear && input.pickup)
@@ -339,6 +368,15 @@ public class UnitController : MonoBehaviour
 
         _animator.SetBool("PickUp", false);
         canMove = true;
+    }
+
+    void AnimTrigger_Crouch()
+    {
+        _animator.SetBool("Crouch", false);
+        canCrouch = false;
+        isCrouching = false;
+        last_crouch_time = Time.time;
+        Debug.Log("Crouch done");
     }
 
     void OnCollisionEnter(Collision collision)
