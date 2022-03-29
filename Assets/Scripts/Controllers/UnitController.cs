@@ -133,10 +133,10 @@ public class UnitController : MonoBehaviour
         [SerializeField] private GameObject handSpot;
         [SerializeField] private Transform debugTransform;
 
-        [SerializeField] private float block_cooldown;
-        [SerializeField] private float block_time;
+        [SerializeField] private float block_cooldown = 3;
+        [SerializeField] private float block_time = 2;
 
-        [SerializeField] private float crouch_cooldown;
+        [SerializeField] private float crouch_cooldown = 2;
 
         public bool hasBall = false;
         public GameObject heldBallGO;
@@ -146,7 +146,7 @@ public class UnitController : MonoBehaviour
     private float last_block_time;
     private bool canBlock = true;
     private bool isBlocking = false;
-    private float block_start_time;
+    private float block_start_time ;
     private Renderer blocker_renderer;
 
     private bool canCrouch = true;
@@ -200,8 +200,9 @@ public class UnitController : MonoBehaviour
         _fallTimeoutDelta = FallTimeout;
 
         pickUpZoneController = GetComponentInChildren<PickUpZoneController>();
-        GameObject Blocker = GameObject.Find("Blocker");
-        blocker_renderer = Blocker.GetComponent<Renderer>();
+        // GameObject Blocker = GameObject.Find("Blocker");
+        blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
+        blocker_renderer.enabled = false;
 
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
