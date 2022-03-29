@@ -303,14 +303,23 @@ public class UnitController : MonoBehaviour
             float elapsed_time = Time.time - last_crouch_time;
             if(elapsed_time >= crouch_cooldown){
                 canCrouch = true;
+
                 Debug.Log("Can crouch again");
             }
         }
         if(input.crouch && canCrouch && !isCrouching)
-        {
-            _animator.SetBool("Crouch", true);
-            isCrouching = true;
-            Debug.Log("started crouching");
+        {   
+            if(input.move == Vector2.zero){
+                _animator.SetBool("Crouch", true);
+                isCrouching = true;
+            }
+            else{
+                Debug.Log("here");
+                _animator.SetTrigger("Slide");
+                canCrouch = false;
+                last_crouch_time = Time.time;
+            }
+            
         }
         
     }
@@ -376,7 +385,6 @@ public class UnitController : MonoBehaviour
         canCrouch = false;
         isCrouching = false;
         last_crouch_time = Time.time;
-        Debug.Log("Crouch done");
     }
 
     void OnCollisionEnter(Collision collision)
