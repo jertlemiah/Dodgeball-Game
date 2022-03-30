@@ -14,6 +14,9 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] private GameObject handSpot;
     [SerializeField] private Transform debugTransform;
 
+    [SerializeField] private float block_cooldown;
+    [SerializeField] private float block_time;
+
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
 
@@ -28,13 +31,26 @@ public class ThirdPersonShooterController : MonoBehaviour
     public float throw_speed;
 
     private Vector3 mouseWorldPosition;
+
+    private CursorLockMode lockMode;
+
+    private float last_block_time;
+    private bool canBlock = true;
+    private bool isBlocking = false;
+    private float block_start_time;
+    private Renderer blocker_renderer;
+
     // Start is called before the first frame update
     private void Awake()
-    {
+    {   
+        lockMode = CursorLockMode.Locked;
+        Cursor.lockState = lockMode;
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         pickUpZoneController = GetComponentInChildren<PickUpZoneController>();
         anim = GetComponent<Animator>();
+        GameObject Blocker = GameObject.Find("Blocker");
+        blocker_renderer = Blocker.GetComponent<Renderer>();
     }
 
     public void ReleaseBall()
@@ -87,6 +103,15 @@ public class ThirdPersonShooterController : MonoBehaviour
             mouseWorldPosition = raycastHit.point;
         }
 
+        if(!canBlock)
+        {
+            float elapsed_time = Time.time - last_block_time;
+            if(elapsed_time >= block_cooldown){
+                canBlock = true;
+                Debug.Log("can block again");
+            }
+        }
+
         if(pickUpZoneController.foundBall)
         {   
             ball = pickUpZoneController.ball.transform.parent.gameObject;
@@ -117,8 +142,29 @@ public class ThirdPersonShooterController : MonoBehaviour
             }
            
         }
+        else if(starterAssetsInputs.block && pickUpZoneController.hasBall && canBlock)
+        {   
+            if(isBlocking){
+                float elapsed_time = Time.time - block_start_time;
+                if(elapsed_time >= block_time){
+                    anim.SetBool("Block", false);
+                    isBlocking = false;
+                    canBlock = false;
+                    last_block_time = Time.time;
+                    blocker_renderer.enabled = false;
+                }
+            }
+            else{
+                anim.SetBool("Block", true);
+                isBlocking = true;
+                block_start_time = Time.time;
+                blocker_renderer.enabled = true;
+            }
+        }
         else{
             anim.SetBool("Aim", false);
+            anim.SetBool("Block", false);
+            blocker_renderer.enabled = false;
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
             thirdPersonController.SetRotateOnMove(true);

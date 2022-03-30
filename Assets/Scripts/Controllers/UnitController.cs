@@ -19,6 +19,10 @@ public struct Input
     public bool jump;
     public bool cursorLocked;
     public bool cursorInputForLook;
+
+    public bool block;
+
+    public bool crouch;
 }
 
 // [RequireComponent(typeof(Rigidbody))]
@@ -128,10 +132,28 @@ public class UnitController : MonoBehaviour
 
         [SerializeField] private GameObject handSpot;
         [SerializeField] private Transform debugTransform;
+
+        [SerializeField] private float block_cooldown = 3;
+        [SerializeField] private float block_time = 2;
+
+        [SerializeField] private float crouch_cooldown = 2;
+
         public bool hasBall = false;
         public GameObject heldBallGO;
         AimIK aimIK => GetComponent<AimIK>();
         
+
+    private float last_block_time;
+    private bool canBlock = true;
+    private bool isBlocking = false;
+    private float block_start_time ;
+    private Renderer blocker_renderer;
+
+    private bool canCrouch = true;
+
+    private bool isCrouching = false;
+
+    private float last_crouch_time;    
 
     // player
     private float _speed;
@@ -182,7 +204,12 @@ public class UnitController : MonoBehaviour
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
+
         pickUpZoneController = GetComponentInChildren<PickUpZoneController>();
+        // GameObject Blocker = GameObject.Find("Blocker");
+        blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
+        blocker_renderer.enabled = false;
+
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
             if(handSpot == null)
@@ -207,6 +234,8 @@ public class UnitController : MonoBehaviour
         Move();
         PickupBall();
         AimAndThrow();
+        Block();
+        Crouch();
     }
     private void LateUpdate()
     {
@@ -260,6 +289,73 @@ public class UnitController : MonoBehaviour
         }
     }
 
+    void Block()
+    {   
+        if(!canBlock)
+        {
+            float elapsed_time = Time.time - last_block_time;
+            if(elapsed_time >= block_cooldown){
+                canBlock = true;
+                Debug.Log("can block again");
+            }
+        }
+
+        // if(canBlock && input.block && pickUpZoneController.hasBall)
+        if(canBlock && input.block && hasBall)
+        {
+            if(isBlocking){
+                float elapsed_time = Time.time - block_start_time;
+                if(elapsed_time >= block_time){
+                    _animator.SetBool("Block", false);
+                    isBlocking = false;
+                    canBlock = false;
+                    last_block_time = Time.time;
+                    blocker_renderer.enabled = false;
+                }
+            }
+            else{
+                _animator.SetBool("Block", true);
+                isBlocking = true;
+                block_start_time = Time.time;
+                blocker_renderer.enabled = true;
+            }
+        }
+        else if(isBlocking){
+            _animator.SetBool("Block", false);
+            isBlocking = false;
+            canBlock = false;
+            last_block_time = Time.time;
+            blocker_renderer.enabled = false;
+        }
+    }
+
+    void Crouch()
+    {   
+        if(!canCrouch)
+        {
+            float elapsed_time = Time.time - last_crouch_time;
+            if(elapsed_time >= crouch_cooldown){
+                canCrouch = true;
+
+                Debug.Log("Can crouch again");
+            }
+        }
+        if(input.crouch && canCrouch && !isCrouching)
+        {   
+            if(input.move == Vector2.zero){
+                _animator.SetBool("Crouch", true);
+                isCrouching = true;
+            }
+            else{
+                Debug.Log("here");
+                _animator.SetTrigger("Slide");
+                canCrouch = false;
+                last_crouch_time = Time.time;
+            }
+            
+        }
+        
+    }
     void PickupBall()
     {
         if(pickUpZoneController.ballNear && input.pickup && Grounded)
@@ -320,6 +416,14 @@ public class UnitController : MonoBehaviour
         _animator.SetBool("PickUp", false);
         hasBall = true;
         canMove = true;
+    }
+
+    void AnimTrigger_Crouch()
+    {
+        _animator.SetBool("Crouch", false);
+        canCrouch = false;
+        isCrouching = false;
+        last_crouch_time = Time.time;
     }
 
     void OnCollisionEnter(Collision collision)
