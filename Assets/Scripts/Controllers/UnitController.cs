@@ -167,11 +167,13 @@ public class UnitController : MonoBehaviour
 
     public GameObject player;
     private SpawnManager spawnManager;
+    private HudController hc;
 
 
     void Start()
     {
         spawnManager = SpawnManager.Instance;
+        hc = HudController.Instance;
         healthCurrent = healthMax;
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
@@ -339,6 +341,7 @@ public class UnitController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log("TakeDamage");
         // This will need to be swapped out for the real system at some point
          if (healthCurrent - damage < 0) {
             healthCurrent = 0;
@@ -535,9 +538,12 @@ public class UnitController : MonoBehaviour
 
     IEnumerator CoundownDeath()
     {
+        Debug.Log("CoundownDeath");
         yield return new WaitForSeconds(5f);
         if (player.GetComponent<CharacterController>() != null)
         {
+            // When respawn timer is up, ignore the collision so player falls through floor
+            // Physics.IgnoreLayerCollision (8, 11, true);
             player.GetComponent<CharacterController>().enabled = true;
         }
     }
@@ -548,11 +554,14 @@ public class UnitController : MonoBehaviour
             {
                 player.GetComponent<CharacterController>().enabled = false;
             }
+            // When player initially dies, we want player (layer 8) to collide with PlayerSpawn layer (11)
+            // Physics.IgnoreLayerCollision (8, 11, false);
             var spawnPoint = spawnManager.GetSpawnLocation();
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
             healthCurrent = healthMax;
             StartCoroutine(CoundownDeath());
+            hc.HandleRespawn(5f);
         }
     }
 }
