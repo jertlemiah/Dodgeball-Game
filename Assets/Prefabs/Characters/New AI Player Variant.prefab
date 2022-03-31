@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2458690849612056800}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &990871348
 MeshFilter:
@@ -126,7 +126,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2458690849612056800}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1881243587
 MeshFilter:
@@ -260,17 +260,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
---- !u!114 &8197284975913575666 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8856255257582327339, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
-  m_PrefabInstance: {fileID: 803090417667601113}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc5a277862f7474abb5a7274b2b3df1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8197284975585276458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -300,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: 8.74
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -308,7 +297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.26
+      value: 12.19
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -368,7 +357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7847919114552562725, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7847919114552562726, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_IsActive
@@ -404,21 +393,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   states:
-  - {fileID: 11400000, guid: 660f5c5b7d2e160449cc42e5a61524ab, type: 2}
-  - {fileID: 11400000, guid: 34584911f10316e4eb5731b89f8cd74c, type: 2}
-  - {fileID: 11400000, guid: 61b1bd20b3f431044a2b26a4229ee0f6, type: 2}
-  currentState: {fileID: 11400000, guid: 61b1bd20b3f431044a2b26a4229ee0f6, type: 2}
-  currentStateEnum: 4
-  defaultState: 4
-  recentEnemies:
-  - enemyController: {fileID: 0}
-    timeOfSighting: 198.8298
+  - {fileID: 934869506}
+  currentState: {fileID: 0}
+  currentStateEnum: 3
+  defaultState: 3
+  recentEnemies: []
   recentBalls:
   - dodgeballController: {fileID: 0}
-    timeOfSighting: 190.52885
-  fow: {fileID: 8197284975913575666}
+    timeOfSighting: 0
+  - dodgeballController: {fileID: 0}
+    timeOfSighting: 0
+  fieldOfView: {fileID: 0}
   fowPrefab: {fileID: 8856255257582327511, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
-  recentMemoryTime: 30
+  recentMemoryTime: 10
   aimAtThis: {fileID: 6069753633734445680}
   destinationIndicator: {fileID: 990871344}
   targetGO: {fileID: 990871344}
@@ -437,13 +424,15 @@ MonoBehaviour:
     jump: 0
     cursorLocked: 0
     cursorInputForLook: 0
+    block: 0
+    crouch: 0
   pathSize: 2
   targetPathCorner: {fileID: 0}
   stoppingDistance: 0.45
   pathIndex: 1
   moveToTarget: 1
   stuck: 0
-  minStuckSpeed: 2
+  minStuckSpeed: 0.8
   jumpCheckDistance: 0.5
   minLedgeHeight: 1.5
   jumping: 0
@@ -451,7 +440,79 @@ MonoBehaviour:
   wantToJumpDistance: 1
   stuckTimer: 0
   minStuckTime: 2
+  startAiming: 0
   navMeshVerticalOffset: 0.2
+--- !u!114 &934869506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2458690849612056824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2877355935566fb41bcf56155defe70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiController: {fileID: 0}
+  aiStateEnum: 3
+  waypointStoppingDist: 1
+  currentTarget: {x: 0, y: 0, z: 0}
+  wanderRadius: 50
+  wanderTimer: 30
+  interestTagName: Points of Interest
+  waypointsOfInterest: []
+  index: -1
+--- !u!114 &934869507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2458690849612056824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb94af34a06e6ac4b8fa90ac317900e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiController: {fileID: 0}
+  aiStateEnum: 0
+--- !u!114 &934869508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2458690849612056824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b03eedac3b81c4a9bfc6af65359409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiController: {fileID: 0}
+  aiStateEnum: 2
+  targetBall: {fileID: 0}
+  minTimeInState: 3
+  maxPredictionTime: 5
+  remainingDistance: 0
+  stoppingDistance: 5
+--- !u!114 &934869509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2458690849612056824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17aef9bb59520cf4cb5c9812639e08d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiController: {fileID: 0}
+  aiStateEnum: 1
+  aimDistance: 10
+  throwDistance: 3
+  targetPlayer: {fileID: 0}
 --- !u!1001 &8197284975811331845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -522,6 +583,10 @@ PrefabInstance:
     - target: {fileID: 3595249375039899590, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
       propertyPath: m_Name
       value: TargetPositionPredictor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3595249375039899590, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7836b138ad7451e449ba68c403a810fc, type: 3}
