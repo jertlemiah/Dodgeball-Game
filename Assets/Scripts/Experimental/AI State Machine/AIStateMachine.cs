@@ -14,7 +14,7 @@ public class AIStateMachine : MonoBehaviour
     public Dictionary<AIStateEnum, AIState> stateDictionary;
     bool busyChange;
     void Start(){
-        StartMachine(this.gameObject,aiController.states);
+        // StartMachine(this.gameObject,aiController.states);
     }
     public void StartMachine(GameObject playerObject, List<AIState> states)
     {

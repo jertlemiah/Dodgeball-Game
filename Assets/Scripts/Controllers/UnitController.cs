@@ -503,6 +503,7 @@ public class UnitController : MonoBehaviour
         direction = _controller.velocity;
         // set target speed based on move speed, sprint speed and if sprint is pressed
         MoveSpeed = input.sprint ? SprintSpeed : NormalSpeed;
+        if(!Grounded) {MoveSpeed = NormalSpeed;}
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
