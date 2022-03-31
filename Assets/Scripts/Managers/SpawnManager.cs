@@ -1,13 +1,14 @@
  using System.Collections;
  using System.Collections.Generic;
  using UnityEngine;
+ using UnityEngine.AI;
  
 //  [CreateAssetMenu(fileName = "SpawnManagerSO", menuName = "SO Channels/SpawnManager", order = 1)]
  public class SpawnManager : Singleton<SpawnManager>
  {
      private int spawnIndex;
      public Transform[] spawnpoints;
-     public float wanderRadius = 50f;
+     public float wanderRadius = 25f;
      
      void Start(){
          int count = transform.childCount;
@@ -19,18 +20,22 @@
          Debug.Log("spawnpoints " + spawnpoints.Length + spawnpoints);
      }
      
-    public Vector3 GetSpawnLocation() {
+    public Vector3 GetSpawnLocation(Vector3 playerLocation) {
+        Vector3 outputLocation;
         if (spawnpoints.Length > 0) {
             var spawn = spawnpoints[spawnIndex];
             spawnIndex++;
             if (spawnIndex >= spawnpoints.Length) {
                 spawnIndex = 0;
             }
+            outputLocation = spawn.transform.position;
         }
          else {
-            currentTarget = RandomNavSphere(aiController.transform.position, wanderRadius, -1);
+            Vector3 origin = new Vector3(0.0f, 0.0f, 0.0f);
+            outputLocation = RandomNavSphere(origin, wanderRadius, -1);
+            outputLocation.y += 5;
         }
-        return spawn.transform.position;
+        return outputLocation;
     }
 
      private static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask) {

@@ -661,7 +661,7 @@ public class UnitController : MonoBehaviour
             }
             // When player initially dies, we want player (layer 8) to collide with PlayerSpawn layer (11)
             Physics.IgnoreLayerCollision (8, 11, false);
-            var spawnPoint = spawnManager.GetSpawnLocation();
+            var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
             healthCurrent = healthMax;
