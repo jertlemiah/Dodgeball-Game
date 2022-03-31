@@ -19,9 +19,9 @@ public class PowerUpController : MonoBehaviour
 
     void OnTriggerEnter(Collider c) {
         if (c.gameObject.layer == LayerMask.NameToLayer("Player")) {
-            PlayerController pc = c.gameObject.GetComponent<PlayerController>();
-            if (pc != null) { // Should I check if there is already a powerup so we can't get multiple?
-                pc.AddPowerup(gameObject);
+            UnitController uc = c.gameObject.GetComponent<UnitController>();
+            if (uc != null) { // Should I check if there is already a powerup so we can't get multiple?
+                uc.AddPowerup(gameObject);
             }
             gameObject.transform.position = new Vector3(-30, -30, -30);
             StartCoroutine(Coundownspawn());

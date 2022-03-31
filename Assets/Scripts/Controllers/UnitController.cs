@@ -113,14 +113,15 @@ public class UnitController : MonoBehaviour
 
     [Header("           Player Attributes")][Space(15)]
         [Tooltip("The health the player will start with each time he respawns.")]
-        public int healthMax = 2;
+        public int healthMax = 100;
 
         [Tooltip("The current health of the player set at runtime")]
-        public int healthCurrent = 2;
+        public int healthCurrent = 100;
 
         public Team team = Team.Team1;        
         public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
-    
+
+        public SimpleHealthBar healthBar;
 
     [Header("           Shooter Settings")][Space(15)]
         [SerializeField] string ballHoldSpotName = "BallHoldSpot";
@@ -141,6 +142,7 @@ public class UnitController : MonoBehaviour
         public bool hasBall = false;
         public GameObject heldBallGO;
         AimIK aimIK => GetComponent<AimIK>();
+
         
 
     private float last_block_time;
@@ -187,10 +189,15 @@ public class UnitController : MonoBehaviour
     public PickUpZoneController pickUpZoneController;
     private Vector3 mouseWorldPosition;
 
+    private SpawnManager _spawnManager;
+
+    private GameObject _powerup;
 
     void Start()
     {
         healthCurrent = healthMax;
+        healthBar.SetMaxHealth(healthMax);
+        _spawnManager = SpawnManager.Instance;
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
@@ -229,6 +236,7 @@ public class UnitController : MonoBehaviour
         AimAndThrow();
         Block();
         Crouch();
+        checkDead();
     }
     private void LateUpdate()
     {
@@ -349,6 +357,22 @@ public class UnitController : MonoBehaviour
         }
         
     }
+
+    void checkDead()
+    {   
+        if (healthCurrent <= 0) {
+            if (GetComponent<CharacterController>() != null)
+            {
+                GetComponent<CharacterController>().enabled = false;
+            }
+            var spawnPoint = _spawnManager.GetSpawnLocation();
+            Debug.Log("spawnPoint" + spawnPoint);
+            transform.position = spawnPoint;
+            healthMax = 100;
+            healthCurrent = 100;
+            StartCoroutine(CoundownDeath());
+        }
+    }
     void PickupBall()
     {
         if(pickUpZoneController.ballNear && input.pickup && Grounded)
@@ -421,10 +445,7 @@ public class UnitController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Ball") && collision.rigidbody.velocity.magnitude > DAMAGE_SPEED)
-        {
-            TakeDamage(1);
-        }
+
     }
 
     private void AssignAnimationIDs()
@@ -438,17 +459,24 @@ public class UnitController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        // This will need to be swapped out for the real system at some point
-        if(team == Team.Team1)
-        {
-            // GameManager.Instance.GiveTeam2Points(1);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
+        if (healthCurrent - damage < 0) {
+            healthCurrent = 0;
+            healthBar.SetHealth(healthCurrent);
+            if(team == Team.Team1)
+            {
+                // GameManager.Instance.GiveTeam2Points(1);
+                EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2,1);
+            }
+            else
+            {
+                // GameManager.Instance.GiveTeam1Points(1);
+                EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
+            }
+        } else {
+            healthCurrent -= damage;
+            healthBar.SetHealth(healthCurrent);
         }
-        else
-        {
-            // GameManager.Instance.GiveTeam1Points(1);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
-        }
+        
     }
 
     private void CameraRotation()
@@ -625,5 +653,61 @@ public class UnitController : MonoBehaviour
         {
             _verticalVelocity += Gravity * Time.deltaTime;
         }
+    }
+
+    public void AddPowerup(GameObject newPowerup)
+    {
+        _powerup = newPowerup;
+        if (_powerup.name.Contains("Health")) {
+            Debug.Log("Picked up Health");
+            healthCurrent += 25;
+            if (healthCurrent > healthMax) {
+                healthCurrent = healthMax;
+            }
+            healthBar.SetHealth(healthCurrent);
+            _powerup = null;
+        } else if (_powerup.name.Contains("Armor")) {
+            Debug.Log("Picked up Armor");
+            healthMax += 50;
+            healthCurrent += 50;
+            healthBar.SetMaxHealth(healthMax);
+            healthBar.SetHealth(healthCurrent);
+            StartCoroutine(CoundownArmor());
+        } else if (_powerup.name.Contains("Speed")) {
+            Debug.Log("Picked up Speed");
+            NormalSpeed = NormalSpeed * 1.5f;
+            SprintSpeed = SprintSpeed * 1.5f;
+            StartCoroutine(CoundownArmor());
+        }
+        Debug.Log("Player just collected new powerup: " + _powerup);
+    }
+
+        IEnumerator CoundownDeath()
+    {
+        yield return new WaitForSeconds(5f);
+        if (GetComponent<CharacterController>() != null)
+        {
+            GetComponent<CharacterController>().enabled = true;
+        }
+    }
+
+    IEnumerator CoundownArmor()
+    {
+        yield return new WaitForSeconds(30f);
+        healthMax -= 50;
+        if (healthCurrent > healthMax) {
+            healthCurrent = healthMax;
+        }
+        healthBar.SetMaxHealth(healthMax);
+        healthBar.SetHealth(healthCurrent);
+        _powerup = null;
+    }
+
+    IEnumerator CoundownSpeed()
+    {
+        yield return new WaitForSeconds(15f);
+        NormalSpeed = NormalSpeed/1.5f;
+        SprintSpeed = SprintSpeed/1.5f;
+        _powerup = null;
     }
 }
