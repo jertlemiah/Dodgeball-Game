@@ -3,8 +3,8 @@ using UnityEngine;
 /// This is base state script implementation.
 /// StateMachine uses these virtual methods to call state when it needs to prepare itself for operating, updating or even being destroyed.
 /// </summary>
-public enum AIStateEnum {Idle, ChaseTarget, Waypoint, FindBall, Wander}
-public abstract class AIState : ScriptableObject
+public enum AIStateEnum {Idle, AttackPlayer, RetrieveBall, Wander}
+public abstract class AIState : MonoBehaviour
 {
     // Reference to our state machine.
     public AIController aiController;
