@@ -647,8 +647,7 @@ public class UnitController : MonoBehaviour
         yield return new WaitForSeconds(5f);
         if (player.GetComponent<CharacterController>() != null)
         {
-            // When respawn timer is up, ignore the collision so player falls through floor
-            Physics.IgnoreLayerCollision (8, 11, true);
+            _animator.enabled = true;
             player.GetComponent<CharacterController>().enabled = true;
         }
     }
@@ -659,8 +658,8 @@ public class UnitController : MonoBehaviour
             {
                 player.GetComponent<CharacterController>().enabled = false;
             }
-            // When player initially dies, we want player (layer 8) to collide with PlayerSpawn layer (11)
-            Physics.IgnoreLayerCollision (8, 11, false);
+            _animator.enabled = false;
+            
             var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
