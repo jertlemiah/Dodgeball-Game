@@ -7,6 +7,7 @@
  {
      private int spawnIndex;
      public Transform[] spawnpoints;
+     public float wanderRadius = 50f;
      
      void Start(){
          int count = transform.childCount;
@@ -16,16 +17,31 @@
              spawnpoints[i] = transform.GetChild(i);
          }
          Debug.Log("spawnpoints " + spawnpoints.Length + spawnpoints);
-
-         
      }
      
     public Vector3 GetSpawnLocation() {
-        var spawn = spawnpoints[spawnIndex];
-        spawnIndex++;
-        if (spawnIndex >= spawnpoints.Length) {
-            spawnIndex = 0;
+        if (spawnpoints.Length > 0) {
+            var spawn = spawnpoints[spawnIndex];
+            spawnIndex++;
+            if (spawnIndex >= spawnpoints.Length) {
+                spawnIndex = 0;
+            }
+        }
+         else {
+            currentTarget = RandomNavSphere(aiController.transform.position, wanderRadius, -1);
         }
         return spawn.transform.position;
+    }
+
+     private static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask) {
+        Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
+ 
+        randDirection += origin;
+ 
+        NavMeshHit navHit;
+ 
+        NavMesh.SamplePosition (randDirection, out navHit, dist, layermask);
+ 
+        return navHit.position;
     }
  }
