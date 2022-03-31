@@ -9,6 +9,7 @@ TagManager:
   - Base
   - OpBall
   - Points of Interest
+  - HUD
   layers:
   - Default
   - TransparentFX

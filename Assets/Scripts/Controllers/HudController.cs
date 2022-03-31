@@ -19,8 +19,13 @@ public class HudController : MonoBehaviour
     [SerializeField] GameObject ballRenderTexture;
     [SerializeField] GameObject pickUpTextGO;
 
+    [SerializeField] Slider crouchBar;
+    [SerializeField] Slider blockBar;
+
     public GameObject blueFlag;
     public GameObject redFlag;
+
+    private float crouch_tween = 2;
 
     // private GameManager gameManager;
     
@@ -127,5 +132,16 @@ public class HudController : MonoBehaviour
     void HideHeldBall()
     {
         ballRenderTexture.SetActive(false);
+    }
+    public void CrouchCooldown(float tween_time)
+    {
+        crouchBar.value = 0;
+        crouchBar.DOValue(1,tween_time);
+    }
+
+    public void BlockCooldown(float tween_time)
+    {
+        blockBar.value = 0;
+        blockBar.DOValue(1,tween_time);
     }
 }
