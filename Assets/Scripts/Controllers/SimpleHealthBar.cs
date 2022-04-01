@@ -15,6 +15,8 @@ public class SimpleHealthBar : MonoBehaviour
 
     public void SetHealth(int health)
 	{
+          Debug.Log("update slider");
 		slider.value = health;
+          Debug.Log(slider.value);
 	}
 }

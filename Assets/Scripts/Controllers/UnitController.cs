@@ -201,6 +201,7 @@ public class UnitController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
+        TakeDamage(30);
         
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
@@ -473,6 +474,7 @@ public class UnitController : MonoBehaviour
                 EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
             }
         } else {
+            Debug.Log("Took Damage");
             healthCurrent -= damage;
             healthBar.SetHealth(healthCurrent);
         }
