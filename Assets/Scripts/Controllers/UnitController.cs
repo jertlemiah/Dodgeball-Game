@@ -665,7 +665,10 @@ public class UnitController : MonoBehaviour
             player.transform.position = spawnPoint;
             healthCurrent = healthMax;
             StartCoroutine(CoundownDeath());
-            hc.HandleRespawn(5f);
+            bool isHuman =  GetComponentsInChildren<HumanInput>().Length > 0;
+            if (isHuman) {
+                hc.HandleRespawn(5f);
+            }
         }
     }
 }
