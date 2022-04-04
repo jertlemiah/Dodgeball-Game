@@ -41,6 +41,7 @@ public class MainMenuController : Singleton<MainMenuController>
     // Start is called before the first frame update
     void Start()
     {
+        GameSceneManager.CheckPersistentScene();
         RectTransform rt = titleScreenGO.GetComponent<RectTransform>();
         screenWidth = rt.rect.width * rt.localScale.x;
         screenHeight = rt.rect.height * rt.localScale.y;
@@ -180,7 +181,8 @@ public class MainMenuController : Singleton<MainMenuController>
     public void Level_PlayButton()
     {
         Debug.Log("Launching the level '"+selectedLevel.sceneIndex.ToString()+"'");
-        GameSceneManager.Instance.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
+        // GameSceneManager.Instance.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
+        GameSceneManager.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
     } 
     public void QuitButton()
     {
@@ -188,22 +190,26 @@ public class MainMenuController : Singleton<MainMenuController>
         Application.Quit();
     }
 
-    public void SetVolMaster(float newVol)
+    // Used for the sliders on the Settings screen
+    public void SetVolSliderMaster(float newVol)
     {
         AudioManager.Instance.SetVolMaster(newVol);
     }
 
-    public void SetVolGameSFX(float newVol)
+    // Used for the sliders on the Settings screen
+    public void SetVolSliderGameSFX(float newVol)
     {
         AudioManager.Instance.SetVolGameSFX(newVol);
     }
 
-    public void SetVolUiSFX(float newVol)
+    // Used for the sliders on the Settings screen
+    public void SetVolSliderUiSFX(float newVol)
     {
         AudioManager.Instance.SetVolUiSFX(newVol);
     }
 
-    public void SetVolMusic(float newVol)
+    // Used for the sliders on the Settings screen
+    public void SetVolSliderMusic(float newVol)
     {
         AudioManager.Instance.SetVolMusic(newVol);
     }

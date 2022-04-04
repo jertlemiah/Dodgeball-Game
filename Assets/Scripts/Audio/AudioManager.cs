@@ -11,53 +11,123 @@ using UnityEngine.Audio;
 /// </summary>
 public class AudioManager : Singleton<AudioManager>
 {
-    [Header("Fill these out")]
-    [Tooltip("The array of AudioTrack scriptable objects the audio manager will play.")] 
-    [SerializeField] public AudioTrack[] backgroundTracks; 
+    [SerializeField] public List<AudioTrack> currentTracks = new List<AudioTrack>(); 
+    [SerializeField] public AudioTrack mainMenuTrack;
+    [SerializeField] public AudioTrack loadingScreenTrack;
 
     [SerializeField] public AudioSource musicAudioSource;
 
     [SerializeField] public AudioMixer mixer;
 
-    [SerializeField] bool shuffleList = true;
+    [SerializeField] bool shuffleListOnStart = true;
     
 
     [Space(10)][Header("Status Info")]
     [SerializeField] string currentTrack; // This is purely for relaying the name of the track to the inspector for readability
 
     private int currentTrackIndex = 0;
+    public bool stopMusic = false;
     
     void Awake()
     {
         if(!musicAudioSource) {
             musicAudioSource = GetComponent<AudioSource>(); // This will just grab the default audioSource
+            musicAudioSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;
         } 
+        // EventManagerSO.E_SceneLoaded += LoadNewSceneMusic;
     }
-    void Start()
+
+    void OnDisable()
     {
-        if(shuffleList)
-            Shuffle();
+        // EventManagerSO.E_SceneLoaded -= LoadNewSceneMusic;
+    }
+
+    void Start ()
+    {
+        if (shuffleListOnStart)
+            Shuffle ();
         
         currentTrackIndex = -1; // Must start on -1 because PlayNextTrack increments currentTrackIndex before using it
-        PlayNextTrack();
+        // PlayNextTrack();
     }
-    void Update()
+    void Update ()
     {
-        if(musicAudioSource.isPlaying == false)
-        {
+        if(!mixer){
+            Debug.LogWarning("AudioManager does not have a mixer set");
+            return;
+        }
+        if (stopMusic){
+            musicAudioSource.Stop();
+        } else if (musicAudioSource.isPlaying == false && currentTracks.Count > 0) {
             PlayNextTrack();
         }
     }
+
+    public void PlayLoadingMusic()
+    {
+        ChangePlaylist(loadingScreenTrack);
+    }
+
+    public void ChangePlaylist(AudioTrack newTrack)
+    {
+        List<AudioTrack> newTracks = new List<AudioTrack>();
+        newTracks.Add(newTrack);
+        ChangePlaylist(newTracks);
+    }
+    public void ChangePlaylist(List<AudioTrack> newPlaylist)
+    {
+        if(newPlaylist.Count>0){
+            currentTracks.Clear();
+            currentTracks = newPlaylist;
+            musicAudioSource.Stop();
+            PlayNextTrack();
+        } else {
+            Debug.LogWarning("Function 'ChangePlayList' was called, but the 'newPlaylist' argument had no tracks to switch to.");
+        }
+        
+    }
+
+    // this overload is broken
+    public void ChangePlaylist(SceneIndex sceneIndex)
+    {
+        List<AudioTrack> newTracks = new List<AudioTrack>();
+        if(sceneIndex == SceneIndex.TITLE_SCREEN){
+            newTracks.Add(mainMenuTrack);
+        } 
+        if(newTracks.Count > 0){
+            ChangePlaylist(newTracks);
+        }
+        
+
+    }
+
+    // void LoadNewSceneMusic(SceneIndex sceneIndex)
+    // {
+    //     List<AudioTrack> newTracks = new List<AudioTrack>();
+    //     switch(sceneIndex){
+    //         case SceneIndex.TITLE_SCREEN:
+    //             newTracks.Add(mainMenuTrack);
+    //             ChangePlaylist(newTracks);
+    //             break;
+    //         // case SceneIndex.:
+    //         //     newTracks.Add(mainMenuTrack);
+    //         //     ChangePlaylist(newTracks);
+    //         //     break;
+    //         default:
+    //             break;
+    //     }
+        
+    // }
 
     /// <summary> 
     /// <para>Shuffles the array of AudioTracks.</para>
     /// </summary>
     public void Shuffle() {
-        for (int i = 0; i < backgroundTracks.Length; i++) {
-            int rnd = Random.Range(0, backgroundTracks.Length);
-            AudioTrack temp = backgroundTracks[rnd];
-            backgroundTracks[rnd] = backgroundTracks[i];
-            backgroundTracks[i] = temp;
+        for (int i = 0; i < currentTracks.Count; i++) {
+            int rnd = Random.Range(0, currentTracks.Count);
+            AudioTrack temp = currentTracks[rnd];
+            currentTracks[rnd] = currentTracks[i];
+            currentTracks[i] = temp;
         }
     }
 
@@ -108,27 +178,40 @@ public class AudioManager : Singleton<AudioManager>
 
     public float GetVolMaster()
     {
-        float mixerLevel;
-        mixer.GetFloat("VolMaster",out mixerLevel);
-        return Mathf.Pow(10f,mixerLevel/20);
+        float mixerLevel;        
+        if(mixer != null && mixer.GetFloat("VolMaster",out mixerLevel)){
+            return Mathf.Pow(10f,mixerLevel/20);
+        } else {
+            return 1f;
+        }
     }
     public float GetVolMusic()
     {
         float mixerLevel;
-        mixer.GetFloat("VolMusic",out mixerLevel);
-        return Mathf.Pow(10f,mixerLevel/20);
+        if(mixer != null && mixer.GetFloat("VolMusic",out mixerLevel)){
+            return Mathf.Pow(10f,mixerLevel/20);
+        } else {
+            return 1f;
+        }
     }
     public float GetVolGameSFX()
     {
         float mixerLevel;
-        mixer.GetFloat("VolGameSFX",out mixerLevel);
-        return Mathf.Pow(10f,mixerLevel/20);
+        if(mixer != null && mixer.GetFloat("VolGameSFX",out mixerLevel)){
+            return Mathf.Pow(10f,mixerLevel/20);
+        } else {
+            return 1f;
+        }
     }
     public float GetVolUiSFX()
     {
         float mixerLevel;
-        mixer.GetFloat("VolUiSFX",out mixerLevel);
-        return Mathf.Pow(10f,mixerLevel/20);
+        if(mixer != null && mixer.GetFloat("VolUiSFX",out mixerLevel)){
+            return Mathf.Pow(10f,mixerLevel/20);
+        } else {
+            return 1f;
+        }
+        
     }
 
     /// <summary> 
@@ -136,13 +219,14 @@ public class AudioManager : Singleton<AudioManager>
     /// </summary>
     public void PlayNextTrack()
     {
+        if(currentTracks.Count == 0) {return;}
         currentTrackIndex++;
-        if(currentTrackIndex >= backgroundTracks.Length) { currentTrackIndex=0;}
+        if(currentTrackIndex >= currentTracks.Count) { currentTrackIndex=0;}
 
-        musicAudioSource.clip = backgroundTracks[currentTrackIndex].audioClip;
-        musicAudioSource.volume = backgroundTracks[currentTrackIndex].volume;
-        musicAudioSource.pitch = backgroundTracks[currentTrackIndex].pitch;
-        currentTrack = backgroundTracks[currentTrackIndex].trackName;
+        musicAudioSource.clip = currentTracks[currentTrackIndex].audioClip;
+        musicAudioSource.volume = currentTracks[currentTrackIndex].volume;
+        musicAudioSource.pitch = currentTracks[currentTrackIndex].pitch;
+        currentTrack = currentTracks[currentTrackIndex].trackName;
         musicAudioSource.Play(); 
     }
 }

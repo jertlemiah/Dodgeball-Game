@@ -70,6 +70,10 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
     public static event PickUpTextHandler E_PickUpText;
 
+    public delegate void SceneLoadedHandler(SceneIndex sceneIndex);
+    /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
+    public static event SceneLoadedHandler E_SceneLoaded;
+
     
     /// <summary> Triggers the E_GiveTeamPoints(Team team, int points) event. </summary>
     public static void TriggerEvent_GiveTeamPoints(Team team, int points)
@@ -194,6 +198,15 @@ public class EventManagerSO : ScriptableObject
         if(E_PickUpText != null){
             Debug.Log("Triggering Event 'E_PickUpText()'");
             E_PickUpText(activeStatus);
+        }
+    }
+
+    /// <summary> Triggers the E_SceneLoaded() event. </summary>
+    public static void TriggerEvent_SceneLoaded(SceneIndex sceneIndex)
+    {       
+        if(E_SceneLoaded != null){
+            Debug.Log("Triggering Event 'E_SceneLoaded("+sceneIndex.ToString()+")'");
+            E_SceneLoaded(sceneIndex);
         }
     }
 }
