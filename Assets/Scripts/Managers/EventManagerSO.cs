@@ -70,6 +70,14 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
     public static event PickUpTextHandler E_PickUpText;
 
+    public delegate void SceneLoadedHandler(SceneIndex sceneIndex);
+    /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
+    public static event SceneLoadedHandler E_SceneLoaded;
+
+    public delegate void StopMusicHandler();
+    /// <summary> E_StopMusic is used to simply stop the currently playing music.</summary>
+    public static event StopMusicHandler E_StopMusic;
+
     
     /// <summary> Triggers the E_GiveTeamPoints(Team team, int points) event. </summary>
     public static void TriggerEvent_GiveTeamPoints(Team team, int points)
@@ -102,7 +110,7 @@ public class EventManagerSO : ScriptableObject
     public static void TriggerEvent_LoadingProgress(float progress)
     {
         if(E_LoadingProgress != null){
-            // Debug.Log("Triggering Event 'SetTimer("+timeRemaining+")'");  // This gets called way too much, lol          
+            Debug.Log("Triggering Event 'LoadingProgress("+progress+")'");  // This gets called way too much, lol          
             E_LoadingProgress(progress);
         }        
     }
@@ -196,4 +204,26 @@ public class EventManagerSO : ScriptableObject
             E_PickUpText(activeStatus);
         }
     }
+
+    /// <summary> Triggers the E_SceneLoaded() event. </summary>
+    public static void TriggerEvent_SceneLoaded(SceneIndex sceneIndex)
+    {       
+        if(E_SceneLoaded != null){
+            Debug.Log("Triggering Event 'E_SceneLoaded("+sceneIndex.ToString()+")'");
+            E_SceneLoaded(sceneIndex);
+        } else {
+            Debug.Log("Cannot trigger Event 'E_SceneLoaded("+sceneIndex.ToString()+")'");
+        }
+    }
+
+    /// <summary> Triggers the E_StopMusic() event. </summary>
+    public static void TriggerEvent_StopMusic()
+    {       
+        if(E_StopMusic != null){
+            Debug.Log("Triggering Event 'E_StopMusic()'");
+            E_StopMusic();
+        }
+    }
+
+    
 }

@@ -48,6 +48,7 @@ public class PauseMenuController : MonoBehaviour
         Debug.Log("Leaving Match");
         // Time.timeScale = 1;
         GameSceneManager.Instance.LoadScene_LoadingScreen(SceneIndex.TITLE_SCREEN);
+        // GameSceneManager.LoadScene_LoadingScreen(SceneIndex.TITLE_SCREEN);
     }
 
     public void ReturnButton()
