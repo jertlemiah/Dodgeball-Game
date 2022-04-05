@@ -28,6 +28,7 @@ public class AIState_Wander : AIState
     {
         base.EnterState();
         if(waypointsOfInterest.Length>0){
+            ShuffleWaypoints();
             currentTarget = GetNextWaypoint().position;
         }
         // aiController.moveToTarget=true;
@@ -64,6 +65,23 @@ public class AIState_Wander : AIState
         }
         
         
+    }
+
+    public void ShuffleWaypoints() {
+        System.Array.Sort(waypointsOfInterest,RandomSort);
+        
+        // for (int i = 0; i < waypointsOfInterest.Length; i++) {
+        //     int rnd = UnityEngine.Random.Range(0, waypointsOfInterest.Length);
+        //     GameObject temp = waypointsOfInterest[rnd];
+        //     waypointsOfInterest[rnd] = waypointsOfInterest[i];
+        //     waypointsOfInterest[i] = temp;
+        // }
+    }
+
+    int RandomSort(GameObject a, GameObject b)
+    {
+        return UnityEngine.Random.Range(-1, 2);
+ 
     }
 
     Transform GetNextWaypoint()

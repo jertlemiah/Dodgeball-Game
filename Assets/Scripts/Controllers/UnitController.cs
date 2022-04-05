@@ -191,9 +191,22 @@ public class UnitController : MonoBehaviour
     private SpawnManager spawnManager;
     private HudController hc;
 
+    void Awake()
+    {
+        EventManagerSO.E_LoadingProgress += StopMovement;
+        EventManagerSO.E_StartMatch += AllowMovement;
+    }
+
+    void OnDisable()
+    {
+        EventManagerSO.E_LoadingProgress -= StopMovement;
+        EventManagerSO.E_StartMatch -= AllowMovement;
+    }
 
     void Start()
     {
+        // canMove = false;
+        
         spawnManager = SpawnManager.Instance;
         hc = HudController.Instance;
         healthCurrent = healthMax;
@@ -670,5 +683,15 @@ public class UnitController : MonoBehaviour
                 hc.HandleRespawn(5f);
             }
         }
+    }
+
+    void AllowMovement()
+    {
+        canMove = true;
+    }
+
+    void StopMovement(float garbage)
+    {
+        canMove = false;
     }
 }
