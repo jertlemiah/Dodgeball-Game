@@ -13,7 +13,7 @@ public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField] public List<AudioTrack> currentTracks = new List<AudioTrack>(); 
     [SerializeField] public AudioTrack mainMenuTrack;
-    [SerializeField] public AudioTrack loadingScreenTrack;
+    // [SerializeField] public AudioTrack loadingScreenTrack;
 
     [SerializeField] public AudioSource musicAudioSource;
 
@@ -28,18 +28,20 @@ public class AudioManager : Singleton<AudioManager>
     private int currentTrackIndex = 0;
     public bool stopMusic = false;
     
-    void Awake()
+    void Awake ()
     {
-        if(!musicAudioSource) {
+        if (!musicAudioSource) {
             musicAudioSource = GetComponent<AudioSource>(); // This will just grab the default audioSource
-            musicAudioSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;
+            // musicAudioSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;
         } 
-        // EventManagerSO.E_SceneLoaded += LoadNewSceneMusic;
+        EventManagerSO.E_SceneLoaded += ChangePlaylist;
+        EventManagerSO.E_StopMusic += StopAudio;
     }
 
-    void OnDisable()
+    void OnDisable ()
     {
-        // EventManagerSO.E_SceneLoaded -= LoadNewSceneMusic;
+        EventManagerSO.E_SceneLoaded -= ChangePlaylist;
+        EventManagerSO.E_StopMusic -= StopAudio;
     }
 
     void Start ()
@@ -50,6 +52,7 @@ public class AudioManager : Singleton<AudioManager>
         currentTrackIndex = -1; // Must start on -1 because PlayNextTrack increments currentTrackIndex before using it
         // PlayNextTrack();
     }
+
     void Update ()
     {
         if(!mixer){
@@ -63,42 +66,60 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public void PlayLoadingMusic()
+    void StopAudio()
     {
-        ChangePlaylist(loadingScreenTrack);
+        Debug.Log("Stopping audio");
+        // musicAudioSource.Stop();
+        stopMusic = true;
     }
 
-    public void ChangePlaylist(AudioTrack newTrack)
-    {
-        List<AudioTrack> newTracks = new List<AudioTrack>();
-        newTracks.Add(newTrack);
-        ChangePlaylist(newTracks);
-    }
+    // public void PlayLoadingMusic()
+    // {
+    //     ChangePlaylist(loadingScreenTrack);
+    // }
+
+    // public void ChangePlaylist (AudioTrack newTrack)
+    // {
+    //     List<AudioTrack> newTracks = new List<AudioTrack>();
+    //     newTracks.Add(newTrack);
+    //     ChangePlaylist(newTracks);
+    // }
+    
     public void ChangePlaylist(List<AudioTrack> newPlaylist)
     {
-        if(newPlaylist.Count>0){
+        if (newPlaylist.Count>0) {
             currentTracks.Clear();
             currentTracks = newPlaylist;
             musicAudioSource.Stop();
             PlayNextTrack();
+            stopMusic = false;
         } else {
             Debug.LogWarning("Function 'ChangePlayList' was called, but the 'newPlaylist' argument had no tracks to switch to.");
-        }
-        
+        }  
     }
 
-    // this overload is broken
+    // public void LoadNewSceneMusic (LevelDataSO levelData)
+    // {
+    //     List<AudioTrack> newTracks = new List<AudioTrack>();
+    //     if (levelData.levelMusic != null) {
+    //         newTracks.Add(levelData.levelMusic);
+    //     }
+    //     if (newTracks.Count > 0) {
+    //         ChangePlaylist(newTracks);
+    //     }
+    // }
+
     public void ChangePlaylist(SceneIndex sceneIndex)
     {
         List<AudioTrack> newTracks = new List<AudioTrack>();
         if(sceneIndex == SceneIndex.TITLE_SCREEN){
             newTracks.Add(mainMenuTrack);
-        } 
+        } else {
+            newTracks.Add(GameSceneManager.Instance.levelDataDict[sceneIndex].levelMusic);
+        }
         if(newTracks.Count > 0){
             ChangePlaylist(newTracks);
         }
-        
-
     }
 
     // void LoadNewSceneMusic(SceneIndex sceneIndex)

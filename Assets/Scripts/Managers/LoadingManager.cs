@@ -37,7 +37,7 @@ public class LoadingManager : Singleton<LoadingManager>
         if(sceneIndex == SceneIndex.TITLE_SCREEN){
             EventManagerSO.TriggerEvent_HideHUD();
         }
-        AudioManager.Instance.PlayLoadingMusic();
+        // AudioManager.Instance.PlayLoadingMusic();
         StartCoroutine(GetSceneLoadProgress(sceneIndex));
     }
     

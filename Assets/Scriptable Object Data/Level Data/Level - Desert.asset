@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50c213f13496af3428e9435bb85eb61f, type: 3}
-  m_Name: Level - Pirate
+  m_Name: Level - Desert
   m_EditorClassIdentifier: 
-  levelName: PIRATE
+  levelName: DESERT
   sceneIndex: 4
   panelColor: {r: 0.6886792, g: 0.66872966, b: 0.6009701, a: 1}
   panelImage: {fileID: 0}

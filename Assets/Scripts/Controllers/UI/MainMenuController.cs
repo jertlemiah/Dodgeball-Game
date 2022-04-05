@@ -41,7 +41,7 @@ public class MainMenuController : Singleton<MainMenuController>
     // Start is called before the first frame update
     void Start()
     {
-        GameSceneManager.CheckPersistentScene();
+        // GameSceneManager.CheckPersistentScene();
         RectTransform rt = titleScreenGO.GetComponent<RectTransform>();
         screenWidth = rt.rect.width * rt.localScale.x;
         screenHeight = rt.rect.height * rt.localScale.y;
@@ -57,6 +57,8 @@ public class MainMenuController : Singleton<MainMenuController>
             audioSource = GetComponent<AudioSource>();
         // SwitchToScreen(MenuScreen.Title);
         SetVolumeSliders();
+
+        // EventManagerSO.TriggerEvent_SceneLoaded(SceneIndex.TITLE_SCREEN);
     }
 
     // Update is called once per frame
@@ -181,8 +183,8 @@ public class MainMenuController : Singleton<MainMenuController>
     public void Level_PlayButton()
     {
         Debug.Log("Launching the level '"+selectedLevel.sceneIndex.ToString()+"'");
-        // GameSceneManager.Instance.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
-        GameSceneManager.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
+        GameSceneManager.Instance.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
+        // GameSceneManager.LoadScene_LoadingScreen(selectedLevel.sceneIndex);
     } 
     public void QuitButton()
     {
