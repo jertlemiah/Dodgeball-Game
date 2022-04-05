@@ -55,13 +55,13 @@ public class DodgeballController : MonoBehaviour
         {
             isThrown = false;
         }
-        // upon hitting a AI/player, call the Player's PlayerController TakeDamage() function. Make sure the "colliding" ball wasn't thrown by the same person its colliding with
+        // upon hitting a AI/player, call the Player's UnitController TakeDamage() function. Make sure the "colliding" ball wasn't thrown by the same person its colliding with
         else if (c.gameObject.layer == LayerMask.NameToLayer("Player") && isThrown == true && c.gameObject != thrownBy) 
         {
-            PlayerController pc = c.gameObject.GetComponent<PlayerController>();
-            if (pc != null)
+            UnitController uc = c.gameObject.GetComponent<UnitController>();
+            if (uc != null)
             {
-                pc.TakeDamage(damage); // fixed damage for now
+                uc.TakeDamage(damage); // fixed damage for now
                 isThrown = false; // eliminate taking damage twice before the ball hits the ground
             }
 

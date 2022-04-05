@@ -49,3 +49,5 @@ sysinfo.txt
 UserSettings/
 
 Assets/Scenes/Jeremiah.unity
+*.DS_Store
+Logs/*

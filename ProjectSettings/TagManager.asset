@@ -7,8 +7,6 @@ TagManager:
   - CinemachineTarget
   - Ball
   - Base
-  - OpBall
-  - Points of Interest
   layers:
   - Default
   - TransparentFX
@@ -21,7 +19,7 @@ TagManager:
   - Player
   - Flag
   - Map
-  - Blocker
+  - 
   - 
   - 
   - 

@@ -935,7 +935,7 @@ MonoBehaviour:
   GroundedRadius: 0.28
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3072
   CinemachineCameraTarget: {fileID: 6043158950741737055}
   TopClamp: 70
   BottomClamp: -30
@@ -963,6 +963,7 @@ MonoBehaviour:
   hasBall: 0
   heldBallGO: {fileID: 0}
   pickUpZoneController: {fileID: 6043158951033007008}
+  player: {fileID: 6043158950332431058}
 --- !u!114 &8402754302049698420
 MonoBehaviour:
   m_ObjectHideFlags: 0
