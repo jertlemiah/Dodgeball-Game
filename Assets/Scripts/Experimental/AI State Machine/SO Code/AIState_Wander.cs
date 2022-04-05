@@ -39,29 +39,31 @@ public class AIState_Wander : AIState
     {
         base.UpdateState();
         
-        if(aiController.unitController.hasBall && aiController.recentEnemies.Count>0){
+        if (aiController.unitController.hasBall && aiController.recentEnemies.Count>0 ){
             aiController.ChangeState(AIStateEnum.AttackPlayer);
-        } else if (aiController.recentBalls.Count > 0) {
+        } else if (!aiController.unitController.hasBall && aiController.recentBalls.Count > 0) {
             // Go retrieve a ball
             aiController.ChangeState(AIStateEnum.RetrieveBall);
+        } else {
+            if(waypointsOfInterest.Length>0){
+                // Waypoint mode
+                // Go to next waypoint
+                if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist){
+                    currentTarget = GetNextWaypoint().position;
+                }    
+            } else { 
+                // Random position mode
+                timer += Time.deltaTime;
+                if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist || aiController.stuck || (timer >= wanderTimer)){
+                    timer = 0;
+                    currentTarget = RandomNavSphere(aiController.transform.position, wanderRadius, -1);
+                }
+            }   
+            aiController.SetDestination(currentTarget);
+            aiController.moveToTarget=true;
         }
         
-        if(waypointsOfInterest.Length>0){
-            // Waypoint mode
-            // Go to next waypoint
-            if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist){
-                currentTarget = GetNextWaypoint().position;
-            }    
-        } else { 
-            // Random position mode
-            timer += Time.deltaTime;
-            if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist || aiController.stuck || (timer >= wanderTimer)){
-                timer = 0;
-                currentTarget = RandomNavSphere(aiController.transform.position, wanderRadius, -1);
-            }
-        }   
-        aiController.SetDestination(currentTarget);
-        aiController.moveToTarget=true;
+        
     }
 
     Transform GetNextWaypoint()

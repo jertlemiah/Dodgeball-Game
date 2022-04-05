@@ -86,12 +86,17 @@ public class AIController : MonoBehaviour
         }
         recentBalls.Clear();
         recentEnemies.Clear();
+        CheckIfNavmesh();
         // this._agent = this.gameObject.GetComponent<NavMeshAgent>();
         // this._agent.destination = this.transform.position;
     }
 
     void Update()
     {  
+        if(!navMeshAvailable){
+            Debug.LogError("gameObject "+gameObject.name+": Game Scene does not have a navmesh baked, and therefore the ai will not work. ");
+            return;
+        }
         elapsed += Time.deltaTime;
         if (elapsed > updatePathTime){
             elapsed -= updatePathTime;
@@ -177,6 +182,18 @@ public class AIController : MonoBehaviour
     }
 
     //_______________Private Functions_______________
+    bool navMeshAvailable;
+    void CheckIfNavmesh()
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(Vector3.zero, out hit, 1000.0f, NavMesh.AllAreas)) {
+        Vector3 result = hit.position;
+            navMeshAvailable = true;
+        } else {
+            navMeshAvailable = false;
+        }
+    }
+
     public float stuckTimer;
     public float minStuckTime = 1f;
     void CheckIfStuck()
