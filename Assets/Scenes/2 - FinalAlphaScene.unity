@@ -4908,6 +4908,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 885945504}
     m_Modifications:
+    - target: {fileID: 1145419433995267181, guid: 18a28e271a6a86a4cb4031242f9098cc, type: 3}
+      propertyPath: minAimTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3313064539351965320, guid: 18a28e271a6a86a4cb4031242f9098cc, type: 3}
       propertyPath: m_RootOrder
       value: 16

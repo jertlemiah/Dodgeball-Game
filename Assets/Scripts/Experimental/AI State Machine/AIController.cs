@@ -539,6 +539,18 @@ public class AIController : MonoBehaviour
 }
 
 [Serializable]
+public struct RecentInterest{
+    // public enum 
+    public UnitController enemyController;
+    public float timeOfSighting;
+
+    public RecentInterest(UnitController controller, float currentTime){
+        enemyController = controller;
+        timeOfSighting = currentTime;
+    }
+}
+
+[Serializable]
 public struct RecentEnemy{
     public UnitController enemyController;
     public float timeOfSighting;
