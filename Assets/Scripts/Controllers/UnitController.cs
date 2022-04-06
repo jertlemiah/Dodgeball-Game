@@ -153,7 +153,9 @@ public class UnitController : MonoBehaviour
 
     private bool isCrouching = false;
 
-    private float last_crouch_time;    
+    private float last_crouch_time;  
+
+    private HudController hudController;
 
     // player
     private float _speed;
@@ -167,6 +169,8 @@ public class UnitController : MonoBehaviour
     private bool _hasAnimator;
     private Animator _animator;
 	private CharacterController _controller;
+
+    private bool isHuman = false; //false out of fear
 
     // animation IDs
     private int _animIDSpeed;
@@ -196,6 +200,7 @@ public class UnitController : MonoBehaviour
     {
         spawnManager = SpawnManager.Instance;
         hc = HudController.Instance;
+        isHuman =  GetComponentsInChildren<HumanInput>().Length > 0; //dirty
         healthCurrent = healthMax;
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
@@ -209,6 +214,8 @@ public class UnitController : MonoBehaviour
         // GameObject Blocker = GameObject.Find("Blocker");
         blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
         blocker_renderer.enabled = false;
+
+        hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
 
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
@@ -306,6 +313,7 @@ public class UnitController : MonoBehaviour
             if(isBlocking){
                 float elapsed_time = Time.time - block_start_time;
                 if(elapsed_time >= block_time){
+                    if(isHuman) hudController.BlockCooldown(block_cooldown);
                     _animator.SetBool("Block", false);
                     isBlocking = false;
                     canBlock = false;
@@ -321,6 +329,7 @@ public class UnitController : MonoBehaviour
             }
         }
         else if(isBlocking){
+            if(isHuman) hudController.BlockCooldown(block_cooldown);
             _animator.SetBool("Block", false);
             isBlocking = false;
             canBlock = false;
@@ -336,18 +345,17 @@ public class UnitController : MonoBehaviour
             float elapsed_time = Time.time - last_crouch_time;
             if(elapsed_time >= crouch_cooldown){
                 canCrouch = true;
-
                 Debug.Log("Can crouch again");
             }
         }
         if(input.crouch && canCrouch && !isCrouching)
         {   
+            if(isHuman) hudController.CrouchCooldown(crouch_cooldown);
             if(input.move == Vector2.zero){
                 _animator.SetBool("Crouch", true);
                 isCrouching = true;
             }
             else{
-                Debug.Log("here");
                 _animator.SetTrigger("Slide");
                 canCrouch = false;
                 last_crouch_time = Time.time;
