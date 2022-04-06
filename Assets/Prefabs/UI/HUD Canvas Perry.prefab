@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 6509902746890903281}
   - component: {fileID: 6509902746890903286}
   m_Layer: 5
-  m_Name: HUD Canvas 1
+  m_Name: HUD Canvas Perry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
