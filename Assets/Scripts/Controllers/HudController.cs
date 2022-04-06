@@ -55,6 +55,9 @@ public class HudController : MonoBehaviour
         // GameManager.SetTimer += SetTimerUI;
         // GameManager.PickupBall += DisplayHeldBall;
         // GameManager.RemoveBall += HideHeldBall;
+
+        crouchBar.value = 1;
+        blockBar.value = 1;
     } 
     void OnDisable()
     {

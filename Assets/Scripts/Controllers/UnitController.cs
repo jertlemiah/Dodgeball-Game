@@ -306,7 +306,7 @@ public class UnitController : MonoBehaviour
             if(isBlocking){
                 float elapsed_time = Time.time - block_start_time;
                 if(elapsed_time >= block_time){
-                    hudController.BlockCooldown(block_cooldown);
+                    if(isHuman) hudController.BlockCooldown(block_cooldown);
                     _animator.SetBool("Block", false);
                     isBlocking = false;
                     canBlock = false;
@@ -322,7 +322,7 @@ public class UnitController : MonoBehaviour
             }
         }
         else if(isBlocking){
-            hudController.BlockCooldown(block_cooldown);
+            if(isHuman) hudController.BlockCooldown(block_cooldown);
             _animator.SetBool("Block", false);
             isBlocking = false;
             canBlock = false;
@@ -343,7 +343,7 @@ public class UnitController : MonoBehaviour
         }
         if(input.crouch && canCrouch && !isCrouching)
         {   
-            hudController.CrouchCooldown(crouch_cooldown);
+            if(isHuman) hudController.CrouchCooldown(crouch_cooldown);
             if(input.move == Vector2.zero){
                 _animator.SetBool("Crouch", true);
                 isCrouching = true;
