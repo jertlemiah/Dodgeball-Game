@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class HudController : MonoBehaviour
+public class HudController : Singleton<HudController>
 {
     [SerializeField] GameConstantsSO gameConstants;
     [SerializeField] GameObject hudScreenGO;
@@ -18,6 +18,9 @@ public class HudController : MonoBehaviour
     [SerializeField] private Slider sliderTeam2Score;
     [SerializeField] GameObject ballRenderTexture;
     [SerializeField] GameObject pickUpTextGO;
+    [SerializeField] private TMP_Text respawnText;
+    private bool isRespawning = false;
+    private float respawnTime;
 
     public GameObject blueFlag;
     public GameObject redFlag;
@@ -34,6 +37,7 @@ public class HudController : MonoBehaviour
         // Hide Flags by default
         redFlag.SetActive(false);
         blueFlag.SetActive(false);
+        respawnText.gameObject.SetActive(false);
         // hudScreenGO.SetActive(false);
         
         EventManagerSO.E_SetScore += SetScoreUI;
@@ -70,6 +74,16 @@ public class HudController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isRespawning) {
+            respawnTime -= Time.deltaTime;
+            respawnText.text = "Respawn in " + Mathf.Round(respawnTime * 10f) / 10f;;
+            if (respawnTime <= 0) {
+                respawnText.gameObject.SetActive(false);
+                isRespawning = false;
+                respawnText.text = "";
+            }
+        }
+
     }
 
     private void PickUpTextActive(bool activeStatus)
@@ -127,5 +141,13 @@ public class HudController : MonoBehaviour
     void HideHeldBall()
     {
         ballRenderTexture.SetActive(false);
+    }
+
+    public void HandleRespawn(float time) {
+        Debug.Log("HandleRespawn()");
+        isRespawning = true;
+        respawnTime = time;
+        respawnText.text = "Respawn in " + Mathf.Round(time * 10f) / 10f;;
+        respawnText.gameObject.SetActive(true);
     }
 }

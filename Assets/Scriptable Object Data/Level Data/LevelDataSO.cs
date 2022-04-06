@@ -10,4 +10,5 @@ public class LevelDataSO : ScriptableObject
     [SerializeField] public SceneIndex sceneIndex;
     [SerializeField] public Color panelColor = Color.blue;
     [SerializeField] public Sprite panelImage;
+    [SerializeField] public AudioTrack levelMusic;
 }

@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
             {
                 player.GetComponent<CharacterController>().enabled = false;
             }
-            var spawnPoint = spawnManager.GetSpawnLocation();
+            var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
             Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
             totalHealth = 100;

@@ -3,7 +3,11 @@ guid: 360bb662d84e602449971c4cc67b62ac
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mainMenuTrack: {fileID: 11400000, guid: 91063b0f37bed5f40a172205a992020d, type: 2}
+  - loadingScreenTrack: {fileID: 11400000, guid: 7ef4cb493d080c94388a869ca2563b85, type: 2}
+  - musicAudioSource: {instanceID: 0}
+  - mixer: {fileID: 24100000, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
