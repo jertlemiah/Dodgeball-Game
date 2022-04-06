@@ -73,6 +73,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5301759155738149991, guid: c34ea4af2f2a3e3429b715d726227786, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6509902746890903280, guid: c34ea4af2f2a3e3429b715d726227786, type: 3}
       propertyPath: m_Name
       value: HUD Canvas

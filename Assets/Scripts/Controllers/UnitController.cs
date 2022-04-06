@@ -189,15 +189,18 @@ public class UnitController : MonoBehaviour
     public PickUpZoneController pickUpZoneController;
     private Vector3 mouseWorldPosition;
 
-    private SpawnManager _spawnManager;
+    private GameObject powerup;
+    public GameObject player;
+    private SpawnManager spawnManager;
+    private HudController hc;
 
-    private GameObject _powerup;
 
     void Start()
     {
+        spawnManager = SpawnManager.Instance;
+        hc = HudController.Instance;
         healthCurrent = healthMax;
         healthBar.SetMaxHealth(healthMax);
-        _spawnManager = SpawnManager.Instance;
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
@@ -230,6 +233,7 @@ public class UnitController : MonoBehaviour
 
     void Update()
     {
+        handleCharacterDead();
         JumpAndGravity();
         GroundedCheck();
         Move();
@@ -237,7 +241,6 @@ public class UnitController : MonoBehaviour
         AimAndThrow();
         Block();
         Crouch();
-        checkDead();
     }
     private void LateUpdate()
     {
@@ -359,21 +362,6 @@ public class UnitController : MonoBehaviour
         
     }
 
-    void checkDead()
-    {   
-        if (healthCurrent <= 0) {
-            if (GetComponent<CharacterController>() != null)
-            {
-                GetComponent<CharacterController>().enabled = false;
-            }
-            var spawnPoint = _spawnManager.GetSpawnLocation();
-            Debug.Log("spawnPoint" + spawnPoint);
-            transform.position = spawnPoint;
-            healthMax = 100;
-            healthCurrent = 100;
-            StartCoroutine(CoundownDeath());
-        }
-    }
     void PickupBall()
     {
         if(pickUpZoneController.ballNear && input.pickup && Grounded)
@@ -660,41 +648,32 @@ public class UnitController : MonoBehaviour
 
     public void AddPowerup(GameObject newPowerup)
     {
-        _powerup = newPowerup;
-        if (_powerup.name.Contains("Health")) {
+        powerup = newPowerup;
+        if (powerup.name.Contains("Health")) {
             Debug.Log("Picked up Health");
             healthCurrent += 25;
             if (healthCurrent > healthMax) {
                 healthCurrent = healthMax;
             }
             healthBar.SetHealth(healthCurrent);
-            _powerup = null;
-        } else if (_powerup.name.Contains("Armor")) {
+            powerup = null;
+        } else if (powerup.name.Contains("Armor")) {
             Debug.Log("Picked up Armor");
             healthMax += 50;
             healthCurrent += 50;
             healthBar.SetMaxHealth(healthMax);
             healthBar.SetHealth(healthCurrent);
-            StartCoroutine(CoundownArmor());
-        } else if (_powerup.name.Contains("Speed")) {
+            StartCoroutine(CountdownArmor());
+        } else if (powerup.name.Contains("Speed")) {
             Debug.Log("Picked up Speed");
             NormalSpeed = NormalSpeed * 1.5f;
             SprintSpeed = SprintSpeed * 1.5f;
-            StartCoroutine(CoundownArmor());
+            StartCoroutine(CountdownSpeed());
         }
-        Debug.Log("Player just collected new powerup: " + _powerup);
+        Debug.Log("Player just collected new powerup: " + powerup);
     }
 
-        IEnumerator CoundownDeath()
-    {
-        yield return new WaitForSeconds(5f);
-        if (GetComponent<CharacterController>() != null)
-        {
-            GetComponent<CharacterController>().enabled = true;
-        }
-    }
-
-    IEnumerator CoundownArmor()
+    IEnumerator CountdownArmor()
     {
         yield return new WaitForSeconds(30f);
         healthMax -= 50;
@@ -703,14 +682,46 @@ public class UnitController : MonoBehaviour
         }
         healthBar.SetMaxHealth(healthMax);
         healthBar.SetHealth(healthCurrent);
-        _powerup = null;
+        powerup = null;
     }
 
-    IEnumerator CoundownSpeed()
+    IEnumerator CountdownSpeed()
     {
         yield return new WaitForSeconds(15f);
         NormalSpeed = NormalSpeed/1.5f;
         SprintSpeed = SprintSpeed/1.5f;
-        _powerup = null;
+        powerup = null;
+    }
+    
+    IEnumerator CountdownDeath()
+    {
+        Debug.Log("CountdownDeath");
+        yield return new WaitForSeconds(5f);
+        if (player.GetComponent<CharacterController>() != null)
+        {
+            _animator.enabled = true;
+            player.GetComponent<CharacterController>().enabled = true;
+        }
+    }
+
+    private void handleCharacterDead() {
+        if (healthCurrent <= 0) {
+            if (player.GetComponent<CharacterController>() != null)
+            {
+                player.GetComponent<CharacterController>().enabled = false;
+            }
+            _animator.enabled = false;
+            
+            var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
+            Debug.Log("spawnPoint" + spawnPoint);
+            player.transform.position = spawnPoint;
+            healthMax = 100;
+            healthCurrent = 100;
+            StartCoroutine(CountdownDeath());
+            bool isHuman =  GetComponentsInChildren<HumanInput>().Length > 0;
+            if (isHuman) {
+                hc.HandleRespawn(5f);
+            }
+        }
     }
 }
