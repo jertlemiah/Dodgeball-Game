@@ -52,8 +52,9 @@ public class GameManager : Singleton<GameManager>
     }
 
     /// Awake triggers before Start.
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         teamDict = new Dictionary<Team, TeamData>();
         foreach(Team team in System.Enum.GetValues(typeof(Team)))
         {

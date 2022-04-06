@@ -28,8 +28,9 @@ public class GameSceneManager : Singleton<GameSceneManager>
     public float totalLoadingProgress = 0f;
     public Dictionary<SceneIndex, LevelDataSO> levelDataDict = new Dictionary<SceneIndex, LevelDataSO>();
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         // // This is used for when only the persistent scene is open
         // if (SceneManager.sceneCount == 1 && SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.MANAGER) {
         //     SceneManager.LoadSceneAsync((int)SceneIndex.TITLE_SCREEN, LoadSceneMode.Additive);

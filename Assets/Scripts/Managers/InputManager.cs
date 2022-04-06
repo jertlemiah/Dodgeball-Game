@@ -21,8 +21,9 @@ public class InputManager : Singleton<InputManager>
     [Header("Mouse Cursor Settings")]
     public bool cursorLocked = true;
 	public bool cursorInputForLook = true;
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         _input = new InputActions();
         _input.Player.Pause.performed += context => PausePerformed();
         // _input.Player.Move.performed += context => MoveInput(context);

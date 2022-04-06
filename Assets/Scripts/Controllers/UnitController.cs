@@ -228,7 +228,8 @@ public class UnitController : MonoBehaviour
         blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
         blocker_renderer.enabled = false;
 
-        hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        // hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        hudController = HudController.Instance;
 
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;

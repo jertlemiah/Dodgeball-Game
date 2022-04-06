@@ -14,8 +14,9 @@ public class LoadingManager : Singleton<LoadingManager>
     [SerializeField] string activeSceneName = "None";
     public float totalLoadingProgress = 0f;
     
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         activeSceneName = SceneManager.GetActiveScene().name;
     }
 
