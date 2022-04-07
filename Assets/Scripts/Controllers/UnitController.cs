@@ -204,6 +204,8 @@ public class UnitController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
+
+        healthCurrent = healthMax;
         
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
@@ -230,7 +232,6 @@ public class UnitController : MonoBehaviour
         }
         if(isHuman) {
             healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
-            healthCurrent = healthMax;
             healthBar.SetMaxHealth(healthMax);
         }
     }
