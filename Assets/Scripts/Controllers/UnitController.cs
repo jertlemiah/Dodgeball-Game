@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -153,7 +154,9 @@ public class UnitController : MonoBehaviour
 
     private bool isCrouching = false;
 
-    private float last_crouch_time;    
+    private float last_crouch_time;  
+
+    private HudController hudController;
 
     // player
     private float _speed;
@@ -167,6 +170,8 @@ public class UnitController : MonoBehaviour
     private bool _hasAnimator;
     private Animator _animator;
 	private CharacterController _controller;
+
+    private bool isHuman = false; //false out of fear
 
     // animation IDs
     private int _animIDSpeed;
@@ -192,8 +197,6 @@ public class UnitController : MonoBehaviour
     private SpawnManager spawnManager;
     private HudController hc;
 
-    private bool isHuman;
-
     private SimpleHealthBar healthBar;
 
     void Start()
@@ -204,7 +207,6 @@ public class UnitController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
-
         healthCurrent = healthMax;
         
         // reset our timeouts on start
@@ -216,19 +218,21 @@ public class UnitController : MonoBehaviour
         blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
         blocker_renderer.enabled = false;
 
+        hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
             if(handSpot == null)
-                Debug.LogError(gameObject.name+" does not have its handSpot game object set, and could not find one in children.");
+                UnityEngine.Debug.LogError(gameObject.name+" does not have its handSpot game object set, and could not find one in children.");
         }
         if(aimVirtualCamera == null) {
-            Debug.LogError(gameObject.name+" does not have its virtual Cinemachine aim camera set.");
+            UnityEngine.Debug.LogError(gameObject.name+" does not have its virtual Cinemachine aim camera set.");
         }
         if(aimColliderLayerMask != LayerMask.GetMask("Map")){
-            Debug.LogWarning(gameObject.name+" has its aim layermask not set to map only. Be careful changing this mask.");
+            UnityEngine.Debug.LogWarning(gameObject.name+" has its aim layermask not set to map only. Be careful changing this mask.");
         }
         if(aimIK.humanBones.Length == 0){
-            Debug.LogWarning(gameObject.name+" does not have its aimIK bones set properly. Set at least one bone with a weight (i.e. Spine to 0.2)");
+            UnityEngine.Debug.LogWarning(gameObject.name+" does not have its aimIK bones set properly. Set at least one bone with a weight (i.e. Spine to 0.2)");
         }
         if(isHuman) {
             healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
@@ -306,7 +310,7 @@ public class UnitController : MonoBehaviour
             float elapsed_time = Time.time - last_block_time;
             if(elapsed_time >= block_cooldown){
                 canBlock = true;
-                Debug.Log("can block again");
+                UnityEngine.Debug.Log("can block again");
             }
         }
 
@@ -316,6 +320,7 @@ public class UnitController : MonoBehaviour
             if(isBlocking){
                 float elapsed_time = Time.time - block_start_time;
                 if(elapsed_time >= block_time){
+                    if(isHuman) hudController.BlockCooldown(block_cooldown);
                     _animator.SetBool("Block", false);
                     isBlocking = false;
                     canBlock = false;
@@ -331,6 +336,7 @@ public class UnitController : MonoBehaviour
             }
         }
         else if(isBlocking){
+            if(isHuman) hudController.BlockCooldown(block_cooldown);
             _animator.SetBool("Block", false);
             isBlocking = false;
             canBlock = false;
@@ -346,18 +352,17 @@ public class UnitController : MonoBehaviour
             float elapsed_time = Time.time - last_crouch_time;
             if(elapsed_time >= crouch_cooldown){
                 canCrouch = true;
-
-                Debug.Log("Can crouch again");
+                UnityEngine.Debug.Log("Can crouch again");
             }
         }
         if(input.crouch && canCrouch && !isCrouching)
         {   
+            if(isHuman) hudController.CrouchCooldown(crouch_cooldown);
             if(input.move == Vector2.zero){
                 _animator.SetBool("Crouch", true);
                 isCrouching = true;
             }
             else{
-                Debug.Log("here");
                 _animator.SetTrigger("Slide");
                 canCrouch = false;
                 last_crouch_time = Time.time;
@@ -398,8 +403,8 @@ public class UnitController : MonoBehaviour
 
         Vector3 throw_direction = (mouseWorldPosition - heldBallGO.transform.position).normalized;
         float throw_speed = heldBallGO.GetComponent<DodgeballController>().velocity;
-        Debug.Log(heldBallGO.name);
-        Debug.Log("The ball was thrown with a velocity of " + throw_speed);
+        UnityEngine.Debug.Log(heldBallGO.name);
+        UnityEngine.Debug.Log("The ball was thrown with a velocity of " + throw_speed);
         ballRb.AddForce(throw_direction*throw_speed*100f);
         hasBall = false;
         _animator.SetBool("Throw", false);
@@ -469,7 +474,7 @@ public class UnitController : MonoBehaviour
                 EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1,1);
             }
         } else {
-            Debug.Log("Took Damage");
+            UnityEngine.Debug.Log("Took Damage");
             healthCurrent -= damage;
             if(isHuman) {
                 healthBar.SetHealth(healthCurrent);
@@ -659,7 +664,7 @@ public class UnitController : MonoBehaviour
     {
         powerup = newPowerup;
         if (powerup.name.Contains("Health")) {
-            Debug.Log("Picked up Health");
+            UnityEngine.Debug.Log("Picked up Health");
             healthCurrent += 25;
             if (healthCurrent > healthMax) {
                 healthCurrent = healthMax;
@@ -669,7 +674,7 @@ public class UnitController : MonoBehaviour
             }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
-            Debug.Log("Picked up Armor");
+            UnityEngine.Debug.Log("Picked up Armor");
             healthMax += 50;
             healthCurrent += 50;
             if(isHuman) {
@@ -678,12 +683,12 @@ public class UnitController : MonoBehaviour
             }
             StartCoroutine(CountdownArmor());
         } else if (powerup.name.Contains("Speed")) {
-            Debug.Log("Picked up Speed");
+            UnityEngine.Debug.Log("Picked up Speed");
             NormalSpeed = NormalSpeed * 1.5f;
             SprintSpeed = SprintSpeed * 1.5f;
             StartCoroutine(CountdownSpeed());
         }
-        Debug.Log("Player just collected new powerup: " + powerup);
+        UnityEngine.Debug.Log("Player just collected new powerup: " + powerup);
     }
 
     IEnumerator CountdownArmor()
@@ -710,7 +715,7 @@ public class UnitController : MonoBehaviour
     
     IEnumerator CountdownDeath()
     {
-        Debug.Log("CountdownDeath");
+        UnityEngine.Debug.Log("CountdownDeath");
         yield return new WaitForSeconds(5f);
         if (player.GetComponent<CharacterController>() != null)
         {
@@ -728,7 +733,7 @@ public class UnitController : MonoBehaviour
             _animator.enabled = false;
             
             var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
-            Debug.Log("spawnPoint" + spawnPoint);
+            UnityEngine.Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
             healthMax = 100;
             healthCurrent = 100;

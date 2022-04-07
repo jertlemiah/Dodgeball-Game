@@ -22,8 +22,13 @@ public class HudController : Singleton<HudController>
     private bool isRespawning = false;
     private float respawnTime;
 
+    [SerializeField] Slider crouchBar;
+    [SerializeField] Slider blockBar;
+
     public GameObject blueFlag;
     public GameObject redFlag;
+
+    private float crouch_tween = 2;
 
     // private GameManager gameManager;
     
@@ -54,6 +59,9 @@ public class HudController : Singleton<HudController>
         // GameManager.SetTimer += SetTimerUI;
         // GameManager.PickupBall += DisplayHeldBall;
         // GameManager.RemoveBall += HideHeldBall;
+
+        crouchBar.value = 1;
+        blockBar.value = 1;
     } 
     void OnDisable()
     {
@@ -149,5 +157,16 @@ public class HudController : Singleton<HudController>
         respawnTime = time;
         respawnText.text = "Respawn in " + Mathf.Round(time * 10f) / 10f;;
         respawnText.gameObject.SetActive(true);
+    }
+    public void CrouchCooldown(float tween_time)
+    {
+        crouchBar.value = 0;
+        crouchBar.DOValue(1,tween_time);
+    }
+
+    public void BlockCooldown(float tween_time)
+    {
+        blockBar.value = 0;
+        blockBar.DOValue(1,tween_time);
     }
 }
