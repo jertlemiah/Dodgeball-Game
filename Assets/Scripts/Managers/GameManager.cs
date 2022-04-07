@@ -105,9 +105,12 @@ public class GameManager : Singleton<GameManager>
     void StartPrematch()
     {
         // Check to see if the main menu is open
-        bool mainMenuOpen = false;
-
-        if(!mainMenuOpen){
+        bool mainMenuOpen = GameSceneManager.Instance.IsSceneOpen(SceneIndex.TITLE_SCREEN);
+        
+        if(mainMenuOpen){
+            EventManagerSO.TriggerEvent_HideHUD();
+            currentState = GameState.MainMenu;
+        } else {
             EventManagerSO.TriggerEvent_StartPrematch();
             currentState = GameState.PreMatch;
         }

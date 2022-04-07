@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -840,7 +840,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 277309537527057240, guid: 934547f2f72fce44fb028a9de8b362e2, type: 3}
       propertyPath: currentState
-      value: 1
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 277309537527057240, guid: 934547f2f72fce44fb028a9de8b362e2, type: 3}
+      propertyPath: timeRemaining
+      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 934547f2f72fce44fb028a9de8b362e2, type: 3}
@@ -1653,46 +1657,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2242629955233782498, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 8555695681841550366, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
     - target: {fileID: 3150556255058229504, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
       propertyPath: m_Name
       value: TrackManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3150556255058229504, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6703249233427841956, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: 8555695681841550366, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
-    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: mixer
-      value: 
-      objectReference: {fileID: 24100000, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
-    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: mainMenuTrack
-      value: 
-      objectReference: {fileID: 11400000, guid: 91063b0f37bed5f40a172205a992020d, type: 2}
-    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: musicAudioSource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: loadingScreenTrack
-      value: 
-      objectReference: {fileID: 11400000, guid: 7ef4cb493d080c94388a869ca2563b85, type: 2}
-    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: backgroundTracks.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8432572673688570610, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
-      propertyPath: backgroundTracks.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 91063b0f37bed5f40a172205a992020d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e336c7bec90b40249913bcdd7dc7fc02, type: 3}
 --- !u!4 &2914632625175147625 stripped

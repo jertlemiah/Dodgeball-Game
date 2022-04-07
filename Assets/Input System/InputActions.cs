@@ -92,7 +92,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Pause"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""6734086b-5f16-4f24-ab94-8f6f7d64c657"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
