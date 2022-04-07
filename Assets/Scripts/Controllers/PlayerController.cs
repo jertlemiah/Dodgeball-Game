@@ -13,11 +13,14 @@ public class PlayerController : MonoBehaviour
 
     private GameObject powerup;
 
+    public Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
         spawnManager = SpawnManager.Instance;
         currentHealth = totalHealth;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -45,15 +48,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator CoundownDeath()
-    {
-        yield return new WaitForSeconds(5f);
-        if (player.GetComponent<CharacterController>() != null)
-        {
-            player.GetComponent<CharacterController>().enabled = true;
-        }
-    }
-
     public void AddPowerup(GameObject newPowerup) {
         powerup = newPowerup;
         if (powerup.name.Contains("Health")) {
@@ -64,12 +58,25 @@ public class PlayerController : MonoBehaviour
             }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
-            Debug.Log("Picked up Health");
+            Debug.Log("Picked up Armor");
             totalHealth += 50;
             currentHealth += 50;
             StartCoroutine(CoundownArmor());
+        } else if (powerup.name.Contains("Speed")) {
+            Debug.Log("Picked up Speed");
+            rb.velocity = rb.velocity * 2;
+            StartCoroutine(CoundownArmor());
         }
         Debug.Log("Player just collected new powerup: " + powerup);
+    }
+
+    IEnumerator CoundownDeath()
+    {
+        yield return new WaitForSeconds(5f);
+        if (player.GetComponent<CharacterController>() != null)
+        {
+            player.GetComponent<CharacterController>().enabled = true;
+        }
     }
 
 
@@ -80,6 +87,13 @@ public class PlayerController : MonoBehaviour
         if (currentHealth > totalHealth) {
             currentHealth = totalHealth;
         }
+        powerup = null;
+    }
+
+    IEnumerator CoundownSpeed()
+    {
+        yield return new WaitForSeconds(30f);
+        rb.velocity = rb.velocity / 2;
         powerup = null;
     }
 }

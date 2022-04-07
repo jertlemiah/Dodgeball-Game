@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class SimpleHealthBar : MonoBehaviour
 {
-    public Slider healthBar;
-    private int playerHealth;
+	public Slider slider;
 
-    void Start() {
-         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentHealth;
-         healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
-    }
+	public void SetMaxHealth(int health)
+	{
+		slider.maxValue = health;
+		slider.value = health;
+	}
 
-    // TODO: We probably dont want this updating every tick, but for now its fine
-    void Update() {
-         healthBar.value = playerHealth;
-    }
+    public void SetHealth(int health)
+	{
+          Debug.Log("update slider");
+		slider.value = health;
+          Debug.Log(slider.value);
+	}
 }
