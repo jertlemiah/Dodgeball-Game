@@ -121,8 +121,6 @@ public class UnitController : MonoBehaviour
         public Team team = Team.Team1;        
         public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
 
-        public SimpleHealthBar healthBar;
-
     [Header("           Shooter Settings")][Space(15)]
         [SerializeField] string ballHoldSpotName = "BallHoldSpot";
         [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
@@ -194,17 +192,18 @@ public class UnitController : MonoBehaviour
     private SpawnManager spawnManager;
     private HudController hc;
 
+    private bool isHuman;
+
+    private SimpleHealthBar healthBar;
 
     void Start()
     {
+        isHuman =  GetComponentsInChildren<HumanInput>().Length > 0;
         spawnManager = SpawnManager.Instance;
         hc = HudController.Instance;
-        healthCurrent = healthMax;
-        healthBar.SetMaxHealth(healthMax);
         _controller = GetComponent<CharacterController>();
         _hasAnimator = TryGetComponent(out _animator);
         AssignAnimationIDs();
-        TakeDamage(30);
         
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
@@ -228,6 +227,11 @@ public class UnitController : MonoBehaviour
         }
         if(aimIK.humanBones.Length == 0){
             Debug.LogWarning(gameObject.name+" does not have its aimIK bones set properly. Set at least one bone with a weight (i.e. Spine to 0.2)");
+        }
+        if(isHuman) {
+            healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
+            healthCurrent = healthMax;
+            healthBar.SetMaxHealth(healthMax);
         }
     }
 
@@ -450,7 +454,9 @@ public class UnitController : MonoBehaviour
     {
         if (healthCurrent - damage < 0) {
             healthCurrent = 0;
-            healthBar.SetHealth(healthCurrent);
+            if(isHuman) {
+                healthBar.SetHealth(healthCurrent);
+            }
             if(team == Team.Team1)
             {
                 // GameManager.Instance.GiveTeam2Points(1);
@@ -464,7 +470,9 @@ public class UnitController : MonoBehaviour
         } else {
             Debug.Log("Took Damage");
             healthCurrent -= damage;
-            healthBar.SetHealth(healthCurrent);
+            if(isHuman) {
+                healthBar.SetHealth(healthCurrent);
+            }
         }
         
     }
@@ -655,14 +663,18 @@ public class UnitController : MonoBehaviour
             if (healthCurrent > healthMax) {
                 healthCurrent = healthMax;
             }
-            healthBar.SetHealth(healthCurrent);
+            if(isHuman) {
+                healthBar.SetHealth(healthCurrent);
+            }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
             Debug.Log("Picked up Armor");
             healthMax += 50;
             healthCurrent += 50;
-            healthBar.SetMaxHealth(healthMax);
-            healthBar.SetHealth(healthCurrent);
+            if(isHuman) {
+                healthBar.SetMaxHealth(healthMax);
+                healthBar.SetHealth(healthCurrent);
+            }
             StartCoroutine(CountdownArmor());
         } else if (powerup.name.Contains("Speed")) {
             Debug.Log("Picked up Speed");
@@ -680,8 +692,10 @@ public class UnitController : MonoBehaviour
         if (healthCurrent > healthMax) {
             healthCurrent = healthMax;
         }
-        healthBar.SetMaxHealth(healthMax);
-        healthBar.SetHealth(healthCurrent);
+        if(isHuman) {
+            healthBar.SetMaxHealth(healthMax);
+            healthBar.SetHealth(healthCurrent);
+        }
         powerup = null;
     }
 
@@ -718,9 +732,10 @@ public class UnitController : MonoBehaviour
             healthMax = 100;
             healthCurrent = 100;
             StartCoroutine(CountdownDeath());
-            bool isHuman =  GetComponentsInChildren<HumanInput>().Length > 0;
             if (isHuman) {
                 hc.HandleRespawn(5f);
+                healthBar.SetMaxHealth(healthMax);
+                healthBar.SetHealth(healthCurrent);
             }
         }
     }
