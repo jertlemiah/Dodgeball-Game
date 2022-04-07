@@ -199,6 +199,16 @@ public class UnitController : MonoBehaviour
 
     private SimpleHealthBar healthBar;
 
+    //variables for changing collider when crouching 
+    private Vector3 standCenter = new Vector3(0, 0.96f, 0);
+    private float standHeight = 1.8f;
+    private Vector3 crouchCenter = new Vector3(0, 0.66f, 0);
+    private float crouchHeight = 1.2f;
+
+    private bool crouchStarted = false;
+    private bool lowerCollider = true;
+    private float crouch_start_time;
+
     void Awake()
     {
         EventManagerSO.E_LoadingProgress += StopMovement;
@@ -264,6 +274,7 @@ public class UnitController : MonoBehaviour
         AimAndThrow();
         Block();
         Crouch();
+        CrouchCollider();
     }
     private void LateUpdate()
     {
@@ -371,6 +382,8 @@ public class UnitController : MonoBehaviour
         }
         if(input.crouch && canCrouch && !isCrouching)
         {   
+            crouchStarted = true;
+            crouch_start_time = Time.time;
             if(isHuman) hudController.CrouchCooldown(crouch_cooldown);
             if(input.move == Vector2.zero){
                 _animator.SetBool("Crouch", true);
@@ -384,6 +397,24 @@ public class UnitController : MonoBehaviour
             
         }
         
+    }
+
+    void CrouchCollider()
+    {
+        if(crouchStarted){
+            float elapsed_time = Time.time - crouch_start_time;
+            if(elapsed_time > 0.2 && lowerCollider){
+                _controller.center = crouchCenter;
+                _controller.height = crouchHeight;
+                lowerCollider = false;
+            }
+            else if(elapsed_time > 0.8){
+                _controller.center = standCenter;
+                _controller.height = standHeight;
+                crouchStarted = false;
+                lowerCollider = true;
+            }
+        }
     }
 
     void PickupBall()
@@ -454,7 +485,7 @@ public class UnitController : MonoBehaviour
         canCrouch = false;
         isCrouching = false;
         last_crouch_time = Time.time;
-    }
+    } 
 
     void OnCollisionEnter(Collision collision)
     {
