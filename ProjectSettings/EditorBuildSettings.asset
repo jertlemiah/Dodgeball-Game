@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/4 - Desert.unity
     guid: 795fff873f810ba478cd65ec3990bae3
   - enabled: 1
+    path: Assets/Scenes/5 - Space (rough).unity
+    guid: e03af3c4074dc433fb1b40a0d669b850
+  - enabled: 1
     path: Assets/Scenes/Jeremiah.unity
     guid: 11f6e7c12bff1ae4e80cc175b55e5951
   - enabled: 1

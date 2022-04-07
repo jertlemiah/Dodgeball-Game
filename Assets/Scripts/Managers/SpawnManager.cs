@@ -9,6 +9,7 @@
      private int spawnIndex;
      public Transform[] spawnpoints;
      public float wanderRadius = 25f;
+    public float verticalRespawnOffset = 15f;
      
      void Start(){
          int count = transform.childCount;
@@ -38,7 +39,7 @@
         return outputLocation;
     }
 
-     private static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask) {
+     private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask) {
         Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
  
         randDirection += origin;
@@ -47,6 +48,6 @@
  
         NavMesh.SamplePosition (randDirection, out navHit, dist, layermask);
  
-        return navHit.position;
+        return navHit.position+Vector3.up*verticalRespawnOffset;
     }
  }

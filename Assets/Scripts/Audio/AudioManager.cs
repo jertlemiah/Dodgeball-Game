@@ -123,7 +123,10 @@ public class AudioManager : Singleton<AudioManager>
         if(sceneIndex == SceneIndex.TITLE_SCREEN){
             newTracks.Add(mainMenuTrack);
         } else {
-            newTracks.Add(GameSceneManager.Instance.levelDataDict[sceneIndex].levelMusic);
+            if(GameSceneManager.Instance.levelDataDict[sceneIndex].levelMusic != null) {
+                newTracks.Add(GameSceneManager.Instance.levelDataDict[sceneIndex].levelMusic);
+            }
+            
         }
         if(newTracks.Count > 0){
             ChangePlaylist(newTracks);

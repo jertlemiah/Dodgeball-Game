@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
     public GameState currentState;
 
     [Space(10)][Header("Game Timer")]
+    public float matchTimeLimit = 120; // seconds
     public float timeRemaining = 60; // seconds
     public bool timerIsRunning = false;
 
@@ -106,6 +107,10 @@ public class GameManager : Singleton<GameManager>
     {
         // Check to see if the main menu is open
         bool mainMenuOpen = GameSceneManager.Instance.IsSceneOpen(SceneIndex.TITLE_SCREEN);
+        EventManagerSO.TriggerEvent_SetScore(0,0);
+        timerIsRunning = false;
+        timeRemaining = matchTimeLimit;
+        EventManagerSO.TriggerEvent_SetTimer(matchTimeLimit);
         
         if(mainMenuOpen){
             EventManagerSO.TriggerEvent_HideHUD();

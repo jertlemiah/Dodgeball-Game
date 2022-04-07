@@ -197,7 +197,7 @@ public class UnitController : MonoBehaviour
     private SpawnManager spawnManager;
     private HudController hc;
 
-    private SimpleHealthBar healthBar;
+    // private SimpleHealthBar healthBar;
 
     void Awake()
     {
@@ -249,8 +249,8 @@ public class UnitController : MonoBehaviour
             UnityEngine.Debug.LogWarning(gameObject.name+" does not have its aimIK bones set properly. Set at least one bone with a weight (i.e. Spine to 0.2)");
         }
         if(isHuman) {
-            healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
-            healthBar.SetMaxHealth(healthMax);
+            // healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
+            hudController.SetMaxHealth(healthMax);
         }
     }
 
@@ -475,7 +475,7 @@ public class UnitController : MonoBehaviour
         if (healthCurrent - damage < 0) {
             healthCurrent = 0;
             if(isHuman) {
-                healthBar.SetHealth(healthCurrent);
+                hudController.SetHealth(healthCurrent);
             }
             if(team == Team.Team1)
             {
@@ -491,7 +491,7 @@ public class UnitController : MonoBehaviour
             UnityEngine.Debug.Log("Took Damage");
             healthCurrent -= damage;
             if(isHuman) {
-                healthBar.SetHealth(healthCurrent);
+                hudController.SetHealth(healthCurrent);
             }
         }
         
@@ -684,7 +684,7 @@ public class UnitController : MonoBehaviour
                 healthCurrent = healthMax;
             }
             if(isHuman) {
-                healthBar.SetHealth(healthCurrent);
+                hudController.SetHealth(healthCurrent);
             }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
@@ -692,8 +692,8 @@ public class UnitController : MonoBehaviour
             healthMax += 50;
             healthCurrent += 50;
             if(isHuman) {
-                healthBar.SetMaxHealth(healthMax);
-                healthBar.SetHealth(healthCurrent);
+                hudController.SetMaxHealth(healthMax);
+                hudController.SetHealth(healthCurrent);
             }
             StartCoroutine(CountdownArmor());
         } else if (powerup.name.Contains("Speed")) {
@@ -713,8 +713,8 @@ public class UnitController : MonoBehaviour
             healthCurrent = healthMax;
         }
         if(isHuman) {
-            healthBar.SetMaxHealth(healthMax);
-            healthBar.SetHealth(healthCurrent);
+            hudController.SetMaxHealth(healthMax);
+            hudController.SetHealth(healthCurrent);
         }
         powerup = null;
     }
@@ -754,8 +754,8 @@ public class UnitController : MonoBehaviour
             StartCoroutine(CountdownDeath());
             if (isHuman) {
                 hc.HandleRespawn(5f);
-                healthBar.SetMaxHealth(healthMax);
-                healthBar.SetHealth(healthCurrent);
+                hudController.SetMaxHealth(healthMax);
+                hudController.SetHealth(healthCurrent);
             }
         }
     }

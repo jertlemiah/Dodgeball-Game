@@ -29,6 +29,7 @@ public class HudController : Singleton<HudController>
     public GameObject redFlag;
 
     private float crouch_tween = 2;
+    [SerializeField] private SimpleHealthBar healthBar;
 
     // private GameManager gameManager;
     
@@ -37,6 +38,9 @@ public class HudController : Singleton<HudController>
         base.Awake();
         if(!gameConstants)
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
+        if(!healthBar){
+            healthBar = GetComponent<SimpleHealthBar>();
+        }
         // StartTimer(timeRemaining);
         // SetScore(0,0);
 
@@ -170,4 +174,14 @@ public class HudController : Singleton<HudController>
         blockBar.value = 0;
         blockBar.DOValue(1,tween_time);
     }
+
+    public void SetMaxHealth(int health)
+	{
+		healthBar.SetMaxHealth(health);
+	}
+
+    public void SetHealth(int health)
+	{
+        healthBar.SetHealth(health);
+	}
 }

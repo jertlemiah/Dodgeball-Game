@@ -39,6 +39,7 @@ public class AIController : MonoBehaviour
         public NavMeshPath path;
         private float elapsed = 0.0f;
         [SerializeField] float updatePathTime = 0.1f;
+        public bool overrideInput = false;
         [SerializeField] public Input newInput = new Input();
         public int pathSize;
         public GameObject nextPointIndicator;
@@ -92,7 +93,6 @@ public class AIController : MonoBehaviour
         // this._agent = this.gameObject.GetComponent<NavMeshAgent>();
         // this._agent.destination = this.transform.position;
     }
-
     void Update()
     {  
         if(!navMeshAvailable){
@@ -136,32 +136,47 @@ public class AIController : MonoBehaviour
         // } else {
         //     newInput.throw_bool = false;
         // }
-        if(!unitController.hasBall) {startAiming = false;}
-        if(startAiming){
-            AimAtTarget();
+
+        if (overrideInput == false) {
+            
+            if(!unitController.hasBall) {startAiming = false;}
+            if(startAiming){
+                AimAtTarget();
+            }
+
+            
+
+            // if(moveToTarget && path != null && targetGO != null){
+                Move();
+            // }
+            
+            if(fieldOfView){
+                CheckFOW();
+            }
+            currentState?.UpdateState();
+            if(stuck & newInput.move.magnitude > 0.2f){
+                newInput.jump = true;
+                // newInput.move = new Vector2(0,-1);
+            }
+            //Assign the new input to the unitController
         }
 
-        
-
-        // if(moveToTarget && path != null && targetGO != null){
-            Move();
-        // }
-        
-        if(fieldOfView){
-            CheckFOW();
-        }
-        currentState?.UpdateState();
-        if(stuck & newInput.move.magnitude > 0.2f){
-            newInput.jump = true;
-            // newInput.move = new Vector2(0,-1);
-        }
-        //Assign the new input to the unitController
         unitController.input = newInput;
     }
 
     void LateUpdate()
     {
+        if (overrideInput == false) {
+            ResetInputs();
+        }
+        
+    }
+
+    void ResetInputs()
+    {
         newInput.jump = false;
+        newInput.aim = false;
+        newInput.throw_bool = false;
     }
 
     //_______________Public Member Functions_______________
@@ -170,6 +185,7 @@ public class AIController : MonoBehaviour
     {
         useTargetObject = true;
         targetGO = newTargtGO;
+        CalculateNewPath();
     }
 
     private bool useTargetObject = false;
@@ -179,6 +195,7 @@ public class AIController : MonoBehaviour
         destinationIndicator.transform.position = newDestination + Vector3.up*1f;
         destination = newDestination;
         moveToTarget = true;
+        CalculateNewPath();
     }
 
     public void ChangeState (AIStateEnum newState) //call this function when changing states

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50c213f13496af3428e9435bb85eb61f, type: 3}
-  m_Name: Level - Gym
+  m_Name: Level - 4 - Desert
   m_EditorClassIdentifier: 
-  levelName: GYM
-  sceneIndex: 2
-  panelColor: {r: 1, g: 0.3354584, b: 0, a: 1}
-  panelImage: {fileID: 21300000, guid: c9ba214260f6d494aaf1b9003248b787, type: 3}
-  levelMusic: {fileID: 11400000, guid: 03f08bc8892a4a34d8d23e07a3ccb2ec, type: 2}
+  levelName: DESERT
+  sceneIndex: 4
+  panelColor: {r: 0.6886792, g: 0.66872966, b: 0.6009701, a: 1}
+  panelImage: {fileID: 21300000, guid: 9a95f0b5649865647b8f94fb8b91c822, type: 3}
+  levelMusic: {fileID: 11400000, guid: b8ebb409903757746954c9d712cfba3a, type: 2}

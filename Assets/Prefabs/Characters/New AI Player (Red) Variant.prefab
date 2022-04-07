@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.75, z: 0.1}
   m_Children: []
   m_Father: {fileID: 3313064539351965320}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &134046854
 MeshFilter:
@@ -127,7 +127,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.75, z: 0.1}
   m_Children: []
   m_Father: {fileID: 3313064539351965320}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1772705991
 MeshFilter:
@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: nextNextNextPointIndicator
       value: 
       objectReference: {fileID: 134046850}
+    - target: {fileID: 934869509, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
+      propertyPath: minAimTime
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 1881243583, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_Name
       value: Next Point Indicator
@@ -257,15 +261,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2458690849612056800, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.518
+      value: -0.7731067
       objectReference: {fileID: 0}
     - target: {fileID: 2458690849612056800, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.55
+      value: 5.83
       objectReference: {fileID: 0}
     - target: {fileID: 2458690849612056800, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.073
+      value: 11.00383
       objectReference: {fileID: 0}
     - target: {fileID: 2458690849612056800, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_LocalRotation.w
@@ -297,7 +301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2458690849612056824, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_Name
-      value: New AI Player (Red)
+      value: New AI Player (Red) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2458690850286885553, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_Materials.Array.data[0]
