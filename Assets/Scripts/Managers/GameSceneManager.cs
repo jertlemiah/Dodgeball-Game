@@ -27,9 +27,11 @@ public class GameSceneManager : Singleton<GameSceneManager>
     [SerializeField] string activeSceneName = "None";
     public float totalLoadingProgress = 0f;
     public Dictionary<SceneIndex, LevelDataSO> levelDataDict = new Dictionary<SceneIndex, LevelDataSO>();
+    public List<Scene> openScenes = new List<Scene>();
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         // // This is used for when only the persistent scene is open
         // if (SceneManager.sceneCount == 1 && SceneManager.GetActiveScene().buildIndex == (int)SceneIndex.MANAGER) {
         //     SceneManager.LoadSceneAsync((int)SceneIndex.TITLE_SCREEN, LoadSceneMode.Additive);
@@ -65,6 +67,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
         DOTween.KillAll();  // This prevents any null references from attempting to tween a deleted object. Technically DOTween will catch these, but this is better practice
         Time.timeScale = 1; // This is in case you leave a paused scene, as timeScale affects ALL scenes
         EventManagerSO.TriggerEvent_StopMusic();
+        EventManagerSO.TriggerEvent_UnpauseGame();
         
         for (int i = 0; i < SceneManager.sceneCount; i++) {
             Scene scene = SceneManager.GetSceneAt(i);
@@ -118,6 +121,13 @@ public class GameSceneManager : Singleton<GameSceneManager>
         SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)sceneIndex));
         Debug.Log("Setting active scene to "+SceneManager.GetActiveScene().name);
         activeSceneName = SceneManager.GetActiveScene().name;
+
+        openScenes.Clear();
+        for (int i = 0; i < SceneManager.sceneCount; i++) {
+            Scene scene = SceneManager.GetSceneAt(i);
+            openScenes.Add(scene);
+        }
+
         EventManagerSO.TriggerEvent_SceneLoaded(sceneIndex);
 
         // loadingScreenGO.SetActive(false);
@@ -137,5 +147,16 @@ public class GameSceneManager : Singleton<GameSceneManager>
 
         return a;
 
+    }
+
+    public bool IsSceneOpen(SceneIndex sceneIndex)
+    {
+        bool sceneIsOpen = false;
+        foreach(Scene scene in openScenes){
+            if(scene.buildIndex == (int)sceneIndex){
+                sceneIsOpen = true;
+            }
+        }
+        return sceneIsOpen;
     }
 }

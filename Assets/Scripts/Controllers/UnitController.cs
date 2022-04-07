@@ -199,8 +199,21 @@ public class UnitController : MonoBehaviour
 
     private SimpleHealthBar healthBar;
 
+    void Awake()
+    {
+        EventManagerSO.E_LoadingProgress += StopMovement;
+        EventManagerSO.E_StartMatch += AllowMovement;
+    }
+
+    void OnDisable()
+    {
+        EventManagerSO.E_LoadingProgress -= StopMovement;
+        EventManagerSO.E_StartMatch -= AllowMovement;
+    }
+
     void Start()
     {
+        // canMove = false;
         isHuman =  GetComponentsInChildren<HumanInput>().Length > 0;
         spawnManager = SpawnManager.Instance;
         hc = HudController.Instance;
@@ -218,7 +231,8 @@ public class UnitController : MonoBehaviour
         blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
         blocker_renderer.enabled = false;
 
-        hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        // hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        hudController = HudController.Instance;
 
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
@@ -744,5 +758,15 @@ public class UnitController : MonoBehaviour
                 healthBar.SetHealth(healthCurrent);
             }
         }
+    }
+
+    void AllowMovement()
+    {
+        canMove = true;
+    }
+
+    void StopMovement(float garbage)
+    {
+        canMove = false;
     }
 }
