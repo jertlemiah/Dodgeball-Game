@@ -41,7 +41,9 @@ public class AIController : MonoBehaviour
         [SerializeField] float updatePathTime = 0.1f;
         [SerializeField] public Input newInput = new Input();
         public int pathSize;
-        public GameObject targetPathCorner;
+        public GameObject nextPointIndicator;
+        public GameObject nextNextPointIndicator;
+        public GameObject nextNextNextPointIndicator;
         [SerializeField] public float stoppingDistance = 0.5f;
         public int pathIndex = 1;
         Vector3[] pathCorners;
@@ -86,12 +88,17 @@ public class AIController : MonoBehaviour
         }
         recentBalls.Clear();
         recentEnemies.Clear();
+        CheckIfNavmesh();
         // this._agent = this.gameObject.GetComponent<NavMeshAgent>();
         // this._agent.destination = this.transform.position;
     }
 
     void Update()
     {  
+        if(!navMeshAvailable){
+            Debug.LogError("gameObject "+gameObject.name+": Game Scene does not have a navmesh baked, and therefore the ai will not work. ");
+            return;
+        }
         elapsed += Time.deltaTime;
         if (elapsed > updatePathTime){
             elapsed -= updatePathTime;
@@ -99,6 +106,7 @@ public class AIController : MonoBehaviour
         }
         DrawDebugPath();
         CheckIfStuck();
+        
 
         // If not doing anything & has no targets, then wander
 
@@ -143,6 +151,10 @@ public class AIController : MonoBehaviour
             CheckFOW();
         }
         currentState?.UpdateState();
+        if(stuck & newInput.move.magnitude > 0.2f){
+            newInput.jump = true;
+            // newInput.move = new Vector2(0,-1);
+        }
         //Assign the new input to the unitController
         unitController.input = newInput;
     }
@@ -177,6 +189,18 @@ public class AIController : MonoBehaviour
     }
 
     //_______________Private Functions_______________
+    bool navMeshAvailable;
+    void CheckIfNavmesh()
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(Vector3.zero, out hit, 1000.0f, NavMesh.AllAreas)) {
+        Vector3 result = hit.position;
+            navMeshAvailable = true;
+        } else {
+            navMeshAvailable = false;
+        }
+    }
+
     public float stuckTimer;
     public float minStuckTime = 1f;
     void CheckIfStuck()
@@ -257,6 +281,22 @@ public class AIController : MonoBehaviour
             newInput.sprint = true;
         } else {
             newInput.sprint = false;
+        }
+
+        if(nextPointIndicator){
+            nextPointIndicator.transform.position = nextPoint;
+        } else {
+            Debug.Log(gameObject.name +": nextPointIndicator is not assigned.");
+        }
+        if(nextNextPointIndicator){
+            nextNextPointIndicator.transform.position = nextNextPoint;
+        } else {
+            Debug.Log(gameObject.name +": nextNextPointIndicator is not assigned.");
+        }
+        if(nextNextNextPointIndicator){
+            nextNextNextPointIndicator.transform.position = nextNextNextPoint;
+        } else {
+            Debug.Log(gameObject.name +": nextNextNextPointIndicator is not assigned.");
         }
     }
 
@@ -384,6 +424,7 @@ public class AIController : MonoBehaviour
         }
     }
 
+    [SerializeField] float pathCornerEstimatedDist = 1f;
     private void CalculateNewPath()
     {
         // NavMesh.CalculatePath(transform.position, targetGO.transform.position, NavMesh.AllAreas, path);
@@ -391,7 +432,7 @@ public class AIController : MonoBehaviour
         Vector3 currentClosestToNavmesh;
         NavMeshHit navmeshHit;
         if(unitController.Grounded){
-            NavMesh.SamplePosition(transform.position,out navmeshHit, 1f, NavMesh.AllAreas);
+            NavMesh.SamplePosition(transform.position,out navmeshHit, pathCornerEstimatedDist, NavMesh.AllAreas);
             currentClosestToNavmesh = navmeshHit.position;
         } else {
             destination = destinationIndicator.transform.position;
@@ -399,15 +440,17 @@ public class AIController : MonoBehaviour
             RaycastHit hit;
             
             if(Physics.Raycast(ray, out hit)){
-                NavMesh.SamplePosition(hit.transform.position,out navmeshHit, 1f, NavMesh.AllAreas);
+                NavMesh.SamplePosition(hit.transform.position,out navmeshHit, pathCornerEstimatedDist, NavMesh.AllAreas);
                 currentClosestToNavmesh = navmeshHit.position;
             } else {
-                currentClosestToNavmesh = this.transform.position;
+                NavMesh.SamplePosition(transform.position,out navmeshHit, pathCornerEstimatedDist, NavMesh.AllAreas);
+                // currentClosestToNavmesh = this.transform.position;
             }
+            currentClosestToNavmesh = navmeshHit.position;
         }
        
         
-        // NavMesh.SamplePosition(transform.position,out navmeshHit, 1f, NavMesh.AllAreas);
+        // NavMesh.SamplePosition(transform.position,out navmeshHit, pathCornerEstimatedDist, NavMesh.AllAreas);
         // Vector3 currentClosestToNavmesh;// = navmeshHit.position;
         if(currentClosestToNavmesh.magnitude > 10000f){
             currentClosestToNavmesh = this.transform.position;
@@ -461,9 +504,21 @@ public class AIController : MonoBehaviour
         Vector2 newMove = new Vector2(direction.x, direction.z).normalized;
 
         newInput.move = newMove;
-        if(targetPathCorner){
-            targetPathCorner.transform.position = nextPoint;
-        }
+        // if(nextPointIndicator){
+        //     nextPointIndicator.transform.position = nextPoint;
+        // } else {
+        //     Debug.Log(gameObject.name +": nextPointIndicator is not assigned.");
+        // }
+        // if(nextNextPointIndicator){
+        //     nextNextPointIndicator.transform.position = nextNextPoint;
+        // } else {
+        //     Debug.Log(gameObject.name +": nextNextPointIndicator is not assigned.");
+        // }
+        // if(nextNextNextPointIndicator){
+        //     nextNextNextPointIndicator.transform.position = nextNextNextPoint;
+        // } else {
+        //     Debug.Log(gameObject.name +": nextNextNextPointIndicator is not assigned.");
+        // }
     }
 
     public float GetPathLength(NavMeshPath _path)
@@ -480,6 +535,18 @@ public class AIController : MonoBehaviour
 
 
         return totalLength;
+    }
+}
+
+[Serializable]
+public struct RecentInterest{
+    // public enum 
+    public UnitController enemyController;
+    public float timeOfSighting;
+
+    public RecentInterest(UnitController controller, float currentTime){
+        enemyController = controller;
+        timeOfSighting = currentTime;
     }
 }
 

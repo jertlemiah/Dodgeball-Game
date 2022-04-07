@@ -13,11 +13,13 @@ public class MatchResultsController : MonoBehaviour
     [SerializeField] int countdownSec = 10;
     void Awake()
     {
+        EventManagerSO.E_SceneLoaded += SceneLoaded;
         EventManagerSO.E_EndMatch += EndMatchUI;
         EventManagerSO.E_StartPrematch +=StartPrematchCountdown;
     } 
     void OnDisable()
     {
+        EventManagerSO.E_SceneLoaded -= SceneLoaded;
         EventManagerSO.E_EndMatch -= EndMatchUI;
         EventManagerSO.E_StartPrematch -= StartPrematchCountdown;
     }
@@ -31,6 +33,11 @@ public class MatchResultsController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void SceneLoaded (SceneIndex sceneIndex)
+    {
+        matchResultsScreenGO.SetActive(false);
     }
 
     public void StartPrematchCountdown()

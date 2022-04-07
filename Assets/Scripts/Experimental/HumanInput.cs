@@ -22,12 +22,12 @@ public class HumanInput : MonoBehaviour
     void Awake()
     {
         _inputActions = new InputActions();
-        // _input.Player.Pause.performed += context => PausePerformed();
+        // _inputActions.Player.Pause.performed += context => PausePerformed();
         // _input.Player.Move.performed += context => MoveInput(context);
         EventManagerSO.E_PauseGame += EnableMouse;
-        EventManagerSO.E_FinishedLoading += DisableMouse;
+        EventManagerSO.E_FinishedLoading += FinishedLoading;
         EventManagerSO.E_EndMatch += EndMatchCleanup;
-        EventManagerSO.E_UnpauseGame += DisableMouse;
+        EventManagerSO.E_UnpauseGame += UnpauseGame;
         DisableMouse();
     }
 
@@ -49,12 +49,13 @@ public class HumanInput : MonoBehaviour
     }
     private void OnDisable()
     {
-        _inputActions.Disable();
-        // _input.Player.Pause.performed -= context => PausePerformed() ;
+        EnableMouse();
+        // _inputActions.Player.Pause.performed -= context => PausePerformed() ;
         EventManagerSO.E_PauseGame -= EnableMouse;
-        EventManagerSO.E_FinishedLoading -= DisableMouse;
+        EventManagerSO.E_FinishedLoading -= FinishedLoading;
         EventManagerSO.E_EndMatch -= EndMatchCleanup;
-        EventManagerSO.E_UnpauseGame -= DisableMouse;
+        EventManagerSO.E_UnpauseGame -= UnpauseGame;
+        _inputActions.Disable();
     }
     private void PausePerformed() {
         Debug.Log("Toggle Pause button clicked");
@@ -66,18 +67,33 @@ public class HumanInput : MonoBehaviour
         EnableMouse();
     }
 
+    void FinishedLoading()
+    {
+        if(GameManager.Instance.currentState == GameState.MainMenu){
+           EnableMouse();
+        } else {
+            DisableMouse();
+        }
+    }
+
     void EnableMouse()
     {
         // cursorLocked = false;
         cursorInputForLook = false;
         SetCursorState(cursorInputForLook);
     }
+    void UnpauseGame()
+    {
+        if(GameManager.Instance.currentState != GameState.MainMenu){
+           DisableMouse();
+        }
+    }
     void DisableMouse()
     {
         // cursorLocked = true;
         Debug.Log("Disabling mouse!");
         cursorInputForLook = true;
-        SetCursorState(cursorInputForLook);
+        SetCursorState(cursorInputForLook);    
     }
 
     public void OnMove(InputValue value)
@@ -184,8 +200,8 @@ public class HumanInput : MonoBehaviour
     }
     private void OnApplicationFocus(bool hasFocus)
     {
-        Debug.Log("GameManager.Instance.currentState: "+GameManager.Instance.currentState);
-        if(GameManager.Instance.currentState != GameState.Paused){
+        // Debug.Log("GameManager.Instance.currentState: "+GameManager.Instance.currentState);
+        if(GameManager.Instance.currentState == GameState.MidMatch || GameManager.Instance.currentState == GameState.PreMatch){
             Debug.Log("locking cursor");
             SetCursorState(cursorLocked);
         }
@@ -196,4 +212,5 @@ public class HumanInput : MonoBehaviour
     {
         Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
     }
+
 }

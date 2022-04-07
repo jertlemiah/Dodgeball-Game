@@ -33,31 +33,31 @@ public class AIState_RetrieveBall : AIState
     public override void UpdateState ()
     {
         base.UpdateState();
-        if(aiController.unitController.hasBall) {
+        if(aiController.unitController.hasBall && aiController.recentEnemies.Count > 0) {
             aiController.ChangeState(AIStateEnum.AttackPlayer); // change to attack player
-        }
-        if (aiController.recentBalls == null || aiController.recentBalls.Count == 0 || aiController.stuck) {
+            return;
+        } else if (aiController.recentBalls.Count == 0 || aiController.stuck) {
             aiController.ChangeState(AIStateEnum.Wander);
             return;
-        }
-
-        if(aiController.unitController.pickUpZoneController.ballNear) {
-            aiController.newInput.pickup = true;
-            if(aiController.recentEnemies.Count > 0){
-                aiController.ChangeState(AIStateEnum.AttackPlayer); // change to attack player
-            } else {
-                aiController.ChangeState(AIStateEnum.Wander); // change to finding a player to attack
-            }
-            
         } else {
-            aiController.newInput.pickup = false;
+            if(aiController.unitController.pickUpZoneController.ballNear) {
+                aiController.newInput.pickup = true;
+                if(aiController.recentEnemies.Count > 0){
+                    aiController.ChangeState(AIStateEnum.AttackPlayer); // change to attack player
+                    return;
+                } else {
+                    aiController.ChangeState(AIStateEnum.Wander); // change to finding a player to attack
+                    return;
+                }
+                
+            } else {
+                aiController.newInput.pickup = false;
+            }
+
+            targetBall = aiController.recentBalls[0].dodgeballController;
+            // aiController.targetGO = targetBall.gameObject;
+            aiController.SetTargetObject(targetBall.gameObject);
         }
-
-        targetBall = aiController.recentBalls[0].dodgeballController;
-        // aiController.targetGO = targetBall.gameObject;
-        aiController.SetTargetObject(targetBall.gameObject);
-
-
     }
 
     public override void ExitState () 

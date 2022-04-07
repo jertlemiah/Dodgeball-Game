@@ -16,5 +16,5 @@ MonoBehaviour:
   author: 
   audioClip: {fileID: 8300000, guid: 260606b036a39f2459a6741f76b34695, type: 3}
   audioMixerGroup: {fileID: 8555695681841550366, guid: 8b6167dc8b252274fb1d6b899938e1bf, type: 2}
-  volume: 0.2
+  volume: 0.08
   pitch: 1

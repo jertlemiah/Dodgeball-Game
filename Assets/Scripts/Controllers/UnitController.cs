@@ -195,9 +195,22 @@ public class UnitController : MonoBehaviour
     private SpawnManager spawnManager;
     private HudController hc;
 
+    void Awake()
+    {
+        EventManagerSO.E_LoadingProgress += StopMovement;
+        EventManagerSO.E_StartMatch += AllowMovement;
+    }
+
+    void OnDisable()
+    {
+        EventManagerSO.E_LoadingProgress -= StopMovement;
+        EventManagerSO.E_StartMatch -= AllowMovement;
+    }
 
     void Start()
     {
+        // canMove = false;
+        
         spawnManager = SpawnManager.Instance;
         hc = HudController.Instance;
         isHuman =  GetComponentsInChildren<HumanInput>().Length > 0; //dirty
@@ -215,7 +228,8 @@ public class UnitController : MonoBehaviour
         blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
         blocker_renderer.enabled = false;
 
-        hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        // hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        hudController = HudController.Instance;
 
         if(handSpot == null) {
             handSpot = transform.Find(ballHoldSpotName).gameObject;
@@ -678,5 +692,15 @@ public class UnitController : MonoBehaviour
                 hc.HandleRespawn(5f);
             }
         }
+    }
+
+    void AllowMovement()
+    {
+        canMove = true;
+    }
+
+    void StopMovement(float garbage)
+    {
+        canMove = false;
     }
 }

@@ -28,14 +28,16 @@ public class AudioManager : Singleton<AudioManager>
     private int currentTrackIndex = 0;
     public bool stopMusic = false;
     
-    void Awake ()
+    new void Awake()
     {
+        base.Awake();
         if (!musicAudioSource) {
             musicAudioSource = GetComponent<AudioSource>(); // This will just grab the default audioSource
             // musicAudioSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;
         } 
         EventManagerSO.E_SceneLoaded += ChangePlaylist;
         EventManagerSO.E_StopMusic += StopAudio;
+        prevMasterVol = GetVolMaster();
     }
 
     void OnDisable ()
@@ -66,11 +68,14 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    float prevMasterVol;
     void StopAudio()
     {
         Debug.Log("Stopping audio");
         // musicAudioSource.Stop();
         stopMusic = true;
+        prevMasterVol = GetVolMaster();
+        SetVolMaster(0);
     }
 
     // public void PlayLoadingMusic()
@@ -87,6 +92,7 @@ public class AudioManager : Singleton<AudioManager>
     
     public void ChangePlaylist(List<AudioTrack> newPlaylist)
     {
+        SetVolMaster(prevMasterVol);
         if (newPlaylist.Count>0) {
             currentTracks.Clear();
             currentTracks = newPlaylist;
@@ -145,7 +151,7 @@ public class AudioManager : Singleton<AudioManager>
     /// </summary>
     public void Shuffle() {
         for (int i = 0; i < currentTracks.Count; i++) {
-            int rnd = Random.Range(0, currentTracks.Count);
+            int rnd = UnityEngine.Random.Range(0, currentTracks.Count);
             AudioTrack temp = currentTracks[rnd];
             currentTracks[rnd] = currentTracks[i];
             currentTracks[i] = temp;

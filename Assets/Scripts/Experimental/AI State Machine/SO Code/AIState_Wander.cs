@@ -28,6 +28,7 @@ public class AIState_Wander : AIState
     {
         base.EnterState();
         if(waypointsOfInterest.Length>0){
+            ShuffleWaypoints();
             currentTarget = GetNextWaypoint().position;
         }
         // aiController.moveToTarget=true;
@@ -39,29 +40,48 @@ public class AIState_Wander : AIState
     {
         base.UpdateState();
         
-        if(aiController.unitController.hasBall && aiController.recentEnemies.Count>0){
+        if (aiController.unitController.hasBall && aiController.recentEnemies.Count>0 ){
             aiController.ChangeState(AIStateEnum.AttackPlayer);
-        } else if (aiController.recentBalls.Count > 0) {
+        } else if (!aiController.unitController.hasBall && aiController.recentBalls.Count > 0) {
             // Go retrieve a ball
             aiController.ChangeState(AIStateEnum.RetrieveBall);
+        } else {
+            if(waypointsOfInterest.Length>0){
+                // Waypoint mode
+                // Go to next waypoint
+                if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist){
+                    currentTarget = GetNextWaypoint().position;
+                }    
+            } else { 
+                // Random position mode
+                timer += Time.deltaTime;
+                if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist || aiController.stuck || (timer >= wanderTimer)){
+                    timer = 0;
+                    currentTarget = RandomNavSphere(aiController.transform.position, wanderRadius, -1);
+                }
+            }   
+            aiController.SetDestination(currentTarget);
+            aiController.moveToTarget=true;
         }
         
-        if(waypointsOfInterest.Length>0){
-            // Waypoint mode
-            // Go to next waypoint
-            if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist){
-                currentTarget = GetNextWaypoint().position;
-            }    
-        } else { 
-            // Random position mode
-            timer += Time.deltaTime;
-            if((aiController.transform.position - currentTarget).magnitude < waypointStoppingDist || aiController.stuck || (timer >= wanderTimer)){
-                timer = 0;
-                currentTarget = RandomNavSphere(aiController.transform.position, wanderRadius, -1);
-            }
-        }   
-        aiController.SetDestination(currentTarget);
-        aiController.moveToTarget=true;
+        
+    }
+
+    public void ShuffleWaypoints() {
+        System.Array.Sort(waypointsOfInterest,RandomSort);
+        
+        // for (int i = 0; i < waypointsOfInterest.Length; i++) {
+        //     int rnd = UnityEngine.Random.Range(0, waypointsOfInterest.Length);
+        //     GameObject temp = waypointsOfInterest[rnd];
+        //     waypointsOfInterest[rnd] = waypointsOfInterest[i];
+        //     waypointsOfInterest[i] = temp;
+        // }
+    }
+
+    int RandomSort(GameObject a, GameObject b)
+    {
+        return UnityEngine.Random.Range(-1, 2);
+ 
     }
 
     Transform GetNextWaypoint()
