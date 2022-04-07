@@ -100,7 +100,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
                 foreach (AsyncOperation operation in scenesLoading) {
                     totalLoadingProgress += operation.progress;  
                 }
-                Debug.Log("totalLoadingProgress: "+totalLoadingProgress);
+                // Debug.Log("totalLoadingProgress: "+totalLoadingProgress);
                 totalLoadingProgress = (float)(totalLoadingProgress / (float)scenesLoading.Count);
                 // loadingBar.DOValue(totalLoadingProgress,tweenTime-(Time.time - startTime));
                 EventManagerSO.TriggerEvent_LoadingProgress(totalLoadingProgress);
@@ -111,10 +111,10 @@ public class GameSceneManager : Singleton<GameSceneManager>
             // loadingBar.DOValue(totalLoadingProgress,tweenTime-(Time.time - startTime));
             EventManagerSO.TriggerEvent_LoadingProgress(totalLoadingProgress);
 
-            Debug.Log("Loading progress: "+(totalLoadingProgress*100).ToString());
+            // Debug.Log("Loading progress: "+(totalLoadingProgress*100).ToString());
             float waitTime = (float)minLoadingTime/scenesLoading.Count;
             if ((Time.time - startTime) < waitTime) {
-                Debug.Log("going to wait for "+(waitTime-(Time.time - startTime)));
+                // Debug.Log("going to wait for "+(waitTime-(Time.time - startTime)));
                 yield return new WaitForSeconds(waitTime-(Time.time - startTime) );
             }
         }
@@ -158,5 +158,19 @@ public class GameSceneManager : Singleton<GameSceneManager>
             }
         }
         return sceneIsOpen;
+    }
+
+    public SceneIndex GetNonManagerScene()
+    {
+        SceneIndex index = SceneIndex.MANAGER;
+        for (int i = 0; i < SceneManager.sceneCount; i++) {
+            Scene scene = SceneManager.GetSceneAt(i);
+            // openScenes.Add(scene);
+            if(scene.buildIndex != (int)SceneIndex.MANAGER){
+                index = (SceneIndex)scene.buildIndex;
+            }
+        }
+        // return (SceneIndex)SceneManager.GetActiveScene().buildIndex;
+        return index;
     }
 }

@@ -195,16 +195,19 @@ public class GameManager : Singleton<GameManager>
         }
     }    
 
+    GameState stateBeforePause = GameState.PreMatch;
+
     /// <summary> Called by the InputManager when the player presses the pause button (start on a controller, Tab on keyboard). 
     /// <para>  If gameState is GameState.MidMatch, the E_PauseGame() event is triggered. </para>
     /// <para>  If gamestate is GameState.Paused, the E_UnPauseGame() event is triggered. </para></summary>
     public void TogglePause()
     {
-        if(currentState == GameState.MidMatch){
-            EventManagerSO.TriggerEvent_PauseGame();
-        } 
-        else if (currentState == GameState.Paused){
+        if (currentState == GameState.Paused){
             EventManagerSO.TriggerEvent_UnpauseGame();
+        }
+        else //if(currentState == GameState.MidMatch)
+        {
+            EventManagerSO.TriggerEvent_PauseGame();
         }
     }
 
@@ -213,6 +216,7 @@ public class GameManager : Singleton<GameManager>
     void PauseGame()
     {
         Time.timeScale = 0;
+        stateBeforePause = currentState;
         currentState = GameState.Paused;
     }
 
@@ -221,6 +225,7 @@ public class GameManager : Singleton<GameManager>
     void UnpauseGame()
     {
         Time.timeScale = 1;
-        currentState = GameState.MidMatch;
+        // currentState = GameState.MidMatch;
+        currentState = stateBeforePause;
     }
 }

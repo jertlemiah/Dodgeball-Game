@@ -69,6 +69,7 @@ public class HumanInput : MonoBehaviour
 
     void FinishedLoading()
     {
+        onFocusFix = false;
         if(GameManager.Instance.currentState == GameState.MainMenu){
            EnableMouse();
         } else {
@@ -198,10 +199,12 @@ public class HumanInput : MonoBehaviour
     {
         newInput.crouch = newCrouchState;
     }
+
+    bool onFocusFix = true;
     private void OnApplicationFocus(bool hasFocus)
     {
         // Debug.Log("GameManager.Instance.currentState: "+GameManager.Instance.currentState);
-        if(GameManager.Instance.currentState == GameState.MidMatch || GameManager.Instance.currentState == GameState.PreMatch){
+        if(onFocusFix || GameManager.Instance.currentState == GameState.MidMatch || GameManager.Instance.currentState == GameState.PreMatch){
             Debug.Log("locking cursor");
             SetCursorState(cursorLocked);
         }

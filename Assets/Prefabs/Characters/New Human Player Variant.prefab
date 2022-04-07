@@ -29,15 +29,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.2531066
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1249604
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.13617
+      value: -7.31
       objectReference: {fileID: 0}
     - target: {fileID: 6043158950332431050, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -70,6 +70,14 @@ PrefabInstance:
     - target: {fileID: 6043158950332431058, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_Name
       value: New Human Player Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043158950508038165, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.7250001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043158950508038165, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.2000003
       objectReference: {fileID: 0}
     - target: {fileID: 7847919114552562726, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_IsActive
@@ -209,6 +217,8 @@ MonoBehaviour:
     jump: 0
     cursorLocked: 0
     cursorInputForLook: 0
+    block: 0
+    crouch: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1

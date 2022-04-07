@@ -50,7 +50,9 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (shuffleListOnStart)
             Shuffle ();
-        
+        if (GameSceneManager.Instance.GetNonManagerScene() != SceneIndex.MANAGER){
+            ChangePlaylist(GameSceneManager.Instance.GetNonManagerScene());
+        }
         currentTrackIndex = -1; // Must start on -1 because PlayNextTrack increments currentTrackIndex before using it
         // PlayNextTrack();
     }
