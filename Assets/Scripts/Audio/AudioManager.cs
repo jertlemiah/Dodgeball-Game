@@ -28,8 +28,9 @@ public class AudioManager : Singleton<AudioManager>
     private int currentTrackIndex = 0;
     public bool stopMusic = false;
     
-    void Awake ()
+    new void Awake()
     {
+        base.Awake();
         if (!musicAudioSource) {
             musicAudioSource = GetComponent<AudioSource>(); // This will just grab the default audioSource
             // musicAudioSource.outputAudioMixerGroup = mixer.outputAudioMixerGroup;

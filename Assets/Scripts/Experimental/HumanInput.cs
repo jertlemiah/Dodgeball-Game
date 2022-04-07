@@ -184,7 +184,7 @@ public class HumanInput : MonoBehaviour
     }
     private void OnApplicationFocus(bool hasFocus)
     {
-        Debug.Log("GameManager.Instance.currentState: "+GameManager.Instance.currentState);
+        // Debug.Log("GameManager.Instance.currentState: "+GameManager.Instance.currentState);
         if(GameManager.Instance.currentState != GameState.Paused){
             Debug.Log("locking cursor");
             SetCursorState(cursorLocked);

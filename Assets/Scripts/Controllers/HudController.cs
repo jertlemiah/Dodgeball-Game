@@ -32,8 +32,9 @@ public class HudController : Singleton<HudController>
 
     // private GameManager gameManager;
     
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         if(!gameConstants)
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
         // StartTimer(timeRemaining);

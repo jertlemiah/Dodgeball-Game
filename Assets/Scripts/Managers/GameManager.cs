@@ -7,7 +7,7 @@ public enum Team {Team1, Team2, NoTeam}
 
 /// <summary> The current state of the GameManager {PreMatch, MidMatch, PostMatch, Paused}. "PreMatch" is for when the match is being set up. "MidMatch" is literally just while a match is playing.
 /// "PostMatch" is after a match is finished while the MatchResults screen is visible. And "Paused" is when the game is paused. </summary>
-public enum GameState {PreMatch, MidMatch, PostMatch, Paused}
+public enum GameState {PreMatch, MidMatch, PostMatch, Paused, MainMenu}
 
 /// <summary> TeamData is a struct that stores data about a specific team. Used in the GameManager in a dict<Team, TeamData> named teamDict. </summary>
 public struct TeamData
@@ -104,8 +104,14 @@ public class GameManager : Singleton<GameManager>
     ///           These two events were separated out in case we wanted the player to click a button or something like that to actually start the match. </summary>
     void StartPrematch()
     {
-        EventManagerSO.TriggerEvent_StartPrematch();
-        currentState = GameState.PreMatch;
+        // Check to see if the main menu is open
+        bool mainMenuOpen = false;
+
+        if(!mainMenuOpen){
+            EventManagerSO.TriggerEvent_StartPrematch();
+            currentState = GameState.PreMatch;
+        }
+        
     }
 
     /// <summary> Triggered by E_StartMatch. Starts the game timer and changes the gameState to GameState.MidMatch.</summary>
