@@ -7,7 +7,7 @@ public class FlagController : MonoBehaviour
     bool InTransit;
     Vector3 startingPosition;
     Quaternion startingRotation;
-    GameObject PlayerWithFlag;
+    public GameObject PlayerWithFlag;
 
     // HUD_CONTROLLER_TYPE mHUDController;
 

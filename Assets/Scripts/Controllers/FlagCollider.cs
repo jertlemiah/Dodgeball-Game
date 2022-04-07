@@ -35,7 +35,15 @@ public class FlagCollider : MonoBehaviour
             }
             else if (collider.gameObject.tag == "Base") // Acceptable colliders for scoring the flag
             {
-                mFlagController.FlagScored();
+                if (collider.gameObject.name == "BlueBase" && mFlagController.PlayerWithFlag.GetComponent<HumanInput>() != null)
+                {
+                    mFlagController.FlagScored();
+                }
+                else if (collider.gameObject.name == "RedBase" && mFlagController.PlayerWithFlag.GetComponent<AIState_Idle>() != null)
+                {
+                    mFlagController.FlagScored();
+                }
+
             }
         }
 
