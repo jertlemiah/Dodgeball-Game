@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,10 @@ public class DodgeballController : MonoBehaviour
     public bool hasOwner = false;
     public bool isThrown = false;
     public GameObject thrownBy;
+
+    private UnityEngine.Vector3 spawnPoint;
+
+    private bool ballRespawnRunning = false;
     
     // Start is called before the first frame update
     public void Start()
@@ -36,6 +41,8 @@ public class DodgeballController : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         if(!rb)
             rb = GetComponent<Rigidbody>();
+
+        spawnPoint = transform.position;
     }
 
     public void PickupByPlayer(UnitController unitController)
@@ -44,9 +51,11 @@ public class DodgeballController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+        if (isThrown && !ballRespawnRunning) {
+            StartCoroutine(CountdownBallRespawn());
+        }
     }
     void OnCollisionEnter(Collision c)
     {
@@ -84,5 +93,18 @@ public class DodgeballController : MonoBehaviour
         
         // Debug.Log("Dodgeball hit, vel is "+rb.velocity.magnitude+", playing clip: "+randClip);
         audioSource.PlayOneShot(randClip);
+    }
+
+        IEnumerator CountdownBallRespawn()
+    {
+        ballRespawnRunning = true;
+        UnityEngine.Debug.Log("CountdownBallRespawn");
+        yield return new WaitForSeconds(10f);
+        if (hasOwner == false)
+        {
+            UnityEngine.Debug.Log("Moving to spawn");
+            transform.position = spawnPoint;
+        }
+        ballRespawnRunning = false;
     }
 }

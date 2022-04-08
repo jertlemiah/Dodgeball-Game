@@ -13,8 +13,8 @@ public class HeavyBallController : DodgeballController
     }
 
     // Update is called once per frame
-    void Update()
+    new public void Update()
     {
-        
+        base.Update();
     }
 }
