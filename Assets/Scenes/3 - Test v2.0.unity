@@ -3164,7 +3164,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5125387841349667843, guid: 32ff13a248b2c9b47860b7601d40342c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125387841349667843, guid: 32ff13a248b2c9b47860b7601d40342c, type: 3}
       propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125387841349667843, guid: 32ff13a248b2c9b47860b7601d40342c, type: 3}
+      propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11543,12 +11551,12 @@ GameObject:
   - component: {fileID: 1970014862}
   - component: {fileID: 1970014861}
   m_Layer: 0
-  m_Name: CM vcam1
+  m_Name: Screenshot Cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1970014861
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -111,6 +111,7 @@ public class GameManager : Singleton<GameManager>
         timerIsRunning = false;
         timeRemaining = matchTimeLimit;
         EventManagerSO.TriggerEvent_SetTimer(matchTimeLimit);
+        EventManagerSO.TriggerEvent_BallPickup(DodgeballType.none);
         
         if(mainMenuOpen){
             EventManagerSO.TriggerEvent_HideHUD();
