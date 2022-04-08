@@ -30,6 +30,11 @@ public class HudController : Singleton<HudController>
 
     private float crouch_tween = 2;
     [SerializeField] private SimpleHealthBar healthBar;
+    [SerializeField] private TMP_Text ballTypeText;
+    [SerializeField] GameObject renderCamGO_dodgeball;
+    [SerializeField] GameObject renderCamGO_fastball;
+    [SerializeField] GameObject renderCamGO_deathball;
+    [SerializeField] GameObject renderCamGO_heavyball;
 
     // private GameManager gameManager;
     
@@ -58,6 +63,7 @@ public class HudController : Singleton<HudController>
         EventManagerSO.E_EndMatch += EndMatch;
         EventManagerSO.E_HideHUD += DisableHUD;
         EventManagerSO.E_PickUpText += PickUpTextActive;
+        EventManagerSO.E_BallPickup += DisplayHeldBall;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
@@ -78,6 +84,7 @@ public class HudController : Singleton<HudController>
         EventManagerSO.E_EndMatch -= EndMatch;
         EventManagerSO.E_HideHUD -= DisableHUD;
         EventManagerSO.E_PickUpText -= PickUpTextActive;
+        EventManagerSO.E_BallPickup -= DisplayHeldBall;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
@@ -147,13 +154,36 @@ public class HudController : Singleton<HudController>
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         textTimer.text = string.Format("{0:0}:{1:00}", minutes, seconds);
     }
-    void DisplayHeldBall()
+    void DisplayHeldBall(DodgeballType dodgeballType)
     {
+        HideRenderCams();
         ballRenderTexture.SetActive(true);
+        ballTypeText.text = dodgeballType.ToString();
+        switch(dodgeballType){
+            case DodgeballType.Dodgeball:
+                renderCamGO_dodgeball.SetActive(true);
+                break;
+            case DodgeballType.Fastball:
+                renderCamGO_fastball.SetActive(true);
+                break;
+            case DodgeballType.Heavyball:
+                renderCamGO_heavyball.SetActive(true);
+                break;
+            case DodgeballType.Deathball:
+                renderCamGO_deathball.SetActive(true);
+                break;
+            default:
+                ballRenderTexture.SetActive(false);
+                break;
+        }
     }
-    void HideHeldBall()
+    void HideRenderCams()
     {
         ballRenderTexture.SetActive(false);
+        renderCamGO_dodgeball.SetActive(false);
+        renderCamGO_fastball.SetActive(false);
+        renderCamGO_heavyball.SetActive(false);
+        renderCamGO_deathball.SetActive(false);
     }
 
     public void HandleRespawn(float time) {

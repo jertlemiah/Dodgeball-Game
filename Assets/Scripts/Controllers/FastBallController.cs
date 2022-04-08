@@ -10,6 +10,7 @@ public class FastBallController : DodgeballController
         base.Start();
         velocity = 40f;
         damage = 10;
+        dodgeballType = DodgeballType.Fastball;
     }
 
     // Update is called once per frame

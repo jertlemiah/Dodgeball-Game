@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DodgeballType {none, Dodgeball, Fastball, Deathball, Heavyball}
 public class DodgeballController : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
@@ -26,6 +27,7 @@ public class DodgeballController : MonoBehaviour
     private UnityEngine.Vector3 spawnPoint;
 
     private bool ballRespawnRunning = false;
+    public DodgeballType dodgeballType = DodgeballType.Dodgeball;
     
     // Start is called before the first frame update
     public void Start()

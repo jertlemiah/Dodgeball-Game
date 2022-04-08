@@ -78,6 +78,10 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_StopMusic is used to simply stop the currently playing music.</summary>
     public static event StopMusicHandler E_StopMusic;
 
+    public delegate void BallPickupHandler(DodgeballType dodgeballType);
+    /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
+    public static event BallPickupHandler E_BallPickup;
+
     
     /// <summary> Triggers the E_GiveTeamPoints(Team team, int points) event. </summary>
     public static void TriggerEvent_GiveTeamPoints(Team team, int points)
@@ -224,6 +228,17 @@ public class EventManagerSO : ScriptableObject
             E_StopMusic();
         }
     }
+
+    /// <summary> Triggers the E_BallPickup() event for when a human player pickups up a dodgeball. </summary>
+    public static void TriggerEvent_BallPickup(DodgeballType dodgeballType)
+    {       
+        if(E_BallPickup != null){
+            Debug.Log("Triggering Event 'E_BallPickup("+dodgeballType.ToString()+")'");
+            E_BallPickup(dodgeballType);
+        } 
+    }
+
+    
 
     
 }

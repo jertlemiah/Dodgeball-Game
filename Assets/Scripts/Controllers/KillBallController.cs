@@ -10,7 +10,7 @@ public class KillBallController : DodgeballController
         base.Start();
         velocity = 20f;
         damage = 200;
-        
+        dodgeballType = DodgeballType.Deathball;
     }
 
     // Update is called once per frame

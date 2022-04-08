@@ -428,7 +428,11 @@ public class UnitController : MonoBehaviour
             heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
             _animator.SetBool("PickUp", true);
             canMove = false;
-            EventManagerSO.TriggerEvent_PickUpText(false); 
+            if(isHuman){
+                EventManagerSO.TriggerEvent_PickUpText(false); 
+                
+            }
+            
         }
 
         if(_animator.GetBool("PickUp"))
@@ -458,6 +462,10 @@ public class UnitController : MonoBehaviour
         heldBallGO.GetComponent<DodgeballController>().isThrown = true; // the ball can now cause damage on collision
         heldBallGO.GetComponent<DodgeballController>().thrownBy = this.gameObject; // to let the dodgeball know not to damage the person who threw it on exit from hand
         heldBallGO = null;
+        if(isHuman){
+            EventManagerSO.TriggerEvent_BallPickup(DodgeballType.none);
+        }
+        
     }
 
     void AnimTrigger_Pickup()
@@ -477,6 +485,9 @@ public class UnitController : MonoBehaviour
         _animator.SetBool("PickUp", false);
         hasBall = true;
         canMove = true;
+        if(isHuman){
+            EventManagerSO.TriggerEvent_BallPickup(heldBallGO.GetComponent<DodgeballController>().dodgeballType);
+        }
     }
 
     void AnimTrigger_Crouch()
