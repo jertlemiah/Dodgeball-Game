@@ -419,7 +419,7 @@ public class UnitController : MonoBehaviour
 
     void PickupBall()
     {
-        if(pickUpZoneController.ballNear && input.pickup && Grounded)
+        if(pickUpZoneController.ballNear && input.pickup && Grounded && !hasBall)
         {
             pickUpZoneController.dodgeball.hasOwner = true;
             pickUpZoneController.ballNear = false;
@@ -499,6 +499,11 @@ public class UnitController : MonoBehaviour
         _animIDJump = Animator.StringToHash("Jump");
         _animIDFreeFall = Animator.StringToHash("FreeFall");
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+    }
+
+    public void KillPlayer()
+    {
+        healthCurrent = 0;
     }
 
     public void TakeDamage(int damage)
@@ -776,6 +781,11 @@ public class UnitController : MonoBehaviour
                 player.GetComponent<CharacterController>().enabled = false;
             }
             _animator.enabled = false;
+            
+            FlagController flagController = GetComponentInChildren<FlagController>();
+            if(flagController){
+                flagController.FlagReturned();
+            }
             
             var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
             UnityEngine.Debug.Log("spawnPoint" + spawnPoint);

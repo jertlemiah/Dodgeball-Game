@@ -36,7 +36,7 @@ public class AIState_RetrieveBall : AIState
         if(aiController.unitController.hasBall && aiController.recentEnemies.Count > 0) {
             aiController.ChangeState(AIStateEnum.AttackPlayer); // change to attack player
             return;
-        } else if (aiController.recentBalls.Count == 0 || aiController.stuck) {
+        } else if (aiController.unitController.hasBall || aiController.recentBalls.Count == 0 || aiController.stuck) {
             aiController.ChangeState(AIStateEnum.Wander);
             return;
         } else {

@@ -127,7 +127,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2458690849612056800}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &990871348
 MeshFilter:
@@ -222,7 +222,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.75, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2458690849612056800}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1772705991
 MeshFilter:
@@ -318,7 +318,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.75, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2458690849612056800}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1881243587
 MeshFilter:
@@ -452,6 +452,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
+--- !u!114 &8197284975913575666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8856255257582327339, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
+  m_PrefabInstance: {fileID: 803090417667601113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bc5a277862f7474abb5a7274b2b3df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8197284975585276458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -465,7 +476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 657184208956269567, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 657184208956269567, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -565,7 +576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7847919114552562725, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7847919114552562726, guid: f0413036c42baff4ab3ef6972e527da5, type: 3}
       propertyPath: m_IsActive
@@ -611,7 +622,7 @@ MonoBehaviour:
     timeOfSighting: 0
   - dodgeballController: {fileID: 0}
     timeOfSighting: 0
-  fieldOfView: {fileID: 0}
+  fieldOfView: {fileID: 8197284975913575666}
   fowPrefab: {fileID: 8856255257582327511, guid: 8ddbc1064c56f284e907ccc2431c77d1, type: 3}
   recentMemoryTime: 10
   aimAtThis: {fileID: 6069753633734445680}

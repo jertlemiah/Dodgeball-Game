@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 49d32fe57f0fa154f9c73a660bbefb7b, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 3d2f4a323b16ea24c946c79ae01ed4e1, type: 2}
 --- !u!1 &125991124
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,6 +507,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1411995457470336619, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3505723156579577740, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -518,6 +522,18 @@ PrefabInstance:
     - target: {fileID: 3505723156579577740, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832721533579786610, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.931
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832721533579786610, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832721533579786610, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.931
       objectReference: {fileID: 0}
     - target: {fileID: 6509902746890903280, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
       propertyPath: m_Name
@@ -614,6 +630,18 @@ PrefabInstance:
     - target: {fileID: 7165448516567733946, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856581004808776050, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.069000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856581004808776050, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856581004808776050, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.069000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4188243d2ad70b84b86c07993a1aee91, type: 3}

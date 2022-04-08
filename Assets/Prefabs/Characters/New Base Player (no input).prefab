@@ -877,7 +877,7 @@ MonoBehaviour:
   aimSensitivity: 0.5
   aimColliderLayerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3072
   overrideTargetTransform: {fileID: 2737770227663698010}
   handSpot: {fileID: 6043158950298477989}
   debugTransform: {fileID: 0}

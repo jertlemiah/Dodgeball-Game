@@ -74,6 +74,9 @@ public class AIController : MonoBehaviour
         }
         newInput.moveRelative = false;
         if(!fieldOfView){
+            fieldOfView = GetComponentInChildren<AIFieldOfView>();
+        }
+        if(!fieldOfView){
             if(fowPrefab){
                 Debug.LogWarning("gameObject "+gameObject.name+" does not have an AIFieldOfView assigned. Creating a prefab fow object.");
                 fieldOfView = Instantiate(fowPrefab,this.transform).GetComponent<AIFieldOfView>();
