@@ -28,6 +28,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
     public float totalLoadingProgress = 0f;
     public Dictionary<SceneIndex, LevelDataSO> levelDataDict = new Dictionary<SceneIndex, LevelDataSO>();
     public List<Scene> openScenes = new List<Scene>();
+    public LevelDataSO[] levelDataArr;
 
     new void Awake()
     {
@@ -39,7 +40,7 @@ public class GameSceneManager : Singleton<GameSceneManager>
         //     EventManagerSO.TriggerEvent_SceneLoaded(SceneIndex.TITLE_SCREEN);
         // }     
         
-        LevelDataSO[] levelDataArr = GetAllInstances<LevelDataSO>();
+        // LevelDataSO[] levelDataArr = GetAllInstances<LevelDataSO>();
         foreach (LevelDataSO levelDataSO in levelDataArr) {
             levelDataDict.Add(levelDataSO.sceneIndex, levelDataSO);
         }
@@ -135,19 +136,19 @@ public class GameSceneManager : Singleton<GameSceneManager>
     }
 
 
-    public static T[] GetAllInstances<T>() where T : ScriptableObject
-    {
-        string[] guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);  //FindAssets uses tags check documentation for more info
-        T[] a = new T[guids.Length];
-        for(int i =0;i<guids.Length;i++)         //probably could get optimized 
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            a[i] = AssetDatabase.LoadAssetAtPath<T>(path);
-        }
+    // public static T[] GetAllInstances<T>() where T : ScriptableObject
+    // {
+    //     string[] guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);  //FindAssets uses tags check documentation for more info
+    //     T[] a = new T[guids.Length];
+    //     for(int i =0;i<guids.Length;i++)         //probably could get optimized 
+    //     {
+    //         string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+    //         a[i] = AssetDatabase.LoadAssetAtPath<T>(path);
+    //     }
 
-        return a;
+    //     return a;
 
-    }
+    // }
 
     public bool IsSceneOpen(SceneIndex sceneIndex)
     {
