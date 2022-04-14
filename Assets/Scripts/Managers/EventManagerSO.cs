@@ -82,6 +82,10 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
     public static event BallPickupHandler E_BallPickup;
 
+    public delegate void UpdateHealthbarHandler(float newHealth, bool isNewMax);
+    /// <summary> E_SetTimer accepts one argument (float timeRemaining) to specify how much time is left in the match.</summary>
+    public static event UpdateHealthbarHandler E_UpdateHealthbar;
+
     
     /// <summary> Triggers the E_GiveTeamPoints(Team team, int points) event. </summary>
     public static void TriggerEvent_GiveTeamPoints(Team team, int points)
@@ -238,7 +242,14 @@ public class EventManagerSO : ScriptableObject
         } 
     }
 
-    
+    /// <summary> Triggers the E_UpdateHealthbar(float newHealth, bool isNewMax) event. </summary>
+    public static void TriggerEvent_UpdateHealthbar(float newHealth, bool isNewMax)
+    {
+        if(E_UpdateHealthbar != null){
+            Debug.Log("Triggering Event 'UpdateHealthbar("+newHealth+", "+isNewMax+")'");  // This gets called way too much, lol          
+            E_UpdateHealthbar(newHealth, isNewMax);
+        }        
+    }
 
     
 }

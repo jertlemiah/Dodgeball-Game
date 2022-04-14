@@ -260,7 +260,8 @@ public class UnitController : MonoBehaviour
         }
         if(isHuman) {
             // healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
-            hudController.SetMaxHealth(healthMax);
+            // hudController.SetMaxHealth(healthMax);
+            EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
         }
     }
 
@@ -522,7 +523,8 @@ public class UnitController : MonoBehaviour
         if (healthCurrent - damage < 0) {
             healthCurrent = 0;
             if(isHuman) {
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
             if(team == Team.Team1)
             {
@@ -538,7 +540,8 @@ public class UnitController : MonoBehaviour
             UnityEngine.Debug.Log("Took Damage");
             healthCurrent -= damage;
             if(isHuman) {
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
         }
         
@@ -731,7 +734,8 @@ public class UnitController : MonoBehaviour
                 healthCurrent = healthMax;
             }
             if(isHuman) {
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
@@ -739,8 +743,10 @@ public class UnitController : MonoBehaviour
             healthMax += 50;
             healthCurrent += 50;
             if(isHuman) {
-                hudController.SetMaxHealth(healthMax);
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetMaxHealth(healthMax);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
             StartCoroutine(CountdownArmor());
         } else if (powerup.name.Contains("Speed")) {
@@ -760,8 +766,10 @@ public class UnitController : MonoBehaviour
             healthCurrent = healthMax;
         }
         if(isHuman) {
-            hudController.SetMaxHealth(healthMax);
-            hudController.SetHealth(healthCurrent);
+            // hudController.SetMaxHealth(healthMax);
+            // hudController.SetHealth(healthCurrent);
+            EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+            EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
         }
         powerup = null;
     }
@@ -806,8 +814,10 @@ public class UnitController : MonoBehaviour
             StartCoroutine(CountdownDeath());
             if (isHuman) {
                 hc.HandleRespawn(5f);
-                hudController.SetMaxHealth(healthMax);
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetMaxHealth(healthMax);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
         }
     }

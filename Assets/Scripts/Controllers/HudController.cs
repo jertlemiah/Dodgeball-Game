@@ -24,12 +24,14 @@ public class HudController : Singleton<HudController>
 
     [SerializeField] Slider crouchBar;
     [SerializeField] Slider blockBar;
+    [SerializeField] CooldownTimer blockCooldownTimer;
 
     public GameObject blueFlag;
     public GameObject redFlag;
 
     private float crouch_tween = 2;
-    [SerializeField] private SimpleHealthBar healthBar;
+    // [SerializeField] private SimpleHealthBar healthBar;
+    [SerializeField] HealthbarController healthbar;
     [SerializeField] private TMP_Text ballTypeText;
     [SerializeField] GameObject renderCamGO_dodgeball;
     [SerializeField] GameObject renderCamGO_fastball;
@@ -41,11 +43,13 @@ public class HudController : Singleton<HudController>
     new void Awake()
     {
         base.Awake();
-        if(!gameConstants)
+        if (!gameConstants)
             Debug.LogError(gameObject.name+" does not have gameConstants property assigned");
-        if(!healthBar){
-            healthBar = GetComponent<SimpleHealthBar>();
-        }
+        if (!healthbar)
+            Debug.LogWarning(gameObject.name + " does not have a healthbarController assigned");
+        // if(!healthBar){
+        //     healthBar = GetComponent<SimpleHealthBar>();
+        // }
         // StartTimer(timeRemaining);
         // SetScore(0,0);
 
@@ -59,11 +63,12 @@ public class HudController : Singleton<HudController>
         EventManagerSO.E_SetTimer += SetTimerUI;
         EventManagerSO.E_UpdateFlagStatus += UpdateFlags;
         EventManagerSO.E_FinishedLoading += DisableHUD;
-        EventManagerSO.E_StartMatch += EnableHUD;
+        EventManagerSO.E_StartMatch += StartMatch;
         EventManagerSO.E_EndMatch += EndMatch;
         EventManagerSO.E_HideHUD += DisableHUD;
         EventManagerSO.E_PickUpText += PickUpTextActive;
         EventManagerSO.E_BallPickup += DisplayHeldBall;
+        EventManagerSO.E_UpdateHealthbar += UpdateHealthbar;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
@@ -80,11 +85,12 @@ public class HudController : Singleton<HudController>
         EventManagerSO.E_SetTimer -= SetTimerUI;
         EventManagerSO.E_UpdateFlagStatus -= UpdateFlags;
         EventManagerSO.E_FinishedLoading -= DisableHUD;
-        EventManagerSO.E_StartMatch -= EnableHUD;
+        EventManagerSO.E_StartMatch -= StartMatch;
         EventManagerSO.E_EndMatch -= EndMatch;
         EventManagerSO.E_HideHUD -= DisableHUD;
         EventManagerSO.E_PickUpText -= PickUpTextActive;
         EventManagerSO.E_BallPickup -= DisplayHeldBall;
+        EventManagerSO.E_UpdateHealthbar -= UpdateHealthbar;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
@@ -109,6 +115,12 @@ public class HudController : Singleton<HudController>
     private void PickUpTextActive(bool activeStatus)
     {
         pickUpTextGO.SetActive(activeStatus);
+    }
+
+    void StartMatch()
+    {
+        EnableHUD();
+        // EventManagerSO.TriggerEvent_UpdateHealthbar
     }
 
     private void EnableHUD()
@@ -201,17 +213,26 @@ public class HudController : Singleton<HudController>
 
     public void BlockCooldown(float tween_time)
     {
-        blockBar.value = 0;
-        blockBar.DOValue(1,tween_time);
+        blockCooldownTimer.StartCooldown(tween_time);
+        // blockBar.value = 0;
+        // blockBar.DOValue(1,tween_time);
     }
 
-    public void SetMaxHealth(int health)
-	{
-		healthBar.SetMaxHealth(health);
-	}
+    void UpdateHealthbar(float newHealth, bool isNewMax)
+    {
+        if(isNewMax) healthbar.SetMaxHealth(newHealth);
+        else {
+            healthbar.SetHealth(newHealth);
+        }
+    }
 
-    public void SetHealth(int health)
-	{
-        healthBar.SetHealth(health);
-	}
+    // public void SetMaxHealth(int health)
+	// {
+	// 	healthBar.SetMaxHealth(health);
+	// }
+
+    // public void SetHealth(int health)
+	// {
+    //     healthBar.SetHealth(health);
+	// }
 }
