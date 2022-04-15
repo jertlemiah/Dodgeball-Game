@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using Mirror;
+
+
 [RequireComponent(typeof(UnitController))]
 [RequireComponent(typeof(PlayerInput))]
-public class HumanInput : MonoBehaviour
+public class HumanInput : NetworkBehaviour
 {
     private InputActions _inputActions;
     UnitController unitController;
@@ -40,7 +43,11 @@ public class HumanInput : MonoBehaviour
 
     void Update()
     {
-        unitController.input = newInput;
+        //if (!hasAuthority) { return; }
+        if (isLocalPlayer)
+        {
+            unitController.input = newInput;
+        }
     }
      
     private void OnEnable()

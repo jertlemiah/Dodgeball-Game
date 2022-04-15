@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Cinemachine;
+using Mirror;
 
 [Serializable]
 public struct Input
@@ -30,7 +31,7 @@ public struct Input
 // [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(AimIK))]
 [RequireComponent(typeof(CharacterController))]
-public class UnitController : MonoBehaviour
+public class UnitController : NetworkBehaviour
 {
     [Header("               Controller Input")]
         [Tooltip("The currently supplied input for the controller")] 
@@ -223,6 +224,10 @@ public class UnitController : MonoBehaviour
 
     void Start()
     {
+        if (!isLocalPlayer)
+        {
+            unitCamera.gameObject.SetActive(false);
+        }
         // canMove = false;
         isHuman =  GetComponentsInChildren<HumanInput>().Length > 0;
         spawnManager = SpawnManager.Instance;

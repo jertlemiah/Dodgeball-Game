@@ -6,21 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/6 - Gym Multiplayer.unity
+    guid: e835cf8036574b54bae2a53393df8899
+  - enabled: 1
     path: Assets/Scenes/0 - Persistent Scene.unity
     guid: 77b634db033a6f749b9504632d7c6c74
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/1 - Main Menu.unity
     guid: 7fcb5d5cff108fb409d925006cb1c2cd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/2 - FinalAlphaScene.unity
     guid: e8ce3f8a2e8fbcd4fb630925da3f6240
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/3 - Test v2.0.unity
     guid: 717112cd8b2a6bd4e8f0ae8b43b275f4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4 - Desert.unity
     guid: 795fff873f810ba478cd65ec3990bae3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/5 - Space (rough).unity
     guid: e03af3c4074dc433fb1b40a0d669b850
   m_configObjects:
