@@ -10,6 +10,7 @@ TagManager:
   - OpBall
   - Points of Interest
   - HUD
+  - Spawn point
   layers:
   - Default
   - TransparentFX
