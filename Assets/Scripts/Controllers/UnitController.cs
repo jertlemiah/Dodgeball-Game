@@ -124,13 +124,14 @@ public class UnitController : MonoBehaviour
 
     [Header("           Shooter Settings")][Space(15)]
         [SerializeField] string ballHoldSpotName = "BallHoldSpot";
+        [SerializeField] private GameObject handSpot;
         [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
         [SerializeField] private float normalSensitivity = 2;
         [SerializeField] private float aimSensitivity = 0.5f;
         [SerializeField] private LayerMask aimColliderLayerMask;
         public Transform overrideTargetTransform;
 
-        [SerializeField] private GameObject handSpot;
+        
         [SerializeField] private Transform debugTransform;
 
         [SerializeField] private float block_cooldown = 3;
@@ -142,7 +143,9 @@ public class UnitController : MonoBehaviour
         public GameObject heldBallGO;
         AimIK aimIK => GetComponent<AimIK>();
 
-        
+        [SerializeField] string flagHoldSpotName = "FlagHoldSpot";
+        [SerializeField] public GameObject flagSpot;
+        public bool hasFlag = false;
 
     private float last_block_time;
     private bool canBlock = true;
@@ -248,6 +251,11 @@ public class UnitController : MonoBehaviour
             handSpot = transform.Find(ballHoldSpotName).gameObject;
             if(handSpot == null)
                 UnityEngine.Debug.LogError(gameObject.name+" does not have its handSpot game object set, and could not find one in children.");
+        }
+        if(flagSpot == null) {
+            flagSpot = transform.Find(flagHoldSpotName).gameObject;
+            if(flagSpot == null)
+                UnityEngine.Debug.LogError(gameObject.name+" does not have its flagSpot game object set, and could not find one in children.");
         }
         if(aimVirtualCamera == null) {
             UnityEngine.Debug.LogError(gameObject.name+" does not have its virtual Cinemachine aim camera set.");
@@ -442,6 +450,8 @@ public class UnitController : MonoBehaviour
             // hasBall = true;
         }
     }
+
+    // public void Capture
 
     void AnimTrigger_Throw()
     {
@@ -802,8 +812,10 @@ public class UnitController : MonoBehaviour
             _animator.enabled = false;
             
             FlagController flagController = GetComponentInChildren<FlagController>();
+            UnityEngine.Debug.Log("Found flag? "+flagController!=null);
             if(flagController){
-                flagController.FlagReturned();
+                // flagController.FlagReturned();
+                flagController.FlagDropped();
             }
             
             var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);

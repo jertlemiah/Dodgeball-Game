@@ -23,29 +23,29 @@ public class FlagCollider : MonoBehaviour
         // Flag controller functions decide whether or not the flag can be taken related to THE FLAGs current status condition. 
         // This (Flag Collider) needs to decide based on the collider aspects (who is colliding with the flag), then pass the decision making on to FlagController by way of function calls
 
-        if (mFlagController != null)
-        {
-            if (collider.gameObject.tag == "Player") // Acceptable colliders for taking the flag
-            {
-                mFlagController.FlagTaken(collider.gameObject);
-            }
-            else if (collider.gameObject.tag == "Enemy") // Acceptable colliders for enemy flag takes
-            {
-                mFlagController.FlagTaken(collider.gameObject);
-            }
-            else if (collider.gameObject.tag == "Base") // Acceptable colliders for scoring the flag
-            {
-                if (collider.gameObject.name == "BlueBase" && mFlagController.PlayerWithFlag.GetComponent<HumanInput>() != null)
-                {
-                    mFlagController.FlagScored();
-                }
-                else if (collider.gameObject.name == "RedBase" && mFlagController.PlayerWithFlag.GetComponent<AIState_Idle>() != null)
-                {
-                    mFlagController.FlagScored();
-                }
+        // if (mFlagController != null)
+        // {
+        //     if (collider.gameObject.tag == "Player") // Acceptable colliders for taking the flag
+        //     {
+        //         mFlagController.FlagTaken(collider.gameObject);
+        //     }
+        //     else if (collider.gameObject.tag == "Enemy") // Acceptable colliders for enemy flag takes
+        //     {
+        //         mFlagController.FlagTaken(collider.gameObject);
+        //     }
+        //     else if (collider.gameObject.tag == "Base") // Acceptable colliders for scoring the flag
+        //     {
+        //         if (collider.gameObject.name == "BlueBase" && mFlagController.PlayerWithFlag.GetComponent<HumanInput>() != null)
+        //         {
+        //             mFlagController.FlagScored();
+        //         }
+        //         else if (collider.gameObject.name == "RedBase" && mFlagController.PlayerWithFlag.GetComponent<AIState_Idle>() != null)
+        //         {
+        //             mFlagController.FlagScored();
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
     }
 }

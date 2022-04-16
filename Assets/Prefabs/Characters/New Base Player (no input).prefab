@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657184208956269562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.12999997, y: 1.725, z: -7.1400003}
+  m_LocalPosition: {x: -0.117504954, y: 1.7250001, z: -3.3315294}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6043158950332431050}
@@ -173,6 +173,36 @@ Transform:
   m_Father: {fileID: 6043158950332431050}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6004569465355634550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7128313896886569124}
+  m_Layer: 8
+  m_Name: FlagHoldSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7128313896886569124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004569465355634550}
+  m_LocalRotation: {x: -0.15304585, y: -0.6903456, z: -0.15304585, w: 0.6903456}
+  m_LocalPosition: {x: -0.51538837, y: -1.0016931, z: -0.2976191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6043158950220708286}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -25, y: -90, z: 0}
 --- !u!1 &6043158949884915695
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +578,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6043158950625387676}
+  - {fileID: 7128313896886569124}
   m_Father: {fileID: 6043158951688407689}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -872,6 +903,7 @@ MonoBehaviour:
   team: 0
   DAMAGE_SPEED: 5
   ballHoldSpotName: BallHoldSpot
+  handSpot: {fileID: 6043158950298477989}
   aimVirtualCamera: {fileID: 6043158951254450274}
   normalSensitivity: 2
   aimSensitivity: 0.5
@@ -879,13 +911,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3072
   overrideTargetTransform: {fileID: 2737770227663698010}
-  handSpot: {fileID: 6043158950298477989}
   debugTransform: {fileID: 0}
   block_cooldown: 2
   block_time: 3
   crouch_cooldown: 2
   hasBall: 0
   heldBallGO: {fileID: 0}
+  flagHoldSpotName: FlagHoldSpot
+  flagSpot: {fileID: 6004569465355634550}
+  hasFlag: 0
   pickUpZoneController: {fileID: 6043158951033007008}
   player: {fileID: 6043158950332431058}
 --- !u!114 &8402754302049698420
