@@ -13,8 +13,10 @@ public class HudController : Singleton<HudController>
     [SerializeField] float screenTransitionTime = 1f;
     [SerializeField] private TMP_Text textTimer;
     [SerializeField] private TMP_Text textTeam1Score;
+    [SerializeField] private TMP_Text textTeam1MaxScore;
     [SerializeField] private Slider sliderTeam1Score;
     [SerializeField] private TMP_Text textTeam2Score;
+    [SerializeField] private TMP_Text textTeam2MaxScore;
     [SerializeField] private Slider sliderTeam2Score;
     [SerializeField] GameObject ballRenderTexture;
     [SerializeField] GameObject pickUpTextGO;
@@ -45,6 +47,13 @@ public class HudController : Singleton<HudController>
     [SerializeField] GameObject flagIndicatorRedGO;
     // [SerializeField] TMP_Text redFlagText;
     GameObject flagRedGO;
+    [SerializeField] Slider redFlagPositionSlider;
+    [SerializeField] Image redFlagPosition;
+    [SerializeField] Image redFlagHomePosition;
+
+    [SerializeField] Slider blueFlagPositionSlider;
+    [SerializeField] Image blueFlagPosition;
+    [SerializeField] Image blueFlagHomePosition;
     [SerializeField] Vector3 flagIndicatorOffset = new Vector3(0,1.5f,0);
 
     // private GameManager gameManager;
@@ -119,16 +128,27 @@ public class HudController : Singleton<HudController>
             }
         }
         UpdateFlagIndicators();
+        UpdateFlagTransitProgress();
     }
+
+
 
     void UpdateFlagIndicators()
     {
         GameObject[] foundGOs = GameObject.FindGameObjectsWithTag("Blue Flag");
+        float cameraAngle = 0f;
         if(foundGOs.Length > 0) {
-            flagBlueGO = foundGOs[0];
+            flagBlueGO = foundGOs[0];            
             if(flagBlueGO){
-                flagIndicatorBlueGO.SetActive(true);
                 flagIndicatorBlueGO.transform.position = Camera.main.WorldToScreenPoint(flagBlueGO.transform.position + flagIndicatorOffset);
+                // cameraAngle = Vector3.Angle(flagBlueGO.transform.position, Camera.main.transform.forward);
+                cameraAngle = Vector3.Angle(flagBlueGO.transform.position - Camera.main.transform.position, Camera.main.transform.forward);
+                // Debug.Log("Angle to the blue flag: "+cameraAngle);
+                if(cameraAngle >= 100 || !overrideBlueInactive) {
+                    flagIndicatorBlueGO.SetActive(false);
+                } else {
+                    flagIndicatorBlueGO.SetActive(true);
+                }
             } else {
                 flagIndicatorBlueGO.SetActive(false);
             }
@@ -138,8 +158,13 @@ public class HudController : Singleton<HudController>
         if(foundGOs.Length > 0) {
             flagRedGO = foundGOs[0];
             if(flagRedGO){
-                flagIndicatorRedGO.SetActive(true);
                 flagIndicatorRedGO.transform.position = Camera.main.WorldToScreenPoint(flagRedGO.transform.position + flagIndicatorOffset);
+                cameraAngle = Vector3.Angle(flagRedGO.transform.position - Camera.main.transform.position, Camera.main.transform.forward);
+                if(cameraAngle >= 100 || !overrideRedInactive) {
+                    flagIndicatorRedGO.SetActive(false);
+                } else {
+                    flagIndicatorRedGO.SetActive(true);
+                }
             } else {
                 flagIndicatorRedGO.SetActive(false);
             }       
@@ -147,12 +172,17 @@ public class HudController : Singleton<HudController>
 
     }
 
+    bool overrideBlueInactive = true;
+    bool overrideRedInactive = true;
+
     public void SetFlagActive(Team flagTeam, bool activeStatus)
     {
         if (flagTeam == Team.Team1) {
-            flagIndicatorBlueGO.SetActive(activeStatus);
+            // flagIndicatorBlueGO.SetActive(activeStatus);
+            overrideBlueInactive = activeStatus;
         } else {
-            flagIndicatorRedGO.SetActive(activeStatus);
+            // flagIndicatorRedGO.SetActive(activeStatus);
+            overrideRedInactive = activeStatus;
         }
     }
 
@@ -224,7 +254,7 @@ public class HudController : Singleton<HudController>
         
     }
 
-    public void SetFlagProgress (Team team, float progress)
+    public void SetFlagCaptureProgress (Team team, float progress)
     {
         Image flagProgressBar = null;
         if (team == Team.Team1 && flagIndicatorBlueGO!=null){
@@ -248,6 +278,7 @@ public class HudController : Singleton<HudController>
 
     void StartMatch()
     {
+        
         EnableHUD();
         // EventManagerSO.TriggerEvent_UpdateHealthbar
     }
@@ -271,12 +302,55 @@ public class HudController : Singleton<HudController>
         hudScreenGO.SetActive(false);
     }
 
-    public void UpdateFlags(Team team, bool status) {
+    public void UpdateFlags(Team team, FlagState status) {
         if (team == Team.Team1) {
-            blueFlag.SetActive(status);
+            // blueFlag.SetActive(status);
+            if (status == FlagState.HOME) {
+                blueFlagPosition.gameObject.SetActive(false);
+                blueFlagHomePosition.gameObject.SetActive(true);
+            } else {
+                blueFlagPosition.gameObject.SetActive(true);
+                blueFlagHomePosition.gameObject.SetActive(false);
+                
+            }
         } else {
-            redFlag.SetActive(status);
+            // redFlag.SetActive(status);
+            if (status == FlagState.HOME) {
+                redFlagPosition.gameObject.SetActive(false);
+                redFlagHomePosition.gameObject.SetActive(true);
+            } else {
+                redFlagPosition.gameObject.SetActive(true);
+                redFlagHomePosition.gameObject.SetActive(false);
+                
+            }
         }
+    }
+
+    void UpdateFlagTransitProgress()
+    {
+        float flagTransitProgress = 0f;
+        Vector3 blueHomePos = Vector3.zero;
+        if(flagBlueGO) {
+            blueHomePos = flagBlueGO.GetComponent<FlagController>().originalPosition;
+        }
+        Vector3 redHomePos = Vector3.zero;
+        if(flagRedGO) {
+            redHomePos = flagRedGO.GetComponent<FlagController>().originalPosition;
+        }
+
+        flagTransitProgress = blueFlagPositionSlider.value;
+        if (flagBlueGO && flagRedGO) {
+            // flagBlueGO.GetComponent<FlagController>().originalPosition
+            flagTransitProgress = 1-(flagBlueGO.transform.position - redHomePos).magnitude / (blueHomePos - redHomePos).magnitude; 
+        }
+        blueFlagPositionSlider.value = flagTransitProgress; //needs to be set
+
+        flagTransitProgress = redFlagPositionSlider.value;
+        if (flagBlueGO && flagRedGO) {
+            // flagBlueGO.GetComponent<FlagController>().originalPosition
+            flagTransitProgress = 1-(flagRedGO.transform.position - blueHomePos).magnitude / (blueHomePos - redHomePos).magnitude; 
+        }
+        redFlagPositionSlider.value = flagTransitProgress; //needs to be set
     }
     
     public void SetScoreUI(int team1Score, int team2Score)
@@ -287,6 +361,8 @@ public class HudController : Singleton<HudController>
         textTeam2Score.text = team2Score.ToString();
         sliderTeam2Score.value = (float)team2Score/gameConstants.WINNING_SCORE;
         // sliderTeam2Score.value = (float)team2Score/gameManager.winningScore;
+        textTeam1MaxScore.text = "/"+gameConstants.WINNING_SCORE.ToString();
+        textTeam2MaxScore.text = "/"+gameConstants.WINNING_SCORE.ToString();
     }
     
     void SetTimerUI(float timeToDisplay)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 public enum FlagState {HOME, TRANSIT, DROPPED, CONTESTED, CAPTURING, RETURNING}
 [RequireComponent(typeof(Rigidbody))]
@@ -12,12 +13,12 @@ public class FlagController : MonoBehaviour
     bool InTransit;
     Vector3 startingPosition;
     Quaternion startingRotation;
-    public GameObject PlayerWithFlag;
+    public GameObject playerWithFlag;
     public float captureTime = 5f;
     [SerializeField] public List<RecentPlayer> contendingPlayers = new List<RecentPlayer>();
     public FlagState currentFlagState;
     private Transform originalParent;
-    private Vector3 originalPosition;
+    public Vector3 originalPosition;
     private Quaternion originalRotation;
 
     [SerializeField] Collider captureCollider;
@@ -48,12 +49,7 @@ public class FlagController : MonoBehaviour
         }
         UpdateFlagProgress();
 
-        // Turn off the Flag Capture Indicator
-        if(PlayerWithFlag && PlayerWithFlag.GetComponent<HumanInput>()) {
-            HudController.Instance.SetFlagActive(teamOwner, false);
-        } else {
-            HudController.Instance.SetFlagActive(teamOwner, true);
-        }
+        
 
         // Turn off the capture collider
         if (currentFlagState == FlagState.TRANSIT) {
@@ -66,12 +62,17 @@ public class FlagController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider) 
     {
+        Debug.Log("collided with "+collider.gameObject.name);
         if (collider.gameObject.tag == "Player") // Acceptable colliders for taking the flag
         {
             contendingPlayers.Add(new RecentPlayer(collider.GetComponent<UnitController>()));
-        } if (collider.gameObject.tag == "Base") // Acceptable colliders for scoring the flag
+        } if (collider.gameObject.tag == "Base" && playerWithFlag) // Acceptable colliders for scoring the flag
         {
+            Debug.Log("collided with "+collider.gameObject.name);
             // TODO: Need to differentiate between the different teams
+            if (originalParent.gameObject != collider.transform.parent.gameObject) {
+                FlagScored();
+            }
         }        
     }
     void OnTriggerExit(Collider collider)
@@ -89,7 +90,7 @@ public class FlagController : MonoBehaviour
     void UpdateFlagProgress()
     {
         if(currentFlagState == FlagState.TRANSIT) {
-            HudController.Instance.SetFlagProgress(teamOwner, 0); 
+            HudController.Instance.SetFlagCaptureProgress(teamOwner, 0); 
             return;
         }
         
@@ -101,7 +102,7 @@ public class FlagController : MonoBehaviour
                 highestProgress = progress;
             }
         }
-        HudController.Instance.SetFlagProgress(teamOwner, highestProgress);   
+        HudController.Instance.SetFlagCaptureProgress(teamOwner, highestProgress);   
         // // tmpText = flagIndicatorBlueGO.GetComponentInChildren<TextMeshProUGUI>();
         // if(teamOwner == Team.Team1) {
         //     // Blue team
@@ -134,7 +135,12 @@ public class FlagController : MonoBehaviour
             
             RecentPlayer player = contendingPlayers[i];
             // Debug.Log("updaging time for "+player.unitController.gameObject.name);
-            player.timeSpent += Time.deltaTime;
+            if (currentFlagState == FlagState.HOME && teamOwner == player.unitController.team) {
+                player.timeSpent = 0;
+            } else {
+                player.timeSpent += Time.deltaTime;
+            }
+            
 
             // captureTime
             if (player.timeSpent >= captureTime) {
@@ -201,13 +207,13 @@ public class FlagController : MonoBehaviour
      */
     public bool FlagTaken(UnitController player)
     {
-        if (InTransit)
-        {
-            // if the flag is already in transit, then you can't take it. 
-            // This would occur if a teammate and you try to take the flag at the same time, only one of you can get it.
-            return false;
-        }
-        else
+        // if (InTransit)
+        // {
+        //     // if the flag is already in transit, then you can't take it. 
+        //     // This would occur if a teammate and you try to take the flag at the same time, only one of you can get it.
+        //     return false;
+        // }
+        // else
         {
             currentFlagState = FlagState.TRANSIT;
             transform.SetParent(player.flagSpot.transform);
@@ -217,14 +223,21 @@ public class FlagController : MonoBehaviour
             // transform.Find("FlagBase").gameObject.SetActive(false);
             // transform.Find("FlagPole").gameObject.SetActive(false);
             // InTransit = true;
-            PlayerWithFlag = player.gameObject;
+            playerWithFlag = player.gameObject;
             // transform.position = player.transform.Find("Skeleton/FlagCarryTarget").transform.position;
             // transform.SetParent(player.transform.Find("Skeleton/FlagCarryTarget").transform);
             // //this.GetComponent<Collider>().isKinematic = true;
 
             // true bc team actively has flag
-            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
-            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, true);
+            // Team team = playerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(teamOwner, currentFlagState);
+
+            // Turn off the Flag Capture Indicator when the human grabs the flag
+            if(playerWithFlag.GetComponent<HumanInput>()) {
+                HudController.Instance.SetFlagActive(teamOwner, false);
+            } else {
+                HudController.Instance.SetFlagActive(teamOwner, true);
+            }
 
             return true;
         }
@@ -237,30 +250,38 @@ public class FlagController : MonoBehaviour
      */
     public bool FlagScored()
    {
-        if (!InTransit) // add conditions where we don't want to score the flag here
+        // if (!InTransit) // add conditions where we don't want to score the flag here
+        // {
+        //     return false;
+        // }
+        // else
         {
-            return false;
-        }
-        else
-        {
-            currentFlagState = FlagState.HOME;
-            // Call the environment.Score script here to increment the score
-            // Then, reset the flag's position and base
-            transform.Find("FlagBase").gameObject.SetActive(true);
-            transform.Find("FlagPole").gameObject.SetActive(true);
-            transform.SetParent(null);
+            // currentFlagState = FlagState.HOME;
+            // // Call the environment.Score script here to increment the score
+            // // Then, reset the flag's position and base
+            // transform.Find("FlagBase").gameObject.SetActive(true);
+            // transform.Find("FlagPole").gameObject.SetActive(true);
+            // transform.SetParent(null);
 
-            // false bc team does not actively have flag
-            Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
-            EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
-            EventManagerSO.TriggerEvent_GiveTeamPoints(team, 1);
+            // // false bc team does not actively have flag
+            // Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
+            // EventManagerSO.TriggerEvent_UpdateFlagStatus(team, false);
+            if (teamOwner == Team.Team1){
+                EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team2, 1);
+            } else {
+                EventManagerSO.TriggerEvent_GiveTeamPoints(Team.Team1, 1);
+            }
             
             
             
-            PlayerWithFlag = null;
-            transform.position = startingPosition;
-            transform.rotation = startingRotation;
-            InTransit = false;
+            
+            // PlayerWithFlag = null;
+            // transform.position = startingPosition;
+            // transform.rotation = startingRotation;
+            // InTransit = false;
+            // return true;
+
+            FlagReturned();
             return true;
         }
     }
@@ -293,11 +314,12 @@ public class FlagController : MonoBehaviour
 
             // false bc team does not actively have flag
             // Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
-            EventManagerSO.TriggerEvent_UpdateFlagStatus(teamOwner, false);
-            PlayerWithFlag = null; // null out PlayerWithFlag
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(teamOwner, currentFlagState);
+            playerWithFlag = null; // null out PlayerWithFlag
             // transform.position = new Vector3(transform.position.x, startingPosition.y, transform.position.z); // lower it to the ground
             // transform.rotation = startingRotation;
             // InTransit = false; // no longer in transit
+            HudController.Instance.SetFlagActive(teamOwner, true);
             return true;
         }
     }
@@ -322,17 +344,19 @@ public class FlagController : MonoBehaviour
             // transform.Find("FlagPole").gameObject.SetActive(true);
             // transform.SetParent(null);
             transform.SetParent(originalParent);
-            transform.position = originalPosition;
+            // transform.position = originalPosition;
+            transform.DOMove(originalPosition,0.1f);
             transform.rotation = originalRotation;
             
             // false bc team does not actively have flag
             // Team team = PlayerWithFlag.tag == "Player" ? Team.Team1 : Team.Team2;
-            EventManagerSO.TriggerEvent_UpdateFlagStatus(teamOwner, false);
+            EventManagerSO.TriggerEvent_UpdateFlagStatus(teamOwner, currentFlagState);
 
-            PlayerWithFlag = null;
+            playerWithFlag = null;
             // transform.position = startingPosition;
             // transform.rotation = startingRotation;
             // InTransit = false;
+            HudController.Instance.SetFlagActive(teamOwner, true);
             return true;
         }
     }

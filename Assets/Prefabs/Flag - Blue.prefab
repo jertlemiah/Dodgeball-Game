@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1700092981194943591}
   - component: {fileID: 6687856500125372705}
   - component: {fileID: 5312547288829882985}
+  - component: {fileID: 3218571151702864826}
   m_Layer: 0
   m_Name: Flag - Blue
   m_TagString: Blue Flag
@@ -65,11 +66,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamOwner: 0
-  PlayerWithFlag: {fileID: 0}
-  captureTime: 5
+  playerWithFlag: {fileID: 0}
+  captureTime: 3
   contendingPlayers: []
   currentFlagState: 0
+  originalPosition: {x: 0, y: 0, z: 0}
   captureCollider: {fileID: 5221243402382864137}
+  allyNearby: 0
+  enemyNearby: 0
+--- !u!136 &3218571151702864826
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079573564560914141}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2251049190475079090
 GameObject:
   m_ObjectHideFlags: 0

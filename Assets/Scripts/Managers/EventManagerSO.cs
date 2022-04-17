@@ -44,7 +44,7 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_UnpauseGame simply marks when the GameState switches from the Paused state.</summary>
     public static event UnpauseGameHandler E_UnpauseGame;
 
-    public delegate void UpdateFlagStatusHandler(Team team, bool status); // team: the team, status: does team actively have flag
+    public delegate void UpdateFlagStatusHandler(Team team, FlagState status); // team: the team, status: does team actively have flag
     public static event UpdateFlagStatusHandler E_UpdateFlagStatus;
 
     public delegate void StartMatchHandler();
@@ -151,7 +151,7 @@ public class EventManagerSO : ScriptableObject
     }
 
     /// <summary> Triggers the E_UpdateFlagStatus(Team team, bool status) event. </summary>
-    public static void TriggerEvent_UpdateFlagStatus(Team team, bool status)
+    public static void TriggerEvent_UpdateFlagStatus(Team team, FlagState status)
     {       
         if(E_UpdateFlagStatus != null){
             Debug.Log("Triggering Event 'UpdateFlagStatus()'");
