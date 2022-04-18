@@ -8800,10 +8800,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e4d9df4c560350342906cea39abcf571, type: 3}
   - {fileID: 8300000, guid: 6d0c022e32716dd46a3949f84761f4d0, type: 3}
   audioSource: {fileID: 851144451}
-  quietSpeed: 0
-  mediumSpeed: 1.5
   loudSpeed: 3
   velocity: 20
+  damage: 25
+  hasOwner: 0
+  isThrown: 0
+  thrownBy: {fileID: 0}
+  dodgeballType: 1
 --- !u!96 &-8109734628765744971
 TrailRenderer:
   serializedVersion: 2

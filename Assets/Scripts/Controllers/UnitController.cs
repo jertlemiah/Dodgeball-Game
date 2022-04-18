@@ -32,6 +32,7 @@ public struct Input
 [RequireComponent(typeof(CharacterController))]
 public class UnitController : MonoBehaviour
 {
+    public string playerName = "";
     [Header("               Controller Input")]
         [Tooltip("The currently supplied input for the controller")] 
         public Input input;
@@ -270,6 +271,9 @@ public class UnitController : MonoBehaviour
             // healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
             // hudController.SetMaxHealth(healthMax);
             EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+        }
+        if (playerName == "") {
+            playerName = gameObject.name;
         }
     }
 
@@ -830,6 +834,9 @@ public class UnitController : MonoBehaviour
                 // hudController.SetHealth(healthCurrent);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
+                EventManagerSO.TriggerEvent_DeathNotification(team, "You","an enemy");
+            } else {
+                EventManagerSO.TriggerEvent_DeathNotification(team, playerName,"an enemy");
             }
         }
     }

@@ -55,6 +55,8 @@ public class HudController : Singleton<HudController>
     [SerializeField] Image blueFlagPosition;
     [SerializeField] Image blueFlagHomePosition;
     [SerializeField] Vector3 flagIndicatorOffset = new Vector3(0,1.5f,0);
+    [SerializeField] GameObject notificationPrefab;
+    [SerializeField] Transform notificationParent;
 
     // private GameManager gameManager;
     
@@ -87,6 +89,7 @@ public class HudController : Singleton<HudController>
         EventManagerSO.E_PickUpText += PickUpTextActive;
         EventManagerSO.E_BallPickup += DisplayHeldBall;
         EventManagerSO.E_UpdateHealthbar += UpdateHealthbar;
+        EventManagerSO.E_DeathNotification += DeathNotification;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // gameManager = GameManager.Instance;
         // GameManager.SetScore += SetScoreUI;
@@ -109,6 +112,7 @@ public class HudController : Singleton<HudController>
         EventManagerSO.E_PickUpText -= PickUpTextActive;
         EventManagerSO.E_BallPickup -= DisplayHeldBall;
         EventManagerSO.E_UpdateHealthbar -= UpdateHealthbar;
+        EventManagerSO.E_DeathNotification -= DeathNotification;
         // EventManagerSO.E_UnhideHUD += UnhideHUD;
         // GameManager.SetScore -= SetScoreUI;
         // GameManager.SetTimer -= SetTimerUI;
@@ -131,7 +135,35 @@ public class HudController : Singleton<HudController>
         UpdateFlagTransitProgress();
     }
 
+    void DeathNotification(Team teamOfPlayer, string playerName, string killerName)
+    {
+        CreateNewNotification(teamOfPlayer, NotifType.DEATH, playerName, killerName);
+    }
 
+    void CreateNewNotification (Team team, NotifType notifType)
+    {
+        GameObject notifGo = Instantiate(notificationPrefab, Vector3.zero, Quaternion.identity, notificationParent);
+        Notification notif = notifGo.GetComponent<Notification>();
+        if(notif) {
+            notif.NewNotification(team, notifType);
+        }
+    }
+    void CreateNewNotification (Team team, NotifType notifType, string detail1)
+    {
+        GameObject notifGo = Instantiate(notificationPrefab, Vector3.zero, Quaternion.identity, notificationParent);
+        Notification notif = notifGo.GetComponent<Notification>();
+        if(notif) {
+            notif.NewNotification(team, notifType, detail1);
+        }
+    }
+    void CreateNewNotification (Team team, NotifType notifType, string detail1, string detail2)
+    {
+        GameObject notifGo = Instantiate(notificationPrefab, Vector3.zero, Quaternion.identity, notificationParent);
+        Notification notif = notifGo.GetComponent<Notification>();
+        if(notif) {
+            notif.NewNotification(team, notifType, detail1, detail2);
+        }
+    }
 
     void UpdateFlagIndicators()
     {
@@ -324,6 +356,18 @@ public class HudController : Singleton<HudController>
                 
             }
         }
+        switch(status){
+            case FlagState.DROPPED:
+                CreateNewNotification(team == Team.Team1? Team.Team2 : Team.Team1, NotifType.DROPPED);
+                break;
+            case FlagState.HOME:
+                // CreateNewNotification(team == Team.Team1? Team.Team2 : Team.Team1, NotifType.SCORED);
+                break;
+            case FlagState.TRANSIT:
+                CreateNewNotification(team == Team.Team1? Team.Team2 : Team.Team1, NotifType.TAKEN);
+                break;
+        }
+        
     }
 
     void UpdateFlagTransitProgress()
@@ -355,6 +399,9 @@ public class HudController : Singleton<HudController>
     
     public void SetScoreUI(int team1Score, int team2Score)
     {
+        bool blueScored = (textTeam1Score.text != team1Score.ToString());
+        bool redScored = (textTeam2Score.text != team2Score.ToString());
+
         textTeam1Score.text = team1Score.ToString();
         sliderTeam1Score.value = (float)team1Score/gameConstants.WINNING_SCORE;
         // sliderTeam1Score.value = (float)team1Score/gameManager.winningScore;
@@ -363,6 +410,13 @@ public class HudController : Singleton<HudController>
         // sliderTeam2Score.value = (float)team2Score/gameManager.winningScore;
         textTeam1MaxScore.text = "/"+gameConstants.WINNING_SCORE.ToString();
         textTeam2MaxScore.text = "/"+gameConstants.WINNING_SCORE.ToString();
+
+        if(blueScored){
+            CreateNewNotification(Team.Team1, NotifType.SCORED);
+        } else if (redScored){
+            CreateNewNotification(Team.Team2, NotifType.SCORED);
+        }
+        
     }
     
     void SetTimerUI(float timeToDisplay)
