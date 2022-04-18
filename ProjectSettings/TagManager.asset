@@ -12,6 +12,7 @@ TagManager:
   - HUD
   - Blue Flag
   - Red Flag
+  - Spawn point
   layers:
   - Default
   - TransparentFX
