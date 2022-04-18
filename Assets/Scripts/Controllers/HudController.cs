@@ -133,6 +133,37 @@ public class HudController : Singleton<HudController>
         }
         UpdateFlagIndicators();
         UpdateFlagTransitProgress();
+
+        GameObject[] ballGOs = GameObject.FindGameObjectsWithTag("Ball");
+        if(ballGOs.Length > 0 && ballIndicators.Count == 0) {
+            CreateBallIndicators();
+        }
+
+    }
+
+    [SerializeField] GameObject ballIndicatorPrefab;
+    [SerializeField] List<BallIndicator> ballIndicators = new List<BallIndicator>();
+
+    void CreateBallIndicators()
+    {
+        if(!ballIndicatorPrefab){
+            return;
+        }
+        GameObject[] ballGOs = GameObject.FindGameObjectsWithTag("Ball");
+        foreach(GameObject ball in ballGOs){
+            DodgeballController dodgeballController;
+            if (ball.TryGetComponent<DodgeballController>(out dodgeballController)) {
+                GameObject GO = Instantiate(ballIndicatorPrefab, Vector3.zero, Quaternion.identity, this.transform);
+                BallIndicator ballIndicator = ballIndicatorPrefab.GetComponent<BallIndicator>();
+                ballIndicator.LoadNewBall(dodgeballController);
+                ballIndicators.Add(ballIndicator);
+            }    
+        }
+    }
+
+    void MaintainBallIndicators()
+    {
+
     }
 
     void DeathNotification(Team teamOfPlayer, string playerName, string killerName)
@@ -305,13 +336,15 @@ public class HudController : Singleton<HudController>
 
     private void PickUpTextActive(bool activeStatus)
     {
-        pickUpTextGO.SetActive(activeStatus);
+        // pickUpTextGO.SetActive(activeStatus);
     }
 
     void StartMatch()
     {
         
         EnableHUD();
+        ballIndicators.Clear();
+        CreateBallIndicators();
         // EventManagerSO.TriggerEvent_UpdateHealthbar
     }
 
@@ -361,7 +394,7 @@ public class HudController : Singleton<HudController>
                 CreateNewNotification(team == Team.Team1? Team.Team2 : Team.Team1, NotifType.DROPPED);
                 break;
             case FlagState.HOME:
-                // CreateNewNotification(team == Team.Team1? Team.Team2 : Team.Team1, NotifType.SCORED);
+                CreateNewNotification(team, NotifType.RETURNED);
                 break;
             case FlagState.TRANSIT:
                 CreateNewNotification(team == Team.Team1? Team.Team2 : Team.Team1, NotifType.TAKEN);

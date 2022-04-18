@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum NotifType {SCORED, DROPPED, TAKEN, DEATH}
+public enum NotifType {SCORED, DROPPED, TAKEN, DEATH, RETURNED}
 [RequireComponent(typeof(CanvasGroup))]
 public class Notification : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class Notification : MonoBehaviour
     [SerializeField] string deathTextFormula = "[detail1] was eliminated by [detail2]!";
     [SerializeField] GameObject iconFlagTakenGO;
     [SerializeField] string flagTakenTextFormula = "[team] team has taken the flag!";
+    [SerializeField] string flagReturnedTextFormula = "The [team] team's flag was returned!";
     CanvasGroup canvasGroup => GetComponent<CanvasGroup>();
     [SerializeField] float notificationTime = 5f;
 
@@ -90,6 +91,11 @@ public class Notification : MonoBehaviour
                 // "[team] team has taken the flag!"
                 messageText = flagTakenTextFormula.Replace("[team]",team == Team.Team1? "Your" : "The Enemy");
                 break;
+            case NotifType.RETURNED:
+                iconScoredFlagGO.SetActive(true);
+                // "The [team]'s flag was returned!"
+                messageText = flagReturnedTextFormula.Replace("[team]",team == Team.Team1? "blue" : "red");
+                break;
             case NotifType.DEATH:
                 iconDeathGO.SetActive(true);
                 // "[detail2] was eliminated by [detail1]!"
@@ -97,6 +103,9 @@ public class Notification : MonoBehaviour
                 if (detail1 == "You"){
                     messageText = messageText.Replace("was","were");
                 }
+                break;
+            default:
+                messageText = "Unhandled notification, type: "+notifType+", detail1: "+detail1+", detail2: "+detail2;
                 break;
         }
 

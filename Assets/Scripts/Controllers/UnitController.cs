@@ -434,11 +434,12 @@ public class UnitController : MonoBehaviour
     {
         if(pickUpZoneController.ballNear && input.pickup && Grounded && !hasBall)
         {
-            pickUpZoneController.dodgeball.hasOwner = true;
+            pickUpZoneController.closestDodgeball.hasOwner = true;
             pickUpZoneController.ballNear = false;
             // GameManager.Instance.TEMP_TurnOnBallHUD(); 
             // hasBall = true;  
-            heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
+            // heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
+            heldBallGO = pickUpZoneController.closestDodgeball.gameObject;
             _animator.SetBool("PickUp", true);
             canMove = false;
             if(isHuman){

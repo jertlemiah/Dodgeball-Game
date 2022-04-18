@@ -10,8 +10,9 @@ public class PickUpZoneController : MonoBehaviour
     public bool foundBall = false;
     public GameObject ball;
     public bool ballNear = false;
-    public DodgeballController dodgeball;
+    public DodgeballController closestDodgeball;
     private StarterAssetsInputs starterAssetsInputs;
+    public List <DodgeballController> ballsInRange = new List<DodgeballController>();
 
     private void Awake()
     {
@@ -28,22 +29,45 @@ public class PickUpZoneController : MonoBehaviour
         //     // GameManager.Instance.TEMP_TurnOnBallHUD();
         //     EventManagerSO.TriggerEvent_PickUpText(false);
         // }
+        if(ballsInRange.Count == 0) {
+            closestDodgeball = null;
+            ballNear = false;
+        } else {
+            SetClosestBall();
+            ballNear = true;
+        }
     } 
+
+    void SetClosestBall()
+    {
+        float closestDist = -1f;
+        foreach (DodgeballController ballController in ballsInRange) {
+            float dist = (ballController.transform.position - transform.position).magnitude;
+            if (closestDist == -1 || dist < closestDist) {
+                closestDist = dist;
+                closestDodgeball = ballController;
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {   
         if(!hasBall)
         {
             if(other.gameObject.CompareTag("Ball"))
             {   
-                dodgeball = other.gameObject.GetComponentInParent<DodgeballController>();
-                if(!dodgeball.hasOwner)
+                DodgeballController dodgeballController = other.gameObject.GetComponentInParent<DodgeballController>();
+                
+                // closestDodgeball = other.gameObject.GetComponentInParent<DodgeballController>();
+                if(!dodgeballController.hasOwner)
                 {
-                    if (other.gameObject.GetComponentInParent<Animator>() != null){
-                        other.gameObject.GetComponentInParent<Animator>().enabled = false;
-                    }
-                    ball = other.gameObject;
-                    ballNear = true;
-                    EventManagerSO.TriggerEvent_PickUpText(true);
+                    // if (other.gameObject.GetComponentInParent<Animator>() != null){
+                    //     other.gameObject.GetComponentInParent<Animator>().enabled = false;
+                    // }
+                    // ball = other.gameObject;
+                    // ballNear = true;
+                    // EventManagerSO.TriggerEvent_PickUpText(true);
+                    ballsInRange.Add(dodgeballController);
                 }
                 
             }
@@ -53,10 +77,22 @@ public class PickUpZoneController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject == ball)
+        // if(other.gameObject == ball)
+        if(other.gameObject.CompareTag("Ball"))
         {
-            ballNear = false;
-            EventManagerSO.TriggerEvent_PickUpText(false);
+            DodgeballController dodgeballController = other.gameObject.GetComponentInParent<DodgeballController>();
+            // ballNear = false;
+            // closestDodgeball = null;
+            // ball = null;
+            // EventManagerSO.TriggerEvent_PickUpText(false);
+            try
+            {
+                ballsInRange.Remove(dodgeballController);
+            }
+            catch (System.Exception)
+            {
+            }
+            
         }
 
     }
