@@ -388,7 +388,7 @@ public class AIController : MonoBehaviour
         }
         recentEnemies = newEnemyList;
         
-        // Add new visible players
+        // Add new visible balls
         foreach (Transform ballT in fieldOfView.visibleBalls) {
             bool found = false;
             foreach (RecentBall ball in recentBalls){
@@ -401,7 +401,7 @@ public class AIController : MonoBehaviour
             }
         }
         
-        // Manage the recent memory players
+        // Manage the recent memory balls
         List<RecentBall> newBallList = new List<RecentBall>();
         for (int i = 0; i < recentBalls.Count; i++) {
             RecentBall ball = recentBalls[i];

@@ -16,9 +16,14 @@ public class Editor_UnitController : Editor
 		// {
 			
 		// }
-         if (GUILayout.Button("Set Player Health to 0"))
+        if (GUILayout.Button("Set Player Health to 0"))
 		{
-			controller.TakeDamage(100);
+			// controller.TakeDamage(100);
+            controller.KillPlayer();
+		}
+        if (GUILayout.Button("Take 1 damage"))
+		{
+			controller.TakeDamage(1);
 		}
 	}
     public static void DrawUILine(Color color, int thickness = 2, int padding = 10)

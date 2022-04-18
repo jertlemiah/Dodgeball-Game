@@ -44,7 +44,7 @@ public class EventManagerSO : ScriptableObject
     /// <summary> E_UnpauseGame simply marks when the GameState switches from the Paused state.</summary>
     public static event UnpauseGameHandler E_UnpauseGame;
 
-    public delegate void UpdateFlagStatusHandler(Team team, bool status); // team: the team, status: does team actively have flag
+    public delegate void UpdateFlagStatusHandler(Team team, FlagState status); // team: the team, status: does team actively have flag
     public static event UpdateFlagStatusHandler E_UpdateFlagStatus;
 
     public delegate void StartMatchHandler();
@@ -81,6 +81,14 @@ public class EventManagerSO : ScriptableObject
     public delegate void BallPickupHandler(DodgeballType dodgeballType);
     /// <summary> E_PauseGame simply marks when the GameState switches to the Paused state.</summary>
     public static event BallPickupHandler E_BallPickup;
+
+    public delegate void UpdateHealthbarHandler(float newHealth, bool isNewMax);
+    /// <summary> E_SetTimer accepts one argument (float timeRemaining) to specify how much time is left in the match.</summary>
+    public static event UpdateHealthbarHandler E_UpdateHealthbar;
+
+    public delegate void DeathNotificationHandler(Team teamOfPlayer, string playerName, string killerName);
+    /// <summary> E_SetTimer accepts one argument (float timeRemaining) to specify how much time is left in the match.</summary>
+    public static event DeathNotificationHandler E_DeathNotification;
 
     
     /// <summary> Triggers the E_GiveTeamPoints(Team team, int points) event. </summary>
@@ -147,7 +155,7 @@ public class EventManagerSO : ScriptableObject
     }
 
     /// <summary> Triggers the E_UpdateFlagStatus(Team team, bool status) event. </summary>
-    public static void TriggerEvent_UpdateFlagStatus(Team team, bool status)
+    public static void TriggerEvent_UpdateFlagStatus(Team team, FlagState status)
     {       
         if(E_UpdateFlagStatus != null){
             Debug.Log("Triggering Event 'UpdateFlagStatus()'");
@@ -238,7 +246,23 @@ public class EventManagerSO : ScriptableObject
         } 
     }
 
-    
+    /// <summary> Triggers the E_UpdateHealthbar(float newHealth, bool isNewMax) event. </summary>
+    public static void TriggerEvent_UpdateHealthbar(float newHealth, bool isNewMax)
+    {
+        if(E_UpdateHealthbar != null){
+            Debug.Log("Triggering Event 'UpdateHealthbar("+newHealth+", "+isNewMax+")'");         
+            E_UpdateHealthbar(newHealth, isNewMax);
+        }        
+    }
+
+    /// <summary> Triggers the E_DeathNotification(Team teamOfPlayer, string playerName, string killerName) event. </summary>
+    public static void TriggerEvent_DeathNotification(Team teamOfPlayer, string playerName, string killerName)
+    {
+        if(E_DeathNotification != null){
+            Debug.Log("Triggering Event 'E_DeathNotification("+teamOfPlayer+", "+playerName+", "+killerName+")'");         
+            E_DeathNotification(teamOfPlayer, playerName, killerName);
+        }        
+    }
 
     
 }

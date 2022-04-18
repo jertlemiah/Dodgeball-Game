@@ -86,6 +86,24 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2076340685624309512, guid: 4aee0ac315a894e27badedc864dce41f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4aee0ac315a894e27badedc864dce41f, type: 3}
+--- !u!1 &4319011498868068765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2076340685624309495, guid: 4aee0ac315a894e27badedc864dce41f, type: 3}
+  m_PrefabInstance: {fileID: 2819414760826087274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1354750593549384304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4319011498868068765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64116f8bdbd52294782ea1e06093f2c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 1, z: 0}
 --- !u!1001 &6323691732603944643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 654523865627913721, guid: 4f7281bba6e1d8d4bafb4e6842ee187b, type: 3}
       propertyPath: m_Name
-      value: RenderCam - Spinning Heavyball
+      value: RenderCam - Spinning Heavyball Variant
       objectReference: {fileID: 0}
     - target: {fileID: 654523865627913721, guid: 4f7281bba6e1d8d4bafb4e6842ee187b, type: 3}
       propertyPath: m_IsActive

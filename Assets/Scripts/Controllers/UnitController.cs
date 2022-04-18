@@ -32,6 +32,7 @@ public struct Input
 [RequireComponent(typeof(CharacterController))]
 public class UnitController : MonoBehaviour
 {
+    public string playerName = "";
     [Header("               Controller Input")]
         [Tooltip("The currently supplied input for the controller")] 
         public Input input;
@@ -124,13 +125,14 @@ public class UnitController : MonoBehaviour
 
     [Header("           Shooter Settings")][Space(15)]
         [SerializeField] string ballHoldSpotName = "BallHoldSpot";
+        [SerializeField] private GameObject handSpot;
         [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
         [SerializeField] private float normalSensitivity = 2;
         [SerializeField] private float aimSensitivity = 0.5f;
         [SerializeField] private LayerMask aimColliderLayerMask;
         public Transform overrideTargetTransform;
 
-        [SerializeField] private GameObject handSpot;
+        
         [SerializeField] private Transform debugTransform;
 
         [SerializeField] private float block_cooldown = 3;
@@ -142,7 +144,9 @@ public class UnitController : MonoBehaviour
         public GameObject heldBallGO;
         AimIK aimIK => GetComponent<AimIK>();
 
-        
+        [SerializeField] string flagHoldSpotName = "FlagHoldSpot";
+        [SerializeField] public GameObject flagSpot;
+        public bool hasFlag = false;
 
     private float last_block_time;
     private bool canBlock = true;
@@ -249,6 +253,11 @@ public class UnitController : MonoBehaviour
             if(handSpot == null)
                 UnityEngine.Debug.LogError(gameObject.name+" does not have its handSpot game object set, and could not find one in children.");
         }
+        if(flagSpot == null) {
+            flagSpot = transform.Find(flagHoldSpotName).gameObject;
+            if(flagSpot == null)
+                UnityEngine.Debug.LogError(gameObject.name+" does not have its flagSpot game object set, and could not find one in children.");
+        }
         if(aimVirtualCamera == null) {
             UnityEngine.Debug.LogError(gameObject.name+" does not have its virtual Cinemachine aim camera set.");
         }
@@ -260,7 +269,11 @@ public class UnitController : MonoBehaviour
         }
         if(isHuman) {
             // healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
-            hudController.SetMaxHealth(healthMax);
+            // hudController.SetMaxHealth(healthMax);
+            EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+        }
+        if (playerName == "") {
+            playerName = gameObject.name;
         }
     }
 
@@ -421,11 +434,12 @@ public class UnitController : MonoBehaviour
     {
         if(pickUpZoneController.ballNear && input.pickup && Grounded && !hasBall)
         {
-            pickUpZoneController.dodgeball.hasOwner = true;
+            pickUpZoneController.closestDodgeball.hasOwner = true;
             pickUpZoneController.ballNear = false;
             // GameManager.Instance.TEMP_TurnOnBallHUD(); 
             // hasBall = true;  
-            heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
+            // heldBallGO = pickUpZoneController.ball.transform.parent.gameObject;
+            heldBallGO = pickUpZoneController.closestDodgeball.gameObject;
             _animator.SetBool("PickUp", true);
             canMove = false;
             if(isHuman){
@@ -441,6 +455,8 @@ public class UnitController : MonoBehaviour
             // hasBall = true;
         }
     }
+
+    // public void Capture
 
     void AnimTrigger_Throw()
     {
@@ -522,7 +538,8 @@ public class UnitController : MonoBehaviour
         if (healthCurrent - damage < 0) {
             healthCurrent = 0;
             if(isHuman) {
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
             if(team == Team.Team1)
             {
@@ -538,7 +555,8 @@ public class UnitController : MonoBehaviour
             UnityEngine.Debug.Log("Took Damage");
             healthCurrent -= damage;
             if(isHuman) {
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
         }
         
@@ -731,7 +749,8 @@ public class UnitController : MonoBehaviour
                 healthCurrent = healthMax;
             }
             if(isHuman) {
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
@@ -739,8 +758,10 @@ public class UnitController : MonoBehaviour
             healthMax += 50;
             healthCurrent += 50;
             if(isHuman) {
-                hudController.SetMaxHealth(healthMax);
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetMaxHealth(healthMax);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
             StartCoroutine(CountdownArmor());
         } else if (powerup.name.Contains("Speed")) {
@@ -760,8 +781,10 @@ public class UnitController : MonoBehaviour
             healthCurrent = healthMax;
         }
         if(isHuman) {
-            hudController.SetMaxHealth(healthMax);
-            hudController.SetHealth(healthCurrent);
+            // hudController.SetMaxHealth(healthMax);
+            // hudController.SetHealth(healthCurrent);
+            EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+            EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
         }
         powerup = null;
     }
@@ -794,8 +817,10 @@ public class UnitController : MonoBehaviour
             _animator.enabled = false;
             
             FlagController flagController = GetComponentInChildren<FlagController>();
+            UnityEngine.Debug.Log("Found flag? "+flagController!=null);
             if(flagController){
-                flagController.FlagReturned();
+                // flagController.FlagReturned();
+                flagController.FlagDropped();
             }
             
             var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
@@ -806,8 +831,13 @@ public class UnitController : MonoBehaviour
             StartCoroutine(CountdownDeath());
             if (isHuman) {
                 hc.HandleRespawn(5f);
-                hudController.SetMaxHealth(healthMax);
-                hudController.SetHealth(healthCurrent);
+                // hudController.SetMaxHealth(healthMax);
+                // hudController.SetHealth(healthCurrent);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+                EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
+                EventManagerSO.TriggerEvent_DeathNotification(team, "You","an enemy");
+            } else {
+                EventManagerSO.TriggerEvent_DeathNotification(team, playerName,"an enemy");
             }
         }
     }
