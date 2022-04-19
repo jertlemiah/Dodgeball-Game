@@ -8802,7 +8802,7 @@ MonoBehaviour:
   audioSource: {fileID: 851144451}
   loudSpeed: 3
   velocity: 20
-  damage: 25
+  damage: 1
   hasOwner: 0
   isThrown: 0
   thrownBy: {fileID: 0}

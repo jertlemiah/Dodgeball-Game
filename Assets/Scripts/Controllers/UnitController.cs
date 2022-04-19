@@ -115,10 +115,10 @@ public class UnitController : MonoBehaviour
 
     [Header("           Player Attributes")][Space(15)]
         [Tooltip("The health the player will start with each time he respawns.")]
-        public int healthMax = 100;
+        public float healthMax = 4.0f;
 
         [Tooltip("The current health of the player set at runtime")]
-        public int healthCurrent = 100;
+        public float healthCurrent = 4.0f;
 
         public Team team = Team.Team1;        
         public float DAMAGE_SPEED = 5; //  the minimum speed from which a ball will deal damage. This value needs to be elsewhere
@@ -201,7 +201,7 @@ public class UnitController : MonoBehaviour
     private SpawnManager spawnManager;
     private HudController hc;
 
-    // private SimpleHealthBar healthBar;
+    private HealthbarController healthbarController;
 
     //variables for changing collider when crouching 
     private Vector3 standCenter = new Vector3(0, 0.96f, 0);
@@ -271,6 +271,10 @@ public class UnitController : MonoBehaviour
             // healthBar = GameObject.Find("Health").GetComponent<SimpleHealthBar>();
             // hudController.SetMaxHealth(healthMax);
             EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
+        } 
+        else
+        {
+            healthbarController = GetComponentInChildren<HealthbarController>();
         }
         if (playerName == "") {
             playerName = gameObject.name;
@@ -533,13 +537,19 @@ public class UnitController : MonoBehaviour
         healthCurrent = 0;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (healthCurrent - damage < 0) {
             healthCurrent = 0;
             if(isHuman) {
                 // hudController.SetHealth(healthCurrent);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Taking Damage");
+                healthbarController.SetHealth(healthCurrent);
+
             }
             if(team == Team.Team1)
             {
@@ -557,6 +567,10 @@ public class UnitController : MonoBehaviour
             if(isHuman) {
                 // hudController.SetHealth(healthCurrent);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
+            }
+            else
+            {
+                healthbarController.SetHealth(healthCurrent);
             }
         }
         
@@ -744,7 +758,7 @@ public class UnitController : MonoBehaviour
         powerup = newPowerup;
         if (powerup.name.Contains("Health")) {
             UnityEngine.Debug.Log("Picked up Health");
-            healthCurrent += 25;
+            healthCurrent += 1.0f;
             if (healthCurrent > healthMax) {
                 healthCurrent = healthMax;
             }
@@ -752,16 +766,25 @@ public class UnitController : MonoBehaviour
                 // hudController.SetHealth(healthCurrent);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
             }
+            else
+            {
+                healthbarController.SetHealth(healthCurrent);
+            }
             powerup = null;
         } else if (powerup.name.Contains("Armor")) {
             UnityEngine.Debug.Log("Picked up Armor");
-            healthMax += 50;
-            healthCurrent += 50;
+            healthMax += 2.0f;
+            healthCurrent += 2.0f;
             if(isHuman) {
                 // hudController.SetMaxHealth(healthMax);
                 // hudController.SetHealth(healthCurrent);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
+            }
+            else
+            {
+                healthbarController.SetMaxHealth(healthMax);
+                healthbarController.SetHealth(healthCurrent);
             }
             StartCoroutine(CountdownArmor());
         } else if (powerup.name.Contains("Speed")) {
@@ -776,7 +799,7 @@ public class UnitController : MonoBehaviour
     IEnumerator CountdownArmor()
     {
         yield return new WaitForSeconds(30f);
-        healthMax -= 50;
+        healthMax -= 2.0f;
         if (healthCurrent > healthMax) {
             healthCurrent = healthMax;
         }
@@ -785,6 +808,11 @@ public class UnitController : MonoBehaviour
             // hudController.SetHealth(healthCurrent);
             EventManagerSO.TriggerEvent_UpdateHealthbar(healthMax, true);
             EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
+        }
+        else
+        {
+            healthbarController.SetMaxHealth(healthMax);
+            healthbarController.SetHealth(healthCurrent);
         }
         powerup = null;
     }
@@ -826,8 +854,8 @@ public class UnitController : MonoBehaviour
             var spawnPoint = spawnManager.GetSpawnLocation(player.transform.position);
             UnityEngine.Debug.Log("spawnPoint" + spawnPoint);
             player.transform.position = spawnPoint;
-            healthMax = 100;
-            healthCurrent = 100;
+            healthMax = 4;
+            healthCurrent = 4;
             StartCoroutine(CountdownDeath());
             if (isHuman) {
                 hc.HandleRespawn(5f);
@@ -837,6 +865,8 @@ public class UnitController : MonoBehaviour
                 EventManagerSO.TriggerEvent_UpdateHealthbar(healthCurrent, false);
                 EventManagerSO.TriggerEvent_DeathNotification(team, "You","an enemy");
             } else {
+                healthbarController.SetMaxHealth(healthMax);
+                healthbarController.SetHealth(healthCurrent);
                 EventManagerSO.TriggerEvent_DeathNotification(team, playerName,"an enemy");
             }
         }

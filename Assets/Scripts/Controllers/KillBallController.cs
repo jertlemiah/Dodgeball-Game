@@ -9,7 +9,7 @@ public class KillBallController : DodgeballController
     {
         base.Start();
         velocity = 20f;
-        damage = 200;
+        damage = 8.0f;
         dodgeballType = DodgeballType.Deathball;
     }
 

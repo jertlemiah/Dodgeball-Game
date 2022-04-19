@@ -899,8 +899,8 @@ MonoBehaviour:
   LockCameraPosition: 0
   useMainCamera: 0
   unitCamera: {fileID: 657184208956269560}
-  healthMax: 2
-  healthCurrent: 2
+  healthMax: 4
+  healthCurrent: 4
   team: 0
   DAMAGE_SPEED: 5
   ballHoldSpotName: BallHoldSpot
