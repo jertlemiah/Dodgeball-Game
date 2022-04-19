@@ -241,7 +241,7 @@ public class UnitController : MonoBehaviour
         blocker_renderer = GetComponentInChildren<BlockerController>().gameObject.GetComponent<Renderer>();
         blocker_renderer.enabled = false;
 
-        // hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
+        //hudController = GameObject.FindWithTag("HUD").GetComponent<HudController>();
         hudController = HudController.Instance;
 
         if(handSpot == null) {
@@ -266,11 +266,13 @@ public class UnitController : MonoBehaviour
 
     void Update()
     {
+        //UnityEngine.Debug.Log(GameObject.FindWithTag("HUD").GetComponent<HudController>);
+
         handleCharacterDead();
         JumpAndGravity();
         GroundedCheck();
         Move();
-        PickupBall();
+        //PickupBall();
         AimAndThrow();
         Block();
         Crouch();
