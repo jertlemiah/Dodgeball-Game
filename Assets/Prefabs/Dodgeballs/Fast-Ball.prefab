@@ -8900,7 +8900,8 @@ MonoBehaviour:
   audioSource: {fileID: 851144451}
   loudSpeed: 0.3
   velocity: 20
-  damage: 25
+  damage: 0.5
   hasOwner: 0
   isThrown: 0
   thrownBy: {fileID: 0}
+  dodgeballType: 1

@@ -859,6 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fae1716d96161f4dbc00cebc550c714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   input:
     sprint: 0
     move: {x: 0, y: 0}
@@ -898,8 +899,8 @@ MonoBehaviour:
   LockCameraPosition: 0
   useMainCamera: 0
   unitCamera: {fileID: 657184208956269560}
-  healthMax: 2
-  healthCurrent: 2
+  healthMax: 4
+  healthCurrent: 4
   team: 0
   DAMAGE_SPEED: 5
   ballHoldSpotName: BallHoldSpot
@@ -2408,7 +2409,8 @@ MonoBehaviour:
   foundBall: 0
   ball: {fileID: 0}
   ballNear: 0
-  dodgeball: {fileID: 0}
+  closestDodgeball: {fileID: 0}
+  ballsInRange: []
 --- !u!1 &6043158951048203557
 GameObject:
   m_ObjectHideFlags: 0

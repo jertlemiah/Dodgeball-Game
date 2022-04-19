@@ -9,7 +9,7 @@ public class FastBallController : DodgeballController
     {
         base.Start();
         velocity = 40f;
-        damage = 10;
+        damage = 1.0f;
         dodgeballType = DodgeballType.Fastball;
     }
 

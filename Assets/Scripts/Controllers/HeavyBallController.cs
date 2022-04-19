@@ -9,7 +9,7 @@ public class HeavyBallController : DodgeballController
     {
         base.Start(); 
         velocity = 8.5f;
-        damage = 50;
+        damage = 3.0f;
         dodgeballType = DodgeballType.Heavyball;
     }
 
