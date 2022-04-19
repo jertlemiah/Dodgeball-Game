@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: fieldOfView
       value: 
       objectReference: {fileID: 9090449503527154330}
+    - target: {fileID: 1520130657736595309, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2458690849612056800, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -74,6 +78,10 @@ PrefabInstance:
     - target: {fileID: 3652215047132461374, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
       propertyPath: team
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5402119757402509262, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1393d30ebc909bc4d81a58d3915f8c44, type: 3}
