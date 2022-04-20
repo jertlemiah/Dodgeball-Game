@@ -15,7 +15,7 @@ public class AimIK : MonoBehaviour
     public Transform targetTransform;
     public bool overrideTarget;
     public Vector3 targetOverridePosition;
-    public Transform aimTransform;
+    public Transform headTransform;
     [SerializeField] int iterations = 10;
     public float angleLimit = 90f;
     public float distanceLimit = 1f;
@@ -40,8 +40,8 @@ public class AimIK : MonoBehaviour
         } else {
             targetPos = targetOverridePosition;
         }
-        Vector3 targetDirection = targetPos - aimTransform.position;
-        Vector3 aimDirection = aimTransform.forward;
+        Vector3 targetDirection = targetPos - headTransform.position;
+        Vector3 aimDirection = headTransform.forward;
         float blendOut = 0f;
 
         float targetAngle = Vector3.Angle(targetDirection, aimDirection);
@@ -56,13 +56,13 @@ public class AimIK : MonoBehaviour
         }
 
         Vector3 direction = Vector3.Slerp(targetDirection, aimDirection, blendOut);
-        return aimTransform.position + direction;
+        return headTransform.position + direction;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(!enableIK || aimTransform == null || (overrideTarget && targetTransform == null))
+        if(!enableIK || headTransform == null || (overrideTarget && targetTransform == null))
             return;
         
         Vector3 targetPosition = GetTargetPosition();
@@ -75,8 +75,8 @@ public class AimIK : MonoBehaviour
         }
     }
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight){
-        Vector3 aimDirection = aimTransform.forward;
-        Vector3 targetDirection = targetPosition - aimTransform.position;
+        Vector3 aimDirection = headTransform.forward;
+        Vector3 targetDirection = targetPosition - headTransform.position;
         Quaternion aimTowards = Quaternion.FromToRotation(aimDirection, targetDirection);
         Quaternion weightedRotation = Quaternion.Slerp(Quaternion.identity,aimTowards, weight);
         bone.rotation = weightedRotation * bone.rotation;
@@ -86,6 +86,6 @@ public class AimIK : MonoBehaviour
         targetTransform = target;
     }
     public void SetAimTransform(Transform aim){
-        aimTransform = aim;
+        headTransform = aim;
     }
 }

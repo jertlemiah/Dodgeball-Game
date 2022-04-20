@@ -298,6 +298,8 @@ public class UnitController : MonoBehaviour
         CameraRotation();
     }
 
+    [SerializeField] Transform aimSpot;
+
     void AimAndThrow()
     {
         // Find the new Mouse World Position to use for aiming
@@ -306,10 +308,16 @@ public class UnitController : MonoBehaviour
         if(!input.moveRelative){
             mouseWorldPosition = overrideTargetTransform.position;      
         } 
-        else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        // else if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        else
         {
             //debugTransform.position = raycastHit.point;
-            mouseWorldPosition = raycastHit.point;
+            // mouseWorldPosition = raycastHit.point;
+            float distToPlayer = (unitCamera.transform.position - player.transform.position).magnitude;
+            
+            mouseWorldPosition = unitCamera.transform.position + ray.direction * distToPlayer*2;
+            aimSpot.transform.position = mouseWorldPosition;
+            // mouseWorldPosition = aimSpot.position;
         }
 
         // If holding a ball &
