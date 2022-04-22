@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c213f13496af3428e9435bb85eb61f, type: 3}
   m_Name: Level - 3 - Test
   m_EditorClassIdentifier: 
-  levelName: TEST
+  levelName: RED V. BLUE
   sceneIndex: 3
   panelColor: {r: 0.40090162, g: 0.016242431, b: 0.6886792, a: 1}
   panelImage: {fileID: 21300000, guid: b3d7f347da806eb4c82e6cb33f17e2d0, type: 3}

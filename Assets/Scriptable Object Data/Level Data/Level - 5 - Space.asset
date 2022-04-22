@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c213f13496af3428e9435bb85eb61f, type: 3}
   m_Name: Level - 5 - Space
   m_EditorClassIdentifier: 
-  levelName: SPACE (WIP)
+  levelName: SPACE
   sceneIndex: 5
   panelColor: {r: 0.09803922, g: 0.8862745, b: 0.02745098, a: 1}
   panelImage: {fileID: 21300000, guid: 6acf7105b1989034aa8c29ef8e6e279a, type: 3}
