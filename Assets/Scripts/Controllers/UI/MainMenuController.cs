@@ -138,7 +138,7 @@ public class MainMenuController : Singleton<MainMenuController>
         creditsVerticalGroup.GetComponent<RectTransform>().localPosition = Vector2.zero;
         if(creditsSequence == null) {
             creditsSequence = DOTween.Sequence();
-            creditsSequence.Append(creditsVerticalGroup.GetComponent<RectTransform>().DOAnchorPos(Vector2.up*1353f,40f));
+            creditsSequence.Append(creditsVerticalGroup.GetComponent<RectTransform>().DOAnchorPos(Vector2.up*1900f,40f));
             
         } else {
             // creditsSequence.Kill();
