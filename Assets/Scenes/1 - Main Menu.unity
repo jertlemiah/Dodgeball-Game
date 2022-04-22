@@ -2147,7 +2147,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82567347}
-  m_LocalRotation: {x: 0.116018824, y: -0.07130804, z: 0.008351168, w: 0.99064887}
+  m_LocalRotation: {x: 0.11601883, y: -0.07130803, z: 0.008351169, w: 0.9906488}
   m_LocalPosition: {x: 5.7299995, y: 2.8552275, z: -1.2448158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -31484,7 +31484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1816}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1758025503
@@ -37210,7 +37210,7 @@ MonoBehaviour:
 
     And
 
-    Claire Givens, Senior Rubber Duck programmer'
+    Claire Givens, Most Valued Rubber Duck'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0fa2a31ed0cc7704280f3aef3325b3a5, type: 2}
   m_sharedMaterial: {fileID: 3989045146947271429, guid: 0fa2a31ed0cc7704280f3aef3325b3a5, type: 2}
