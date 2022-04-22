@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 public enum MenuScreen {Title,Play,Settings,Credits,LevelDetails}
 public class MainMenuController : Singleton<MainMenuController>
@@ -38,6 +39,9 @@ public class MainMenuController : Singleton<MainMenuController>
     Dictionary<MenuScreen, GameObject> menuScreenDict = new Dictionary<MenuScreen, GameObject>();
     float screenWidth = 1000f;
     float screenHeight = 600f;
+    [SerializeField] GameObject splashScreenBackgroundGO;
+    [SerializeField] GameObject gameTitleGO;
+    [SerializeField] CinemachineVirtualCamera introCmCam;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +57,7 @@ public class MainMenuController : Singleton<MainMenuController>
         currentScreen = MenuScreen.Title;
         screenHistory.Add(currentScreen);
         titleScreenGO.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        // titleScreenGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,-screenHeight);
         if(!audioSource)
             audioSource = GetComponent<AudioSource>();
         // SwitchToScreen(MenuScreen.Title);
@@ -66,6 +71,83 @@ public class MainMenuController : Singleton<MainMenuController>
     {
         
     }
+
+    [SerializeField] float fadeTime = 2f;
+
+    public void Signal_FadeTitleIn() {
+        titleScreenGO.GetComponent<CanvasGroup>().alpha = 0;
+        titleScreenGO.GetComponent<CanvasGroup>().interactable = false;
+        gameTitleGO.GetComponent<CanvasGroup>().alpha = 0;
+
+        CanvasGroup canvasGroup;
+        canvasGroup = splashScreenBackgroundGO.GetComponent<CanvasGroup>();
+        if (canvasGroup) {
+            canvasGroup.alpha = 1;
+        }
+
+        canvasGroup = gameTitleGO.GetComponent<CanvasGroup>();
+        if (canvasGroup) {
+            canvasGroup.alpha = 0;
+            canvasGroup.DOFade(1,fadeTime);
+        }
+    }
+
+    public void Signal_FadeSplashOut()
+    {
+        Sequence notifSequence = DOTween.Sequence();
+
+        // notifSequence
+        //     .Append(transform.DOScale(new Vector3(1f, 1f, 1f), 1))
+        //     .AppendInterval(notificationTime)
+        //     .Append(canvasGroup.DOFade(0,1))
+        //     .OnComplete(()=>Destroy(this.gameObject));
+        
+        CanvasGroup canvasGroup;
+        canvasGroup = splashScreenBackgroundGO.GetComponent<CanvasGroup>();
+        if (canvasGroup) {
+            notifSequence.Append(canvasGroup.DOFade(0,fadeTime))
+                .OnComplete(()=>{introCmCam.Priority=9;});
+                // .Append(titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,fadeTime));
+            // canvasGroup.DOFade(0,fadeTime);
+        }
+    }
+
+    public void Signal_InitMainMenu()
+    {
+        Sequence notifSequence = DOTween.Sequence();
+        notifSequence.AppendCallback(()=>{introCmCam.Priority=9;})
+            .Append(gameTitleGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(20,0),2f))
+            .Append(titleScreenGO.GetComponent<CanvasGroup>().DOFade(1,1f))
+            .AppendCallback(()=>{titleScreenGO.GetComponent<CanvasGroup>().interactable = true;});
+        // Move game title
+        // gameTitleGO.GetComponent<RectTransform>().anchorMax = new Vector2(0,1);
+        // gameTitleGO.GetComponent<RectTransform>().anchorMin = new Vector2(1,1);
+        // gameTitleGO.GetComponent<RectTransform>().DOAnchorPos(new Vector2(20,0),2f);
+        // titleScreenGO.GetComponent<CanvasGroup>().DOFade(1,fadeTime);
+        // titleScreenGO.GetComponent<CanvasGroup>().interactable = true;
+        // move in buttons one at a time
+        // move in
+        // titleScreenGO.GetComponent<RectTransform>().DOAnchorPos(Vector2.zero,fadeTime);
+    }
+
+    [SerializeField] GameObject creditsVerticalGroup;
+
+    Sequence creditsSequence;
+    public void PlayCredits()
+    {
+        creditsVerticalGroup.GetComponent<RectTransform>().localPosition = Vector2.zero;
+        if(creditsSequence == null) {
+            creditsSequence = DOTween.Sequence();
+            creditsSequence.Append(creditsVerticalGroup.GetComponent<RectTransform>().DOAnchorPos(Vector2.up*1353f,40f));
+            
+        } else {
+            // creditsSequence.Kill();
+            creditsSequence.Restart();
+        }
+        
+        
+    }
+
     public void SwitchToScreen(MenuScreen newScreen, bool forwards) 
     {
         if(!menuScreenDict.ContainsKey(newScreen)){
@@ -110,6 +192,10 @@ public class MainMenuController : Singleton<MainMenuController>
             //     .Append(transform.DORotate(new Vector3(0,180,0), 1));
 
             currentScreen = newScreen;
+
+            if(newScreen == MenuScreen.Credits) {
+                PlayCredits();
+            }
         }
     }
 
