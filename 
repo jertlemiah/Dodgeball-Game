@@ -1,0 +1,1234 @@
+[33mcommit b57837f8c5f86c704b696d0fd08599b16f7ad7d6[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 21 21:07:00 2022 -0500
+
+    ahhhhh one more change
+
+[33mcommit edcf94cbddaa4230e81d8597ac07a7b7ff564bd4[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 21 20:58:57 2022 -0500
+
+    Needed to extend the credit roll a tiny bit
+
+[33mcommit 0b7c1edecbeb51ca5c5e91763f03093cb1019518[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 21 20:58:06 2022 -0500
+
+    Forgot playtesters in the credits
+
+[33mcommit ef38c66f744c3b00a8cbd171478b19e0f077e132[m
+Merge: 54e0e77a e4140165
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 21 20:46:00 2022 -0500
+
+    Merge branch 'Newmainmenu2' into main
+
+[33mcommit e4140165c1fe37077850618cc3c62961c36953d4[m[33m ([m[1;32mNewmainmenu2[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 21 20:26:33 2022 -0500
+
+    Created new main menu
+
+[33mcommit 54e0e77ac1927b0293b3a30f3fabf9f6f88bad46[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Thu Apr 21 19:54:05 2022 -0400
+
+    Fixed spawns, removed extra gym scene
+    
+    -stuff
+
+[33mcommit d0c269dfc9ccb28fe077d684b210744b1120b4a4[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 20 17:56:51 2022 -0500
+
+    Needed to update the model to allow the cloth physics to render properly
+
+[33mcommit 45a683d82444252eae855b00beb75ea148453993[m
+Author: edjees <elyest98@gmail.com>
+Date:   Wed Apr 20 15:17:22 2022 -0400
+
+    fixed ballspot for new character models
+
+[33mcommit 767f086610aeda0b5c2e59cb013c1ae20352f53a[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 19:38:26 2022 -0500
+
+    Changed how the aiming works, it now does not care about the aim layermask
+
+[33mcommit ab7026f5e63c550ade62a755f9d9e3ccf719a9ba[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 18:04:27 2022 -0500
+
+    Added billboarding to the ai health
+
+[33mcommit 86216109b7b36fce3b63dad46c0275621327d3d3[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 17:57:45 2022 -0500
+
+    Fixed the red player color models (the only merge conflict!)
+
+[33mcommit 71aef28a54bee0a61b24cd0be331fa085a6a1a9a[m
+Merge: 26cb6c18 bda9e575
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 17:55:26 2022 -0500
+
+    Merge remote-tracking branch 'origin/perry-enemy-health' into main
+
+[33mcommit bda9e5750b68dbbf9a0a6e9d602197e29f246bab[m[33m ([m[1;31morigin/perry-enemy-health[m[33m)[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Apr 19 18:36:37 2022 -0400
+
+    Updated health for enemy and layer
+
+[33mcommit 26cb6c18ec96a4cef7bf4ba4425a7fe37edf9531[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 14:41:07 2022 -0500
+
+    Implemented the new models. Needed to change references to the old skeleton to the new one, but otherwise it was very easy
+
+[33mcommit e864ead8d68b5b198706bdf52563532af79d3d38[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 13:50:16 2022 -0500
+
+    Another small tweak
+
+[33mcommit a192365114c94aa1ffc1a4b825baa78540a59e5f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 19 13:32:29 2022 -0500
+
+    Slightly tweaked an anchor on the HUD prefab
+
+[33mcommit d5dd8eb9762c06566b24352909c9a853da024698[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 18 18:53:51 2022 -0500
+
+    Tweaked the positions of the flags in all the scenes
+
+[33mcommit f18a39d474a35addef4e46493c1d135be0d1a03a[m
+Merge: cee8798d 80d46deb
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 18 16:05:07 2022 -0500
+
+    Merge branch 'NewHUD' into main
+
+[33mcommit 80d46deb8c9f31a6ba130d882c7b5587e30891fe[m[33m ([m[1;31morigin/NewHUD[m[33m, [m[1;32mNewHUD[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 18 16:04:48 2022 -0500
+
+    Removed temp file
+
+[33mcommit d4e61b8dbe7f53e453b3f13da56d7626f2d2588e[m
+Merge: 7ff10927 cee8798d
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 18 16:03:48 2022 -0500
+
+    Merge branch 'main' into NewHUD
+
+[33mcommit 7ff10927366d863822aace89a6aab7dcefee6efe[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 18 16:03:17 2022 -0500
+
+    temp
+
+[33mcommit 1953925877f1f214dac2f193c1e254d3987dfa23[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 18 16:00:44 2022 -0500
+
+    Finished the new ball pickup text. Time to merge back into main
+
+[33mcommit cee8798d8265afc753872e5f362347a65f5a72b2[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Apr 18 15:14:27 2022 -0400
+
+    Added loud air conditioners to space leve
+    
+    Added 4 loud air conditioners to space level central room. You may need to turn the music down to hear it
+
+[33mcommit 54300c0aa361f6c6741def079295002d5c16ffa4[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Apr 17 21:55:02 2022 -0500
+
+    Added the message updates, added more tweaks and polish things
+
+[33mcommit c44c77a7b76917c3f067d500eb65c5d20283c272[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sat Apr 16 22:26:28 2022 -0500
+
+    Finished the capture the flag HUD integration
+
+[33mcommit 4ea9753f18aa6b84f93293d2e30d27e58f06882e[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sat Apr 16 17:44:37 2022 -0500
+
+    Added new flags and redid the capture the flag code, sorry, lol
+
+[33mcommit 742f6e67f9849c8f15b4e5847095e211310af1e8[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Fri Apr 15 19:23:58 2022 -0400
+
+    Space Level QA Round 1
+    
+    Central Room - Hallway Doorway gap around frame fixed
+    Ceiling near tunnel hallway into red base, gaps on left side fixed
+    Tiles flickering in intermediate room fixed
+    Tiles flickering in hallway after intermediate room
+    Ceiling gap at the end of dead end hallway
+    Left wall gap near dead end
+    Tile flickering near dead end
+    Out of central room, blue arrow hallway end, right side wall gap
+    Out of blue base, right turn end of hallway corner wall gap and ceiling gap
+    All bunk rooms tiles flickered, and doorways had gaps
+    Yellow walls opposite bunks had floor gaps
+    Central room to Red floor sign had floor gap near door frame
+
+[33mcommit 83f0ed2f5091bf8b7f5b8fa083b53e30d542ea88[m
+Merge: 9ea2c56f e972b69f
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 15 13:13:04 2022 -0500
+
+    Merge branch 'bjh-add-spawn-points' into main
+
+[33mcommit e972b69f3feb77c7048f7d744e2d8d5597b36b21[m[33m ([m[1;31morigin/bjh-add-spawn-points[m[33m, [m[1;32mbjh-add-spawn-points[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 15 13:12:47 2022 -0500
+
+    Changed how the spawn points work so that they fit how the other systems are setup. Tweaked some respawn points
+
+[33mcommit dac901fa27e2d1bebcef409c9b68aaaf5e28390c[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 14 22:12:56 2022 -0500
+
+    Got all the ui elements in, need to update some code now
+
+[33mcommit 81cf0652256df34abab81dc692fdf3a6c2fc8611[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 14 15:26:35 2022 -0500
+
+    First pass on HUD
+
+[33mcommit 3466c62d67e5b54db50e9d43fae4d1fbaf46e493[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Wed Apr 13 21:52:21 2022 -0400
+
+    add spawn points to scene
+
+[33mcommit 9ea2c56ffebcb8f78d37c4b0932102858b54117d[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Fri Apr 8 19:27:42 2022 -0400
+
+    Added Space Music Scriptable Object
+    
+    Space Level music has been added! Some soft techno
+
+[33mcommit 3102ec39c1f11eb485988a6e31f02bb59dabc4bc[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 8 16:14:17 2022 -0500
+
+    smal tweaks before the build
+
+[33mcommit 111b873530e593424858fae9eebc5872615cc584[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 8 15:33:03 2022 -0500
+
+    More eidts to space level
+
+[33mcommit 868a9acbd65f2c87b8429fddee63703c73a3ad64[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 8 15:24:56 2022 -0500
+
+    Updated Space level with players and dodgeballs
+
+[33mcommit 69c75263fcf3ee26d248459bafc4fd554a6cef92[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 8 14:43:53 2022 -0500
+
+    Brought the renderCam dodgeball textures! Now the HUD shows what ball the player is holding
+
+[33mcommit aeeac4844c6d7b4b2e07cd6c3c7dc833467ebe1f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 8 13:59:57 2022 -0500
+
+    Replaced the test level with test v2.0!! Added deathplanes, added random ai fixes
+
+[33mcommit 69cb883f6d551d403a39d376f6dbe89a3001bb6d[m
+Merge: c57d1bd8 810ab553
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Apr 8 12:25:47 2022 -0500
+
+    Merge remote-tracking branch 'origin/perry-ball-respawn' into main
+
+[33mcommit 810ab55370081f364e1cf23cd7ec73d60044bc80[m[33m ([m[1;31morigin/perry-ball-respawn[m[33m)[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Fri Apr 8 09:47:08 2022 -0400
+
+    Ball respawn done
+
+[33mcommit c57d1bd81a32aad973acecc29daa717ba1f49948[m
+Merge: a439ca42 03340f35
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 7 19:02:00 2022 -0500
+
+    Merge remote-tracking branch 'origin/main' into main
+
+[33mcommit a439ca428dfcab4b4050d5b5f0c61a74954071fa[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 7 19:01:49 2022 -0500
+
+    Fixed up some more things with the ai, the test stage, & the persitent scene
+
+[33mcommit 03340f357f0c4bfa7dca6cc693ce8e9137763023[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Thu Apr 7 19:59:55 2022 -0400
+
+    Added basic navmesh to Space Level
+    
+    Added a basic navmesh to floor of space level.
+    I needed to raise 2 of the platforms by 0.01 to get rid of some streaks in the main room with the flag in it
+
+[33mcommit 4ef6ce06c5eefbfd0bd0f329c5ed12eb88db15cc[m
+Merge: f4daee15 dd78a266
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 7 16:34:44 2022 -0500
+
+    Merge remote-tracking branch 'origin/Collider-crouch' into main
+
+[33mcommit f4daee1519b7d43a77acfbbd0e1fb3681869af3b[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Apr 7 16:34:34 2022 -0500
+
+    Made changes during meeting, tweaked some AI things
+
+[33mcommit dd78a2666ed194915b73723fa66f36ac993f08af[m[33m ([m[1;31morigin/Collider-crouch[m[33m)[m
+Author: edjees <elyest98@gmail.com>
+Date:   Thu Apr 7 16:57:50 2022 -0400
+
+    got rid of susness
+
+[33mcommit 54904b54021ed2562319d2afdd40b1962bde383a[m
+Author: edjees <elyest98@gmail.com>
+Date:   Thu Apr 7 16:11:05 2022 -0400
+
+    crouch collider fixed + added back block animation
+
+[33mcommit 7159bd95c0e8e7d395802861e2ea13c751d713f0[m
+Merge: f129c85e 01d1b3fa
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 21:55:43 2022 -0500
+
+    Merge remote-tracking branch 'origin/perry-alpha-powerups' into main
+
+[33mcommit f129c85e16dadb4e3c007e02d8b8d89443c6f512[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 21:55:36 2022 -0500
+
+    Ahhh sorry made a few more tweaks to the persistent scene and the audio manager
+
+[33mcommit 01d1b3fad7f92a6ec50ee534375be0eaff683f3f[m[33m ([m[1;31morigin/perry-alpha-powerups[m[33m, [m[1;32mperry-alpha-powerups[m[33m)[m
+Merge: da923ce4 c45be1e7
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Wed Apr 6 22:35:30 2022 -0400
+
+    Fixed merge conflicts again
+
+[33mcommit da923ce410c653f47ca2c134624db5183ec1b445[m
+Merge: 72ca8eda 68ee9035
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Wed Apr 6 22:30:28 2022 -0400
+
+    Fixed merge conflicts
+
+[33mcommit c45be1e709d1170ec1da81b29c269c58c8ca76ca[m
+Merge: 68ee9035 9e41534c
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 21:26:43 2022 -0500
+
+    Merge branch 'Random-Jeremiah-fixes' into main
+
+[33mcommit 9e41534cfc6f46949e72bd9a6ece8402cb1b3139[m[33m ([m[1;31morigin/Random-Jeremiah-fixes[m[33m, [m[1;32mRandom-Jeremiah-fixes[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 21:26:29 2022 -0500
+
+    Disabled the WIP credits page since it was a mess
+
+[33mcommit 0c6ce23c242b089821e51030da3a5c70f0599aea[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 21:24:04 2022 -0500
+
+    Got the new setup to work! Had to tweak a lot of minor things to make sure menus were closing when they weren't needed
+
+[33mcommit 72ca8edac1f8829e9fe5b09f49c6c2166165011f[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Wed Apr 6 22:09:52 2022 -0400
+
+    Duplicated HUD
+
+[33mcommit e0942efc6c1ff77e10777234ca05bdfc8aa3588b[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Wed Apr 6 22:04:23 2022 -0400
+
+    Updated unit controller to not take damage and to only update health bar for the human
+
+[33mcommit 68ee9035fecbcb763ceb340cbd5003a21a767b1d[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 19:14:51 2022 -0500
+
+    Undoing the WIP thing that I have brought to a different branch to avoid interrupting other workflows
+
+[33mcommit 36d1d7efbab42e156a8877320cf0f807f650d838[m
+Merge: df987d47 76d3d776
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 19:13:45 2022 -0500
+
+    Merge remote-tracking branch 'origin/main' into main
+
+[33mcommit a220760ab1767cba55053199f68089314c5710e4[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 19:13:30 2022 -0500
+
+    wip
+
+[33mcommit 6714c17972fddf6c3aa22c604f9951ce1938945f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 17:17:40 2022 -0500
+
+    Separating out persistent scene things
+
+[33mcommit 7b16b08f76f372f272d9c06ad0280cc3cc3bbc76[m
+Merge: 41e719aa df987d47
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 17:17:22 2022 -0500
+
+    Merge branch 'main' into Random-Jeremiah-fixes
+
+[33mcommit 76d3d7768ddfe6c6a31376059245f9ee1cbd44aa[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Wed Apr 6 17:35:08 2022 -0400
+
+    Fix "Score in Both Bases" Bug
+    
+    Now only the player can score in the blue base, AI can only score in Red base.
+    NOTE: The bases need to be called BlueBase and RedBase for this to work
+
+[33mcommit df987d4790f395115546222b9a431c6bfec93e00[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 16:31:10 2022 -0500
+
+    wip
+
+[33mcommit f7597d9d824534e11fd6566c47313418e96287e9[m
+Merge: 8f592843 b4eaba42
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 16:30:35 2022 -0500
+
+    Merge branch 'HUD-cooldown' into main
+
+[33mcommit b732bfe74561c94fc0997e3596e77938ea17ce84[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Wed Apr 6 16:56:32 2022 -0400
+
+    Added bases, flag, and signs
+    
+    Added the bases, the flag in the middle, and signs so you don't get lost
+    Keep in mind, this map is pretty rushed, so there's gonna be some jank in places, but it's playable
+
+[33mcommit b4eaba4216564e38732aefcb26a60a6585df25a2[m[33m ([m[1;32mHUD-cooldown[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 15:47:37 2022 -0500
+
+    wip before merge
+
+[33mcommit 8f592843e1c15bdfc932494d43aae44982a41dca[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 15:43:42 2022 -0500
+
+    wip
+
+[33mcommit 69e8830d8f30cd269824f8aeb59b638032987fa8[m[33m ([m[1;31morigin/HUD-cooldown[m[33m)[m
+Author: edjees <elyest98@gmail.com>
+Date:   Wed Apr 6 15:31:33 2022 -0400
+
+    saved my scene lol
+
+[33mcommit 7f0906a8d0366ea9daff2e82007c9735fe6bcc27[m
+Author: edjees <elyest98@gmail.com>
+Date:   Wed Apr 6 15:30:27 2022 -0400
+
+    updated HUD prefab
+
+[33mcommit 41e719aa72ddebb25b316140e4e3bfe8d795abb6[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Apr 6 13:30:47 2022 -0500
+
+    Changed the main menu scene a bit, updated nav meshes for the test scene, started the new credits page
+
+[33mcommit ee22bd1f184da3f15c5c4ede56486f973b0ca129[m
+Author: edjees <elyest98@gmail.com>
+Date:   Wed Apr 6 12:45:59 2022 -0400
+
+    fixed anchroage + ishuman check
+
+[33mcommit 6544f66dff96142b23a625842e2dc51b7b2bb95e[m
+Merge: 47e50468 ed9e2791
+Author: HalpImStuck <98988823+HalpImStuck@users.noreply.github.com>
+Date:   Tue Apr 5 23:19:13 2022 -0400
+
+    Merge pull request #19 from jertlemiah/AndrewFourthScene
+    
+    Andrew fourth scene
+
+[33mcommit ed9e279132850edd37b26416939745e29f201a73[m[33m ([m[1;31morigin/AndrewFourthScene[m[33m)[m
+Merge: 99deb030 47e50468
+Author: HalpImStuck <98988823+HalpImStuck@users.noreply.github.com>
+Date:   Tue Apr 5 23:18:47 2022 -0400
+
+    Merge branch 'main' into AndrewFourthScene
+
+[33mcommit 99deb030d663b6feeca82b7a65cce9bfac110936[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 23:17:07 2022 -0400
+
+    attempt 3
+    
+    dafdasfdas
+
+[33mcommit 688a83cfbb1715021746157406275f6f5a4c2be8[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 23:16:28 2022 -0400
+
+    attempt 2
+    
+    dfkd
+
+[33mcommit b0c3091f897309dbc140401cbfa3535aeb7ae168[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 23:15:23 2022 -0400
+
+    fix merge stuff
+    
+    dfafdadfa
+
+[33mcommit fea933c4e3c4d52eca50e6fbb25635df492d9894[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 23:08:03 2022 -0400
+
+    5 - Space Rough Draft
+    
+    Space level is good enough to run around in.
+    I'll add the bases and flag in the next day or two
+
+[33mcommit 5170f37b19f39fef2c5866584f364f081fca15bf[m
+Merge: 27f6c0a8 47e50468
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Apr 5 22:12:38 2022 -0400
+
+    Merge branch 'main' of https://github.com/jertlemiah/Dodgeball-Game into perry-alpha-powerups
+
+[33mcommit 27f6c0a8d67ff2bd5c33b2f911733c80df7608a4[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Apr 5 22:09:18 2022 -0400
+
+    Fixed the prefab
+
+[33mcommit b2280fbd7a40ea7324e3efacb0d948dec340eb48[m
+Merge: 75a16b0f 2f5f8b66
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Apr 5 22:02:55 2022 -0400
+
+    Merged with main
+
+[33mcommit 47e5046877586e217dcfd4a484881669eed99b8a[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 21:58:06 2022 -0400
+
+    Polish the Desert Level
+    
+    Closed up some gaps in the wall
+
+[33mcommit 75a16b0f64e4ab2e6c9325e3e7479e9a932de97f[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Apr 5 21:54:36 2022 -0400
+
+    Reset HUD
+
+[33mcommit e3d5a469d366091dc2d8ded67583f17f11a2e71a[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Apr 5 21:34:51 2022 -0400
+
+    Trying to merge new HUD
+
+[33mcommit 2f5f8b66de48f4be17f2b5685b9a91ca6d1eb42e[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 20:11:39 2022 -0400
+
+    DestructibleBridge Prefab Commit
+    
+    made the destructible Bridge prefab, hit the targets with the ball and it falls apart
+
+[33mcommit 0d39bca23e009661a38d152ef3db038b932b0f2f[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Tue Apr 5 19:12:55 2022 -0400
+
+    Blue Base Animation Failure
+    
+    I tried adding some animations to the blue base to make them look cooler, but I don't like the way it looks. So I disabled the animator and mesh render for the base objects I was animating in case I have time to make changes to them later
+
+[33mcommit 5a5a5e122ac548d52a36ac12c8819c8e549f53e4[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 5 15:58:29 2022 -0500
+
+    AI now has to aim at a target for at least 1 second before being allowed to attack
+
+[33mcommit e0bfed335164f2b55fb5a15c9a8169b9021a023f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Apr 5 15:31:38 2022 -0500
+
+    Audio is now muted during the loading screen, and players cannot move until the match starts
+
+[33mcommit aa036d0fec35605ecaad96c372fd33063f915250[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 22:03:21 2022 -0500
+
+    addressed a flaw in the AI Wander state
+
+[33mcommit 4b815c307e0fd0c8f192b38f0c960cafb308e0d6[m
+Merge: 83bbb73d 40d16749
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 21:21:08 2022 -0500
+
+    Merge remote-tracking branch 'origin/bjh-respawn-mnesh' into main
+
+[33mcommit 83bbb73dcd1e5a1526bb80c38f021798f6ed9441[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 20:33:55 2022 -0500
+
+    Ahhh sorry, a few more minor tweaks to audio files
+
+[33mcommit 4d3bc0fc8ff2347cbb84fe16f9a7a466a35cece5[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 20:30:53 2022 -0500
+
+    typo in scene name
+
+[33mcommit 59d15119b320aaab53452681bde1cdd3f470ef61[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 20:30:01 2022 -0500
+
+    Renamed the remaining appropriate scenes to match build indices
+
+[33mcommit 4e1bad29b3284c41ed306a14acc0513bb6e13368[m
+Merge: bbb0d95d 7ad1906f
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 20:26:41 2022 -0500
+
+    Merge branch 'Random-Jeremiah-fixes' into main
+
+[33mcommit 7ad1906fca08c58e5afae263056f758abf347651[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 20:25:02 2022 -0500
+
+    Added the desert level tile, added level based music changes
+
+[33mcommit bbb0d95dd708cc0b95453215d102b3ab9bdf8484[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Apr 4 21:21:20 2022 -0400
+
+    Renamed Desert Scene to 4 - Desert
+    
+    noice
+
+[33mcommit 63dcb3fdebf90869213a057e6df3bce258d3081f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Apr 4 18:45:25 2022 -0500
+
+    Realizing this won't work and that I'll need to change it yet again
+
+[33mcommit 40d1674968886e305ba9d37f9866f57f63fd1024[m[33m ([m[1;31morigin/bjh-respawn-mnesh[m[33m)[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Mon Apr 4 18:45:20 2022 -0400
+
+    only show HUD respawn stuff if the human player dies
+
+[33mcommit 411158dfdf838c1711d75e824a9972340d59f062[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Apr 4 17:52:45 2022 -0400
+
+    35% done
+    
+    It's gonna be rough though
+
+[33mcommit 760c33c98695adad40032f69bdc68e37c76b740e[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Sun Apr 3 21:21:40 2022 -0400
+
+    first commit - 25% done
+    
+    test
+
+[33mcommit 663b82d5bd3f53533f945be241856b4758a344ef[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 31 20:48:30 2022 -0400
+
+    Updated the health bar
+
+[33mcommit 1f4b10a397062db3a0ef3f845dd5565db41b86fa[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Thu Mar 31 18:11:07 2022 -0400
+
+    remove blocks from spawn points
+
+[33mcommit 1f73b08aeab695cad98ffc7ecd6a439ca40fdbdb[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Thu Mar 31 17:59:10 2022 -0400
+
+    disable animation when respawning
+
+[33mcommit 55335b3984fc679b43eda3bb84bc28432326c688[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Thu Mar 31 17:48:34 2022 -0400
+
+    spawn manager can handle no given spawn points
+
+[33mcommit 384fe0b2f9d96be5e7d0bca84824c1acd847abb4[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Thu Mar 31 16:58:56 2022 -0400
+
+    unity trying to break things
+
+[33mcommit 8eb539c8d66c7b0b497a0375656b85efe98f573f[m
+Merge: 870d6532 f5fae102
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Thu Mar 31 16:34:05 2022 -0400
+
+    merge in main
+
+[33mcommit 9c8d22110dd3ca5d834b6d1f0800995c5e23e2bc[m
+Merge: 51efd4d8 f5fae102
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 31 15:47:50 2022 -0400
+
+    Merge branch 'main' of https://github.com/jertlemiah/Dodgeball-Game into perry-alpha-powerups
+
+[33mcommit 51efd4d8ea0feb5bf2ccf168a8e1cfa47d4a6d77[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 31 15:47:10 2022 -0400
+
+    Created a new health bar
+
+[33mcommit 9d72d6c7ccee1e17120d65598fdc9f18886e494e[m
+Author: edjees <elyest98@gmail.com>
+Date:   Thu Mar 31 14:11:01 2022 -0400
+
+    added HUD cooldown timers
+
+[33mcommit f5fae102967a9c73d94bbe93581b0e1652715caa[m
+Merge: ddc55e40 a2b7ba0b
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 30 20:53:29 2022 -0500
+
+    Merge branch 'New-Unit-Controller' into main
+
+[33mcommit a2b7ba0b7d8250e4cab79c1b657e0af7733a8412[m[33m ([m[1;31morigin/New-Unit-Controller[m[33m, [m[1;32mNew-Unit-Controller[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 30 20:53:17 2022 -0500
+
+    AI IS WORKING, WHOOO. Redesigned how the state machine worked so that multiple ais can use it without interfering with each other. It is also much more readable than before.
+
+[33mcommit ddc55e4092c86eea15cf5a876634fe058539dba2[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 30 18:05:15 2022 -0500
+
+    Sorry, I accidentally changed this setting while trying to get Unity git merge to work
+
+[33mcommit a4ea90f13621cbb22c3f3eafbfc008085672bd6e[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Wed Mar 30 18:07:52 2022 -0400
+
+    Baked NavMesh into AndrewThirdScene
+
+[33mcommit 870d65325843211164cb86c823904d9b3188851a[m[33m ([m[1;31morigin/hud-respawn[m[33m, [m[1;32mhud-respawn[m[33m)[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Tue Mar 29 22:09:20 2022 -0400
+
+    handle player falling through spawn point
+
+[33mcommit 9c253ba3e61a6763283426e6b531cd90a35489f2[m
+Merge: 35bb1843 cfe18b24
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Tue Mar 29 20:35:35 2022 -0400
+
+    fix merge conflicts and update gitignore
+
+[33mcommit 35bb18434dedd45a76270abe672df12d0cc90229[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Tue Mar 29 20:32:48 2022 -0400
+
+    respawn works
+
+[33mcommit cfe18b246a5687e87bc088903c9c18b70fe72bc3[m
+Merge: 92db918d f260c551
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 16:35:34 2022 -0500
+
+    Merge remote-tracking branch 'origin/Slide' into main
+
+[33mcommit 92db918d6d603c28ae8f0a95bf0bde362553b5e2[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 16:31:41 2022 -0500
+
+    made a change to UnitController to allow it to block
+
+[33mcommit f260c551ecec3561a44b0aa35b6c1802ea060692[m[33m ([m[1;31morigin/Slide[m[33m)[m
+Author: edjees <elyest98@gmail.com>
+Date:   Tue Mar 29 17:18:03 2022 -0400
+
+    added sliding
+
+[33mcommit 018c1323ffa6505ce28715905b2dcd2ee2cf9dc8[m[33m ([m[1;32mFixes[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 16:14:41 2022 -0500
+
+    Manually combined the player prefabs
+
+[33mcommit fd6a000c24ee78af7135144e79274adb8da09774[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 15:24:57 2022 -0500
+
+    Merge branch 'Block' into main
+
+[33mcommit ffa7d6b2d64cccf8578e6e08b9b6edac496a6521[m
+Merge: 6e715cc5 3a17707f
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 14:50:21 2022 -0500
+
+    wip merge
+
+[33mcommit 6e715cc57e6762d1e8dbca7269071c4251a7931f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 12:40:57 2022 -0500
+
+    wip
+
+[33mcommit 3a17707f55f39a1fcc9c796196f22c6867f26a46[m[33m ([m[1;31morigin/Block[m[33m, [m[1;32mBlock[m[33m)[m
+Author: edjees <elyest98@gmail.com>
+Date:   Tue Mar 29 13:20:49 2022 -0400
+
+    actually saved animation stuff
+
+[33mcommit 2116d70a752108453b8efe61880b8305ea1b703f[m
+Author: edjees <elyest98@gmail.com>
+Date:   Tue Mar 29 13:07:26 2022 -0400
+
+    implemented crouching
+
+[33mcommit bc2077ee7eb364a931e8dd23193b38bbf8916f38[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 12:06:13 2022 -0500
+
+    auto-clean up after merge
+
+[33mcommit 17562aa9d36450908afde245fdeb49cba670d02b[m
+Merge: 02132f19 3bcc3d20
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 12:01:42 2022 -0500
+
+    Merge branch 'AndrewThirdScene' into main
+
+[33mcommit 02132f19fa476bb739e7d3b496d045cc06eb33e1[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 29 07:52:12 2022 -0500
+
+    wip
+
+[33mcommit 3bcc3d20afdfc2c7c0da6ea6006be323a2c82dab[m[33m ([m[1;31morigin/AndrewThirdScene[m[33m, [m[1;32mAndrewThirdScene[m[33m)[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Mar 28 22:08:06 2022 -0400
+
+    Delete the player objects from my scene since they're old
+    
+    Deleted the player objects from my scene so the new prefabs can just be dropped in
+
+[33mcommit 9090efd93e3c563769a47070e5047e53b916d00c[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Mar 28 22:05:16 2022 -0400
+
+    ¡Ugggggh! But in spanish this time
+
+[33mcommit a0ac138fb06d635c8e0afb43bcaa2aa4a64b23d5[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Mar 28 22:00:12 2022 -0400
+
+    ugggggggh
+    
+    o_o
+
+[33mcommit e6cf9141ff55ecb663e07c228d0a935b0e801e88[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Mon Mar 28 21:47:06 2022 -0400
+
+    Final Commit before we merge this into main
+    
+    Doesn't mean I'm done, I just think "AndrewThirdScene" is in a workable enough state to add in the powerups, spawnpoints, dodgeball placement, etc. while I continue to add the small details
+
+[33mcommit 4e98fb573e710abce20eb547ff854dcea1b1bcc4[m
+Author: edjees <elyest98@gmail.com>
+Date:   Mon Mar 28 17:50:26 2022 -0400
+
+    added blockcontroller to blocker gameobject and updated player prefab
+
+[33mcommit baafb04419fec88ba71cf72056c6ae540fd42e88[m
+Author: edjees <elyest98@gmail.com>
+Date:   Mon Mar 28 17:47:58 2022 -0400
+
+    added blocking to new control scheme
+
+[33mcommit 28ca86b885917c3df52d99dc9ce85bd4cd4696c6[m
+Merge: 6cd8ceb5 6ad60a7b
+Author: edjees <elyest98@gmail.com>
+Date:   Mon Mar 28 17:47:00 2022 -0400
+
+    Merge branch 'main' into Block
+
+[33mcommit 823f18bd28afe3ac5780fbc6bf58a6b86a81648f[m
+Merge: 7c015b03 25b34b43
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Mon Mar 28 16:51:26 2022 -0400
+
+    merge main
+
+[33mcommit 7c015b03e1d959be720cf12ed8826143a7136acb[m
+Author: Benjamin Heath <bjheath@mitre.org>
+Date:   Mon Mar 28 16:50:55 2022 -0400
+
+    workign on it
+
+[33mcommit 25b34b43cf749b56ed72077939296bd6e383c8a3[m
+Merge: 6ad60a7b b6c3571f
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 28 15:45:23 2022 -0500
+
+    Merge branch 'New-Unit-Controller' into main
+
+[33mcommit b6c3571f2a7e5ac7d1ab31192be92283149a39ff[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 28 15:44:55 2022 -0500
+
+    Lots of AI things. Starting to get the state machine working among other things
+
+[33mcommit 6b9751dba9510822ae09cdc25abee5c82cf9816c[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Sun Mar 27 13:31:36 2022 -0400
+
+    More Work on Cuba side
+
+[33mcommit 300987cdb05ce8976d245efdc8fc392c488cbdff[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sat Mar 26 20:42:17 2022 -0500
+
+    WIP new state machine
+
+[33mcommit 8be686ff903e0a8ce10ba5221f45c29a5ae05b83[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sat Mar 26 12:39:39 2022 -0500
+
+    AI Field of view is working! Now he just needs to USE that information, lol
+
+[33mcommit 79a39561d37cc47c5b5c3c7bbba2c6af3c47996f[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Fri Mar 25 17:43:52 2022 -0400
+
+    pirate side mostly done
+    
+    pirate side is almost done, next gonna switch over to cuba side
+
+[33mcommit 6bf32fc60168d7e77d449cc3c472b7cf14b5aa45[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Fri Mar 25 10:37:47 2022 -0500
+
+    fixed the decision process for jumping off a cliff
+
+[33mcommit 240a3166e3a777d866a441d49679ebe2550be9e8[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 24 20:32:14 2022 -0500
+
+    Got the AI to jump towards its goal! Also fixed a bug where the AI was jumping EVERYWHERE
+
+[33mcommit 6cd8ceb564c73c6ffdfae6b68ea252da04a41c31[m
+Author: edjees <elyest98@gmail.com>
+Date:   Thu Mar 24 17:39:08 2022 -0400
+
+    some bs
+
+[33mcommit 1256507713d5355bb6b1958d250ca429f911624e[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 24 16:38:45 2022 -0500
+
+    WIP
+
+[33mcommit 68fb376cb73d7bb3aa9496541e3940608b3fa886[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 24 15:12:12 2022 -0500
+
+    First iteration of the new ai using the unit controller
+
+[33mcommit e9f5391d6840c067f1887fa8c0821ba950875810[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Wed Mar 23 18:58:13 2022 -0400
+
+    First Commit, Around half done
+    
+    The Scene is under AndrewThirdScene, and I know I have way to many unnecessary packages, I'll filter those out later.
+    I'm about half done, I have a decent idea of the layout, I just have to fill it with junk. Making custom houses takes awhile
+
+[33mcommit 6ad60a7be2cfb78003c4e469a768226a2a92a0e8[m
+Merge: 0c8b507b 9345af52
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 23 16:14:53 2022 -0500
+
+    Merge branch 'New-Unit-Controller' into main
+
+[33mcommit 9345af526e1c282ce9b52d6e42cf36eb3ccfaa86[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 23 16:14:38 2022 -0500
+
+    Created prefabs for the new player
+
+[33mcommit daea90b16861568efd2aebba460f63dcd16c369c[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 23 16:10:46 2022 -0500
+
+    Completely rehauled the UnitController to rely on an input struct instead of direct human input.
+    
+    Finished the HumanInput script so that the human player is using it properly. Need to still setup the ai to use it, but it should be much easier now that the ground work is done
+
+[33mcommit 694ebaec3e84f09a0d40edabcf4186af5c7aa098[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Tue Mar 22 23:13:32 2022 -0500
+
+    WIP
+
+[33mcommit 0c8b507b79a06d12f74850e14a16ba6ddf7ac6dd[m
+Merge: 4382671f 566ff7f8
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 21:51:39 2022 -0500
+
+    Merge branch 'perry-alpha-hotfix' into main
+
+[33mcommit 566ff7f8ed5331f7a0b6f208eaf2aaa76bc4100c[m[33m ([m[1;31morigin/perry-alpha-hotfix[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 21:51:12 2022 -0500
+
+    tweaks to fix errors
+
+[33mcommit 4382671f8658b8ab428ecc1d312140c7d8884526[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 21:22:33 2022 -0500
+
+    another tweak to the main menu
+
+[33mcommit fa0474a49b296683d4ab2f6dc57f2bf0412aa84c[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 17 21:52:04 2022 -0400
+
+    Added fast, heavy, and kill balls to alpha scene. Added armor and health pickups too.
+
+[33mcommit 7550798057e62f8a0ceeb9fa1754f2100f58572f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 20:04:10 2022 -0500
+
+    Made some tweaks to the main menu scene & some adjacent scripts
+
+[33mcommit 7ce1e8b3f678585c61f972445f71f310a97c54ee[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 16:47:10 2022 -0500
+
+    Cleaned up a ton of unused files & reorganized some folders
+
+[33mcommit c458d161dac600cea92ef403c588460d8d0375a8[m
+Merge: 856fc05e 69babe2c
+Author: Jeremiah Plauche <67203503+jertlemiah@users.noreply.github.com>
+Date:   Thu Mar 17 16:10:30 2022 -0500
+
+    Merge pull request #11 from jertlemiah/perry-alpha-powerups
+    
+    Perry alpha powerups
+
+[33mcommit 856fc05e9f7eb81f872b8f1820ed16dd6fb42161[m
+Merge: dba55aab 1c497f8f
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 15:58:12 2022 -0500
+
+    Merge branch 'Menu-sound-effects' into main
+
+[33mcommit 1c497f8ff280baff13d00a27a4291cc8b9ddc09c[m[33m ([m[1;31morigin/Menu-sound-effects[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 15:57:56 2022 -0500
+
+    Added settings!
+
+[33mcommit 69babe2c25b4775085023c7b9ca0326d2db866ae[m
+Merge: 5a35ef1a dba55aab
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 17 16:07:29 2022 -0400
+
+    Fixed merge conflicts
+
+[33mcommit 5a35ef1affd5f848c4d12744105deea385a6d9f1[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 17 16:03:02 2022 -0400
+
+    Just took the models from the icon pack
+
+[33mcommit ec34bc468d762915d6406d59b1cd973bcd6b18c5[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 17 15:57:23 2022 -0400
+
+    I brought in the icon packs and am using a few of them.
+
+[33mcommit a3a689d269defc9f95bffe70ead78ade479586ad[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Thu Mar 17 15:53:51 2022 -0400
+
+    Added powerups! Just two, but they work sorta.
+
+[33mcommit dba55aab07961dd5382f370e7cb2c3d45ba50da8[m
+Merge: f064161a 43224458
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 12:46:41 2022 -0500
+
+    Merge branch 'Menu-sound-effects' into main
+
+[33mcommit 432244586062a14e204409b99330f089000f5527[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Thu Mar 17 12:46:30 2022 -0500
+
+    Added music, menu sound effects, & made a few tweaks
+
+[33mcommit f064161a25032a3ebe89ba5ac2fbc21bd024a512[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 16 19:20:11 2022 -0500
+
+    Minor tweak to the input manager
+
+[33mcommit 56334c1b12da9abce91c80298421efcaf4effc25[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 16 18:12:13 2022 -0500
+
+    Finally made it so that the mouse disables properly. Fixed player colors
+
+[33mcommit e2bae96e5e4f2fd565b2b9017a590255ff307431[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Wed Mar 16 18:04:17 2022 -0500
+
+    More comments, changes to how the loading screen works. Fixed an issue with the singleton class. Added the Interaction Text event
+
+[33mcommit 597fe11f48c204e60d1db3864c3db179e0c5f120[m[33m ([m[1;31morigin/perry-alpha[m[33m)[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Wed Mar 16 09:36:36 2022 -0400
+
+    Added new materials to the different balls.
+
+[33mcommit 873c53a7865bc686052f89d5800e494855610108[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Mar 15 23:21:47 2022 -0400
+
+    Fixed damage amount for different balls.
+
+[33mcommit d03193dd9ff78f2424cb6e7c8bb12b065c2986f2[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Mar 15 23:15:08 2022 -0400
+
+    Added some logic to damage taking and respawning.
+
+[33mcommit 00a2a2561251de853f742d35b409d3b7d4d7174e[m
+Merge: e8d47349 ca86f497
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Mar 15 22:26:12 2022 -0400
+
+    Pulled from main.
+
+[33mcommit e8d47349ac6ea9dbc0b0cdb0b521e96b64a97708[m
+Author: Andrew Perry <aperry94@gatech.edu>
+Date:   Tue Mar 15 22:21:30 2022 -0400
+
+    Added my scene.
+
+[33mcommit ca86f497da1e12572b2e1c9e9a4c6e18a1353b9b[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 14 22:00:45 2022 -0500
+
+    Started to comment all my code to make it a *bit* easier to use
+
+[33mcommit 838464a73c51c63e7eef29091140587eed431750[m
+Merge: 11266329 c78201a0
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 14 16:34:53 2022 -0500
+
+    Merge branch 'MainMenu' into main
+
+[33mcommit c78201a007058fabe59904c25757b2cb46086751[m[33m ([m[1;31morigin/MainMenu[m[33m)[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 14 16:33:31 2022 -0500
+
+    More minor tweaks to the main menu transitions
+
+[33mcommit 3edc72cc5f5194197c6d90043e45947790558a8f[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 14 16:01:24 2022 -0500
+
+    Auto stash before merge of "MainMenu" and "main"
+
+[33mcommit 8d24c9d3158bb507531f72980da78fb27bce51a7[m
+Merge: 156d2cb4 11266329
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Mon Mar 14 16:01:17 2022 -0500
+
+    Merge branch 'main' into MainMenu
+
+[33mcommit 1126632907dc5717e359ffeae41f108f1cdfc108[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Mar 13 21:51:20 2022 -0500
+
+    final edits before submission
+
+[33mcommit 78d2d7933aca419f91f7c013aba9d03f5c934a6d[m
+Author: HalpImStuck <aschroeder31@gatech.edu>
+Date:   Sun Mar 13 21:07:44 2022 -0400
+
+    AI and player respawning
+    
+    AI Player respawning, fixed flag character movement bug when scoring (forgot to push changes to prefab last time).
+    Still couldn't get the health bar to work, not sure if that's a me problem not setting it up right or something
+
+[33mcommit 3eba6b9c22c9e0b76713d66754f3204ff54540e4[m
+Merge: 831e5f8d 156d2cb4
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Mar 13 19:13:10 2022 -0500
+
+    Merge branch 'MainMenu' into main
+
+[33mcommit 156d2cb470f720bc4866e88dd22e56b7f4617af9[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Mar 13 19:04:50 2022 -0500
+
+    added transition fade to main menu
+
+[33mcommit 831e5f8d2d2291b37e7ed340d9ed68dfc9344d15[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Mar 13 18:49:49 2022 -0500
+
+    Tweaks to the main menu
+
+[33mcommit 619a16233525fec720899c9b8d4596e220f8451c[m
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Mar 13 18:37:31 2022 -0500
+
+    Made some changes to how the main menu & persistent scene interact so that the game will actually launch correctly
+
+[33mcommit 43ec600958f1367c206b8236159da68ed8c1312b[m
+Merge: a6d92291 343534f4
+Author: Jeremiah <jeremiah.plauche@gmail.com>
+Date:   Sun Mar 13 18:28:37 2022 -0500
+
+    Merge branch 'interactionHUD' into main
+
+[33m
