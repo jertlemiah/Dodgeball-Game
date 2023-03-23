@@ -26,6 +26,29 @@ MonoBehaviour:
     - {fileID: -589994448510469335}
     - {fileID: -84447649782735206}
     - {fileID: 7644488513135579325}
+--- !u!114 &-2171301682759577789
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46e36075dd1c124a8422c228e75e1fb, type: 3}
+  m_Name: Signal Track (1)
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-1932347132137504061
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,6 +132,7 @@ MonoBehaviour:
   m_Tracks:
   - {fileID: -4609262453174266414}
   - {fileID: 8355645955712327487}
+  - {fileID: -2171301682759577789}
   m_FixedDuration: 8
   m_EditorSettings:
     m_Framerate: 60
